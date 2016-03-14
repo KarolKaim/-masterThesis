@@ -5,6 +5,8 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/gpio.h"
 
+#include "SwitchGear.h"
+
 int main(void) {
 
 	SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
@@ -13,6 +15,8 @@ int main(void) {
 
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2);
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x04);
+
+	initializeSwitches();
 	while (true) {
 	}
 	return 0;
