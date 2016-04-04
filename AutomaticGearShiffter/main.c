@@ -6,6 +6,7 @@
 #include "driverlib/gpio.h"
 
 #include "SwitchGear.h"
+#include "MagneticSensors.h"
 
 int main(void) {
 
@@ -16,7 +17,8 @@ int main(void) {
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2);
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x04);
 
-	initializeSwitches();
+	//initializeSwitches();
+	initializeMagneticSensors();
 	while (true) {
 	}
 	return 0;

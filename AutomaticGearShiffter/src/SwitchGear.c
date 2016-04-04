@@ -14,19 +14,23 @@
 volatile uint32_t DelayConuter = 0;
 
 void startAntiBouncingTimer() {
+
 	IntDisable(INT_GPIOA);
 	IntDisable(INT_GPIOB);
 	TimerEnable(TIMER0_BASE, TIMER_B);
 }
 void gearUpHandler(void) {
 	GPIOIntClear(GPIO_PORTA_BASE, GPIO_PIN_4);
-	startAntiBouncingTimer();
-	int a;
-	a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
+	//startAntiBouncingTimer();
+	IntDisable(INT_GPIOA);
+	IntDisable(INT_GPIOB);
+	TimerEnable(TIMER0_BASE, TIMER_B);
+	int32_t a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
 }
 
 void gearDownHandler(void) {
+
 	GPIOIntClear(GPIO_PORTB_BASE, GPIO_PIN_6);
 	startAntiBouncingTimer();
 	int a;
@@ -34,16 +38,16 @@ void gearDownHandler(void) {
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
 }
 
-void switchBounceTimerHandler(void) {
+void switchBouncingTimerHandler(void) {
+
 	TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
 	DelayConuter += 1;
-	if (DelayConuter == 1000) {
+	if (DelayConuter == 50) {
 		IntEnable(INT_GPIOA);
 		IntEnable(INT_GPIOB);
 		TimerDisable(TIMER0_BASE, TIMER_B);
 		DelayConuter = 0;
 	}
-
 }
 
 void initializeSwitches(void) {

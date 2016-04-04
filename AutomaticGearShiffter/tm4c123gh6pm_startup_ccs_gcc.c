@@ -44,6 +44,10 @@ static void IntDefaultHandler(void);
 //
 //*****************************************************************************
 extern int main(void);
+extern void switchBouncingTimerHandler(void);
+extern void gearDownHandler(void);
+extern void gearUpHandler(void);
+extern void wheelMagnetHandler(void);
 
 //*****************************************************************************
 //
@@ -86,9 +90,9 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     IntDefaultHandler,                      // The PendSV handler
     IntDefaultHandler,                      // The SysTick handler
-    IntDefaultHandler,                      // GPIO Port A
-    IntDefaultHandler,                      // GPIO Port B
-    IntDefaultHandler,                      // GPIO Port C
+	gearUpHandler,                      // GPIO Port A
+	gearDownHandler,                      // GPIO Port B
+	wheelMagnetHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
     IntDefaultHandler,                      // UART0 Rx and Tx
@@ -106,7 +110,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
     IntDefaultHandler,                      // Timer 0 subtimer A
-    IntDefaultHandler,                      // Timer 0 subtimer B
+	switchBouncingTimerHandler,                      // Timer 0 subtimer B
     IntDefaultHandler,                      // Timer 1 subtimer A
     IntDefaultHandler,                      // Timer 1 subtimer B
     IntDefaultHandler,                      // Timer 2 subtimer A
