@@ -45,9 +45,12 @@ static void IntDefaultHandler(void);
 //*****************************************************************************
 extern int main(void);
 extern void switchBouncingTimerHandler(void);
-extern void gearDownHandler(void);
-extern void gearUpHandler(void);
-extern void wheelMagnetHandler(void);
+extern void gpioPortB(void);
+extern void gpioPortA(void);
+extern void gpioPortC(void);
+extern void wheelMagnetBouncingTimerHander(void);
+extern void wheelMagnetIntervalsTimerHander(void);
+
 
 //*****************************************************************************
 //
@@ -90,9 +93,9 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     IntDefaultHandler,                      // The PendSV handler
     IntDefaultHandler,                      // The SysTick handler
-	gearUpHandler,                      // GPIO Port A
-	gearDownHandler,                      // GPIO Port B
-	wheelMagnetHandler,                      // GPIO Port C
+	gpioPortA,                      // GPIO Port A
+	gpioPortB,                      // GPIO Port B
+	gpioPortC,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
     IntDefaultHandler,                      // UART0 Rx and Tx
@@ -111,8 +114,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Watchdog timer
     IntDefaultHandler,                      // Timer 0 subtimer A
 	switchBouncingTimerHandler,                      // Timer 0 subtimer B
-    IntDefaultHandler,                      // Timer 1 subtimer A
-    IntDefaultHandler,                      // Timer 1 subtimer B
+	wheelMagnetIntervalsTimerHander,                      // Timer 1 subtimer A
+	wheelMagnetBouncingTimerHander,                      // Timer 1 subtimer B
     IntDefaultHandler,                      // Timer 2 subtimer A
     IntDefaultHandler,                      // Timer 2 subtimer B
     IntDefaultHandler,                      // Analog Comparator 0

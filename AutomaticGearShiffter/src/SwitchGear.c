@@ -19,24 +19,7 @@ void startAntiBouncingTimer() {
 	IntDisable(INT_GPIOB);
 	TimerEnable(TIMER0_BASE, TIMER_B);
 }
-void gearUpHandler(void) {
-	GPIOIntClear(GPIO_PORTA_BASE, GPIO_PIN_4);
-	//startAntiBouncingTimer();
-	IntDisable(INT_GPIOA);
-	IntDisable(INT_GPIOB);
-	TimerEnable(TIMER0_BASE, TIMER_B);
-	int32_t a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
-}
 
-void gearDownHandler(void) {
-
-	GPIOIntClear(GPIO_PORTB_BASE, GPIO_PIN_6);
-	startAntiBouncingTimer();
-	int a;
-	a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
-}
 
 void switchBouncingTimerHandler(void) {
 
@@ -58,8 +41,8 @@ void initializeSwitches(void) {
 	GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_4);
 	GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, GPIO_PIN_6);
 
-	GPIOIntRegister(GPIO_PORTA_BASE, gearUpHandler);
-	GPIOIntRegister(GPIO_PORTB_BASE, gearDownHandler);
+	//GPIOIntRegister(GPIO_PORTA_BASE, gearUpHandler);
+	//GPIOIntRegister(GPIO_PORTB_BASE, gearDownHandler);
 
 	GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_4, GPIO_RISING_EDGE);
 	GPIOIntTypeSet(GPIO_PORTB_BASE, GPIO_PIN_6, GPIO_RISING_EDGE);

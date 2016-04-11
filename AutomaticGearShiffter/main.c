@@ -19,6 +19,7 @@ int main(void) {
 
 	//initializeSwitches();
 	initializeMagneticSensors();
+
 	while (true) {
 	}
 	return 0;
