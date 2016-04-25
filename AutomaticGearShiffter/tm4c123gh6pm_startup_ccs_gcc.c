@@ -50,6 +50,7 @@ extern void gpioPortA(void);
 extern void gpioPortC(void);
 extern void wheelMagnetBouncingTimerHander(void);
 extern void wheelMagnetIntervalsTimerHander(void);
+extern void imuI2CHandler(void);
 
 
 //*****************************************************************************
@@ -162,7 +163,7 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     0,                                      // Reserved
     IntDefaultHandler,                      // I2C2 Master and Slave
-    IntDefaultHandler,                      // I2C3 Master and Slave
+	imuI2CHandler,                      // I2C3 Master and Slave
     IntDefaultHandler,                      // Timer 4 subtimer A
     IntDefaultHandler,                      // Timer 4 subtimer B
     0,                                      // Reserved

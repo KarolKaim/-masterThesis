@@ -30,6 +30,36 @@
 			<type>1</type>
 			<locationURI>TIVAWARE_INSTALL/driverlib/ccs/Debug/driverlib.lib</locationURI>
 		</link>
+		<link>
+			<name>linkedResources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>linkedResources/sensorlib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>linkedResources/utils</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>linkedResources/sensorlib/i2cm_drv.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/usr/TivaWare/TivaWare_C_Series-2.1.0.12573/sensorlib/i2cm_drv.c</locationURI>
+		</link>
+		<link>
+			<name>linkedResources/sensorlib/lsm303dlhc_accel.c</name>
+			<type>1</type>
+			<locationURI>TIVAWARE_INSTALL/sensorlib/lsm303dlhc_accel.c</locationURI>
+		</link>
+		<link>
+			<name>linkedResources/utils/uartstdio.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/usr/TivaWare/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.c</locationURI>
+		</link>
 	</linkedResources>
 	<variableList>
 		<variable>

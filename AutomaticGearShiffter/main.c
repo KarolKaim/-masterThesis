@@ -7,6 +7,8 @@
 
 #include "SwitchGear.h"
 #include "MagneticSensors.h"
+#include "UartLogger.h"
+#include "Imu.h"
 
 int main(void) {
 
@@ -17,8 +19,16 @@ int main(void) {
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2);
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x04);
 
-	//initializeSwitches();
+	initializeSwitches();
 	initializeMagneticSensors();
+	initializeUart(115200);
+	UARTprintf("Rakieta !!!!\n");
+	initializeImu();
+	float accelResult[3];
+	readAccelMeasurements(accelResult);
+	UARTprintf("Noto accel read:\n");
+	UARTprintf("Accel x - %f", accelResult[0]);
+
 
 	while (true) {
 	}
