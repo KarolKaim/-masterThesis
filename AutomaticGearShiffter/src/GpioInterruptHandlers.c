@@ -8,21 +8,20 @@
 #include "driverlib/sysctl.h"
 
 #include "MagneticSensors.h"
+#include "SwitchGear.h"
 
 void gpioPortA(void) {
-	GPIOIntClear(GPIO_PORTA_BASE, GPIO_PIN_4);
-	IntDisable(INT_GPIOA);
-	IntDisable(INT_GPIOB);
-	int32_t a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
+	uint32_t status = clearGpioInt(GPIO_PORTA_BASE);
+	if ((status & GPIO_PIN_4) == GPIO_PIN_4) {
+		handleGearUp();
+	}
 }
 
 void gpioPortB(void) {
-
-	GPIOIntClear(GPIO_PORTB_BASE, GPIO_PIN_6);
-	int a;
-	a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
+	uint32_t status = clearGpioInt(GPIO_PORTB_BASE);
+	if ((status & GPIO_PIN_6) == GPIO_PIN_6) {
+		handleGearDown();
+	}
 }
 
 void gpioPortC(void) {

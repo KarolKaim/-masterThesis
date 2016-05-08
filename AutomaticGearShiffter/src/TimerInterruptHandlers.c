@@ -6,6 +6,8 @@
 #include "driverlib/sysctl.h"
 
 #include "MagneticSensors.h"
+#include "DerailleurController.h"
+#include "SwitchGear.h"
 
 void wheelMagnetBouncingTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
@@ -18,9 +20,34 @@ void wheelMagnetBouncingTimerHander(void) {
 
 }
 
+void switchBouncingTimerHandler(void) {
+	TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
+	switchBouncingDelayInMs += 1;
+	if (switchBouncingDelayInMs == 20) {
+		TimerDisable(TIMER0_BASE, TIMER_B);
+		switchBouncingDelayInMs = 0;
+		switchBouncingTimerNotActivated = true;
+	}
+
+}
+
 void wheelMagnetIntervalsTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 	wheelMagnetIntervalInMs += 1;
+
+}
+
+void derailleurControlGeneratorTimerHandler(void) {
+	TimerIntClear(TIMER2_BASE, TIMER_TIMA_TIMEOUT);
+	currentPwmTicksInUs += 1;
+
+	if (currentPwmTicksInUs == gearPositions[currentGear]) {
+		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x00);
+
+	} else if (currentPwmTicksInUs == PWM_PERIOD_IN_HUND_OF_US) {
+		currentPwmTicksInUs = 0;
+		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x04);
+	}
 
 }
 
