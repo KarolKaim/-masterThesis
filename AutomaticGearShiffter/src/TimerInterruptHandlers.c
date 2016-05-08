@@ -23,7 +23,7 @@ void wheelMagnetBouncingTimerHander(void) {
 void switchBouncingTimerHandler(void) {
 	TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
 	switchBouncingDelayInMs += 1;
-	if (switchBouncingDelayInMs == 20) {
+	if (switchBouncingDelayInMs == 500) {
 		TimerDisable(TIMER0_BASE, TIMER_B);
 		switchBouncingDelayInMs = 0;
 		switchBouncingTimerNotActivated = true;
@@ -42,11 +42,11 @@ void derailleurControlGeneratorTimerHandler(void) {
 	currentPwmTicksInUs += 1;
 
 	if (currentPwmTicksInUs == gearPositions[currentGear]) {
-		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x00);
+		GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_2, 0x00);
 
 	} else if (currentPwmTicksInUs == PWM_PERIOD_IN_HUND_OF_US) {
 		currentPwmTicksInUs = 0;
-		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0x04);
+		GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_2, 0x04);
 	}
 
 }
