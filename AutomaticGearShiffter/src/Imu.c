@@ -4,26 +4,14 @@
 #include <stdbool.h>
 #include "inc/hw_memmap.h"
 #include "inc/hw_ints.h"
-#include "driverlib/debug.h"
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/pin_map.h"
-#include "driverlib/rom.h"
 #include "driverlib/sysctl.h"
-#include "driverlib/uart.h"
-#include "utils/uartstdio.h"
-#include "sensorlib/hw_mpu9150.h"
-#include "sensorlib/hw_ak8975.h"
 #include "sensorlib/i2cm_drv.h"
-#include "sensorlib/ak8975.h"
-#include "sensorlib/mpu9150.h"
-#include "sensorlib/comp_dcm.h"
 
 #include "sensorlib/hw_lsm303dlhc.h"
-#include "sensorlib/lsm303dlhc_mag.h"
 #include "sensorlib/lsm303dlhc_accel.h"
-#include "sensorlib/l3gd20h.h"
-#include "sensorlib/hw_l3gd20h.h"
 
 tLSM303DLHCAccel sLSM303DLHCAccel;
 tI2CMInstance g_sI2CInst;

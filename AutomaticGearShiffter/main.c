@@ -26,8 +26,6 @@ int main(void) {
 	initializeImu();
 	float accelResult[3];
 	readAccelMeasurements(accelResult);
-	UARTprintf("Noto accel read:\n");
-	UARTprintf("Accel x - %f", accelResult[0]);
 
 
 	while (true) {
