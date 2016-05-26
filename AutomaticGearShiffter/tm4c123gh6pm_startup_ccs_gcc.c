@@ -51,6 +51,7 @@ extern void gpioPortC(void);
 extern void wheelMagnetBouncingTimerHander(void);
 extern void wheelMagnetIntervalsTimerHander(void);
 extern void imuI2CHandler(void);
+extern void derailleurControlGeneratorTimerHandler(void);
 
 
 //*****************************************************************************
@@ -113,11 +114,11 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 2
     IntDefaultHandler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
-    IntDefaultHandler,                      // Timer 0 subtimer A
+	IntDefaultHandler,                      // Timer 0 subtimer A
 	switchBouncingTimerHandler,                      // Timer 0 subtimer B
 	wheelMagnetIntervalsTimerHander,                      // Timer 1 subtimer A
 	wheelMagnetBouncingTimerHander,                      // Timer 1 subtimer B
-    IntDefaultHandler,                      // Timer 2 subtimer A
+	derailleurControlGeneratorTimerHandler,                      // Timer 2 subtimer A
     IntDefaultHandler,                      // Timer 2 subtimer B
     IntDefaultHandler,                      // Analog Comparator 0
     IntDefaultHandler,                      // Analog Comparator 1
