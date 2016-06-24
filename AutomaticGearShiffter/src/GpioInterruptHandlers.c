@@ -25,7 +25,6 @@ void gpioPortB(void) {
 }
 
 void gpioPortC(void) {
-
 	uint32_t status = clearGpioInt(GPIO_PORTC_BASE);
 
 	if ((status & GPIO_PIN_7) == GPIO_PIN_7) {

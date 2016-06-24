@@ -23,7 +23,7 @@ void wheelMagnetBouncingTimerHander(void) {
 void switchBouncingTimerHandler(void) {
 	TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
 	switchBouncingDelayInMs += 1;
-	if (switchBouncingDelayInMs == 500) {
+	if (switchBouncingDelayInMs == 20) {
 		TimerDisable(TIMER0_BASE, TIMER_B);
 		switchBouncingDelayInMs = 0;
 		switchBouncingTimerNotActivated = true;
@@ -48,7 +48,6 @@ void derailleurControlGeneratorTimerHandler(void) {
 		currentPwmTicksInUs = 0;
 		GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_2, 0x04);
 	}
-
 }
 
 void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,

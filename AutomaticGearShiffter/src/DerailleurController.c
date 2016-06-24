@@ -15,7 +15,7 @@ uint32_t currentPwmTicksInUs = 0;
 //minimum value to get position 0 - 11;
 //maximu value to get position 180 - 48
 // firt gear - 17
-uint32_t gearPositions[8] = { 17, 18, 20, 23, 25, 26, 27, 28 };
+uint32_t gearPositions[8] = { 17, 19, 21, 23, 25, 27, 29, 32};
 int8_t currentGear = 0;
 
 void initializeGearController(void) {

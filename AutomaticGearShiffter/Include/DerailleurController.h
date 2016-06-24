@@ -9,6 +9,7 @@ extern uint32_t currentPwmTicksInUs;
 extern uint32_t gearPositions[8];
 extern int8_t currentGear;
 
+
 void initializeGearController(void);
 
 #endif

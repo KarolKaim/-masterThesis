@@ -11,22 +11,19 @@
 #include "Imu.h"
 #include "DerailleurController.h"
 
-
-
 int main(void) {
 
 	SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
 	SYSCTL_XTAL_16MHZ);
 
-
 	initializeSwitches();
-<<<<<<< HEAD
-	initializeMagneticSensors();
-	initializeUart(115200);
-	UARTprintf("Rakieta !!!!\n");
-	initializeImu();
-	float accelResult[3];
-	readAccelMeasurements(accelResult);
+	//initializeMagneticSensors();
+	//initializeUart(115200);
+	//UARTprintf("Rakieta !!!!\n");
+	//initializeImu();
+	//float accelResult[3];
+	//readAccelMeasurements(accelResult);
+	initializeGearController();
 
 	while (true) {
 	}
