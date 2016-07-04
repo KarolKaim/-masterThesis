@@ -9,31 +9,22 @@
 #include "DerailleurController.h"
 #include "SwitchGear.h"
 
-void wheelMagnetBouncingTimerHander(void) {
-	TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
-	wheelMagnetBouncingDelayInMs += 1;
-	if (wheelMagnetBouncingDelayInMs == 20) {
-		TimerDisable(TIMER1_BASE, TIMER_B);
-		wheelMagnetBouncingDelayInMs = 0;
-		wheelMagnetBouncingTimerActivated = false;
-	}
-
-}
-
-void switchBouncingTimerHandler(void) {
-	TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
-	switchBouncingDelayInMs += 1;
-	if (switchBouncingDelayInMs == 20) {
-		TimerDisable(TIMER0_BASE, TIMER_B);
-		switchBouncingDelayInMs = 0;
-		switchBouncingTimerNotActivated = true;
-	}
-
-}
-
-void wheelMagnetIntervalsTimerHander(void) {
+/*
+*_____Timers used in application______
+*
+*	Timer1A - wheel rotational speed
+*	Timer1B - crank rotational speed
+*	Timer2A - PWM signal generation
+*
+*/
+void wheelMagnetTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-	timeSinceLastInterrupt += 1;
+	timeSinceLastWheelMagnetInt += 1;
+
+}
+
+void crankMagnetTimerHander(void) {
+	TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
 
 }
 

@@ -17,12 +17,10 @@ int main(void) {
 	SYSCTL_XTAL_16MHZ);
 
 	initializeSwitches();
-	//initializeMagneticSensors();
+	initializeMagneticSensors();
 	//initializeUart(115200);
 	//UARTprintf("Rakieta !!!!\n");
 	//initializeImu();
-	//float accelResult[3];
-	//readAccelMeasurements(accelResult);
 	initializeGearController();
 
 	while (true) {
