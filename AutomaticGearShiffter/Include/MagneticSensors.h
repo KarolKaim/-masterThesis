@@ -6,11 +6,12 @@
 
 extern  uint32_t bicycleVelocity;
 extern  uint32_t wheelMagnetBouncingDelayInMs;
-extern  uint32_t wheelMagnetIntervalInMs;
+extern  uint32_t timeSinceLastInterrupt;
 extern  bool wheelMagnetBouncingTimerActivated;
 
 void initializeMagneticSensors(void);
 void handleWheelMagnetInt(void);
+void handleCrankMagnetInt(void);
 void computeBicycleVelocityInMetersPerSecond();
 
 #endif

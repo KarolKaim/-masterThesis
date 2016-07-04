@@ -34,14 +34,15 @@ url=false,
 % Ustawienia związane z polskimi normami dla bibliografii.
 maxbibnames=3,
 % Jeżeli używamy BibTeXa:
-backend=bibtex
+backend=biber
 ]{biblatex}
 
 \usepackage{csquotes}
 % Ponieważ `csquotes` nie posiada polskiego stylu, można skorzystać z mocno zbliżonego stylu chorwackiego.
 \DeclareQuoteAlias{croatian}{polish}
 
-\addbibresource{bibliografia.bib}
+\addbibresource{cos.bib}
+
 
 % Nie wyświetlaj wybranych pól.
 %\AtEveryBibitem{\clearfield{note}}
@@ -138,7 +139,8 @@ backend=bibtex
 \clearpage
 
 %\include{rozdzial1}
-\include{r1}
+\input{./chapters/r1.tex}
+\input{./chapters/r2.tex}
 %\include{rozdzial2}
 %\include{tests}
 
@@ -149,7 +151,6 @@ backend=bibtex
 % \include{dodatekA}
 % \include{dodatekB}
 % itd.
-
 \printbibliography
 
 \end{document}

@@ -16,7 +16,7 @@
 uint32_t bicycleVelocity = 0;
 
 uint32_t wheelMagnetBouncingDelayInMs = 0;
-uint32_t wheelMagnetIntervalInMs = 0;
+uint32_t timeSinceLastInterrupt = 0;
 bool wheelMagnetBouncingTimerActivated = false;
 
 void handleWheelMagnetInt(void) {
@@ -25,19 +25,20 @@ void handleWheelMagnetInt(void) {
 		TimerEnable(TIMER1_BASE, TIMER_B);
 		wheelMagnetBouncingTimerActivated = true;
 		computeBicycleVelocityInMetersPerSecond();
-		wheelMagnetIntervalInMs = 0;
-
-		int a;
-		a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
-		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
+		timeSinceLastInterrupt = 0;
 	}
 }
 
-void initializeMagneticSensors(void) {
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+void handleCrankMagnetInt(void){
+	//TODO - check magnetic filters and decide whether delay timers are required or not
 
-	GPIOPinTypeGPIOInput(GPIO_PORTC_BASE, GPIO_PIN_7);
-	GPIOIntTypeSet(GPIO_PORTC_BASE, GPIO_PIN_7, GPIO_RISING_EDGE);
+}
+
+void initializeMagneticSensors(void) {
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+
+	GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2 || GPIO_PIN_3);
+	GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2 || GPIO_PIN_3, GPIO_RISING_EDGE);
 
 	initializeTimer(SYSCTL_PERIPH_TIMER1, TIMER1_BASE,
 			TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
@@ -49,11 +50,11 @@ void initializeMagneticSensors(void) {
 
 	IntMasterEnable();
 	IntEnable(INT_TIMER1B);
-	IntEnable(INT_GPIOC);
+	IntEnable(INT_GPIOA);
 
-	GPIOIntEnable(GPIO_PORTC_BASE, GPIO_PIN_7);
+	GPIOIntEnable(GPIO_PORTC_BASE, GPIO_PIN_2 || GPIO_PIN_3);
 }
 
 void computeBicycleVelocityInMetersPerSecond() {
-	bicycleVelocity = 2 * PI * WHEELRADIUS / (0.001 * wheelMagnetIntervalInMs);
+	bicycleVelocity = 2 * PI * WHEELRADIUS / (0.001 * timeSinceLastInterrupt);
 }

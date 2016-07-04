@@ -33,7 +33,7 @@ void switchBouncingTimerHandler(void) {
 
 void wheelMagnetIntervalsTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-	wheelMagnetIntervalInMs += 1;
+	timeSinceLastInterrupt += 1;
 
 }
 

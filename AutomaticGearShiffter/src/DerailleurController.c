@@ -17,6 +17,8 @@ uint32_t currentPwmTicksInUs = 0;
 // firt gear - 17
 uint32_t gearPositions[8] = { 17, 19, 21, 23, 25, 27, 29, 32};
 int8_t currentGear = 0;
+enum GearMode currentMode = remote;
+enum RgbColours currentModeIndicatior = yellow;
 
 void initializeGearController(void) {
 
@@ -32,3 +34,28 @@ void initializeGearController(void) {
 
 }
 
+void changeCurrentGearMode(void)
+{
+	switch(currentMode)
+	{
+	case remote:
+		currentModeIndicatior = green;
+		currentMode = comfort;
+		break;
+	case comfort:
+		currentModeIndicatior = blue;
+		currentMode = active;
+		break;
+	case active:
+		currentModeIndicatior = pink;
+		currentMode = sport;
+		break;
+	case sport:
+		currentModeIndicatior = yellow;
+		currentMode = remote;
+		break;
+	default:
+		break;
+	}
+
+}
