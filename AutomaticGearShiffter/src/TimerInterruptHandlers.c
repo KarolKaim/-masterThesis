@@ -25,6 +25,7 @@ void wheelMagnetTimerHander(void) {
 
 void crankMagnetTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
+	timeSinceLastCrankMagnetInt += 1;
 
 }
 
