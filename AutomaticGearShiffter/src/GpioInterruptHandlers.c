@@ -10,6 +10,7 @@
 #include "MagneticSensors.h"
 #include "SwitchGear.h"
 #include "DerailleurController.h"
+#include "TimerInterruptHandlers.h"
 
 /*
  *  GPIO Input pins:
@@ -43,10 +44,11 @@ void gpioPortA(void) {
 void gpioPortB(void) {
 	uint32_t status = clearGpioInt(GPIO_PORTB_BASE);
 	if ((status & GPIO_PIN_6) == GPIO_PIN_6) {
-		handleGearUp();
+		reduceGear();
 	} else if ((status & GPIO_PIN_7) == GPIO_PIN_7) {
-		handleGearDown();
+		increaseGear();
 	}
+	turnOnConitnousChangeTimer();
 }
 
 void gpioPortC(void) {

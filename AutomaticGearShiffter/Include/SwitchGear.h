@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 void initializeSwitches(void);
-void handleGearUp(void);
-void handleGearDown(void);
+bool isGearUpSwitchPressed(void);
+bool isGearDownSwitchPressed(void);
 
 #endif

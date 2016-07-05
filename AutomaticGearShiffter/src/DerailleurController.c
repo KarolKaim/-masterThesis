@@ -57,5 +57,16 @@ void changeCurrentGearMode(void)
 	default:
 		break;
 	}
+}
 
+void increaseGear(void) {
+	if (currentGear < 7) {
+		currentGear++;
+	}
+}
+
+void reduceGear(void) {
+	if (currentGear > 0) {
+		currentGear--;
+	}
 }

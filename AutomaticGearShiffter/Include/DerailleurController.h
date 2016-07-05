@@ -11,7 +11,6 @@ enum GearMode {
 
 enum RgbColours {
 	red, green, yellow, blue, pink, cyan, white
-
 };
 
 extern uint32_t currentPwmTicksInUs;
@@ -20,5 +19,7 @@ extern int8_t currentGear;
 
 void initializeGearController(void);
 void changeCurrentGearMode(void);
+void reduceGear(void);
+void increaseGear(void);
 
 #endif

@@ -12,25 +12,22 @@
 #include "TimerInterruptHandlers.h"
 #include "DerailleurController.h"
 
-void handleGearUp(void) {
-	if (currentGear < 7) {
-		currentGear++;
-	}
-}
-
-void handleGearDown(void) {
-	if (currentGear > 0) {
-		currentGear--;
-	}
-}
-
 void initializeSwitches(void) {
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
-
 	GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
 	GPIOIntTypeSet(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7, GPIO_FALLING_EDGE);
 	GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
-
 	IntEnable(INT_GPIOB);
-	IntEnable(INT_TIMER0B);
+	initialzeContinuousGearChangeTimer();
 }
+
+bool isGearUpSwitchPressed(void) {
+	return (GPIOPinRead(GPIO_PORTB_BASE,
+	GPIO_PIN_6) && GPIO_PIN_6) == GPIO_PIN_6;
+}
+
+bool isGearDownSwitchPressed(void) {
+	return (GPIOPinRead(GPIO_PORTB_BASE,
+	GPIO_PIN_6) && GPIO_PIN_6) == GPIO_PIN_6;
+}
+
