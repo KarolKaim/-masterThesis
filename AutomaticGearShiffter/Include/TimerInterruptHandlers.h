@@ -10,5 +10,7 @@ void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 void turnOnConitnousChangeTimer(void);
 void turnOffConitnousChangeTimer(void);
 void initialzeContinuousGearChangeTimer(void);
-
+void initializeComfortModePeriodicTimer(void);
+void turnOnComfortModeTimer(void);
+void turnOffComfortModeTimer(void);
 #endif

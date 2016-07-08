@@ -10,15 +10,18 @@
 #include "driverlib/interrupt.h"
 
 #include "TimerInterruptHandlers.h"
+#include "SwitchGear.h"
+#include "MagneticSensors.h"
+#include "RGBIndicator.h"
 
 uint32_t currentPwmTicksInUs = 0;
-//minimum value to get position 0 - 11;
-//maximu value to get position 180 - 48
+uint16_t currentComfortModeTimer = 0;
+//minimum value to get angle 0 - 11;
+//maximu value to get angle 180 - 48
 // firt gear - 17
-uint32_t gearPositions[8] = { 17, 19, 21, 23, 25, 27, 29, 32};
+uint32_t gearPositions[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
 int8_t currentGear = 0;
 enum GearMode currentMode = remote;
-enum RgbColours currentModeIndicatior = yellow;
 
 void initializeGearController(void) {
 
@@ -34,24 +37,26 @@ void initializeGearController(void) {
 
 }
 
-void changeCurrentGearMode(void)
-{
-	switch(currentMode)
-	{
+void changeCurrentGearMode(void) {
+	switch (currentMode) {
 	case remote:
-		currentModeIndicatior = green;
+		setCurrentRgbState(green);
 		currentMode = comfort;
+		disableSwitches();
+		turnOnComfortModeTimer();
 		break;
 	case comfort:
-		currentModeIndicatior = blue;
+		setCurrentRgbState(blue);;
 		currentMode = active;
+		enableSwitches();
+		turnOffComfortModeTimer();
 		break;
 	case active:
-		currentModeIndicatior = pink;
+		setCurrentRgbState(pink);
 		currentMode = sport;
 		break;
 	case sport:
-		currentModeIndicatior = yellow;
+		setCurrentRgbState(yellow);
 		currentMode = remote;
 		break;
 	default:
@@ -68,5 +73,13 @@ void increaseGear(void) {
 void reduceGear(void) {
 	if (currentGear > 0) {
 		currentGear--;
+	}
+}
+
+void comfortModeHandler() {
+	if (cadenceInRPM < 50) {
+		reduceGear();
+	} else if (cadenceInRPM > 70) {
+		increaseGear();
 	}
 }

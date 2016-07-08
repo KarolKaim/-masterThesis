@@ -7,5 +7,7 @@
 void initializeSwitches(void);
 bool isGearUpSwitchPressed(void);
 bool isGearDownSwitchPressed(void);
+void disableSwitches(void);
+void enableSwitches(void);
 
 #endif

@@ -31,3 +31,11 @@ bool isGearDownSwitchPressed(void) {
 	GPIO_PIN_6) && GPIO_PIN_6) == GPIO_PIN_6;
 }
 
+void disableSwitches(void) {
+	GPIOIntDisable(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
+}
+
+void enableSwitches(void) {
+	GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
+}
+

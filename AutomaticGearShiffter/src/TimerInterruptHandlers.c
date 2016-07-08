@@ -18,6 +18,7 @@
  *	Timer1B - crank rotational speed
  *	Timer2A - PWM signal generation
  *	Timer3A - continous gear change
+ *	Timer3B - periodic timer for comfort mode
  *
  */
 
@@ -63,6 +64,17 @@ void derailleurControlGeneratorTimerHandler(void) {
 	}
 }
 
+void comfortModeTimerHandler()
+{
+	currentComfortModeTimer += 1;
+	if(currentComfortModeTimer == 200)
+	{
+		currentComfortModeTimer = 0;
+		comfortModeHandler();
+
+	}
+}
+
 void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 		uint32_t timerConfig, uint32_t timer, uint32_t intFlags,
 		uint32_t secondsDivider) {
@@ -85,4 +97,20 @@ void initialzeContinuousGearChangeTimer(void) {
 	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
 	TIMER_TIMA_TIMEOUT, 1000);
 	IntEnable(INT_TIMER3A);
+}
+
+void initializeComfortModePeriodicTimer()
+{
+	initializeTimer(SYSCTL_PERIPH_TIMER3, TIMER3_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_B_PERIODIC, TIMER_B,
+	TIMER_TIMB_TIMEOUT, 100);
+	IntEnable(INT_TIMER3B);
+}
+
+void turnOnComfortModeTimer(void) {
+	TimerEnable(TIMER3_BASE, TIMER_B);
+}
+
+void turnOffComfortModeTimer(void) {
+	TimerDisable(TIMER3_BASE, TIMER_B);
 }

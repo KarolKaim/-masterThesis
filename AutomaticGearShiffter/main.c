@@ -18,6 +18,7 @@ int main(void) {
 
 	initializeSwitches();
 	initializeMagneticSensors();
+	initializeComfortModePeriodicTimer();
 	//initializeUart(115200);
 	//UARTprintf("Rakieta !!!!\n");
 	//initializeImu();
