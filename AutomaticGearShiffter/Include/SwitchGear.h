@@ -4,11 +4,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-extern uint32_t switchBouncingDelayInMs;
-extern bool switchBouncingTimerNotActivated;
-
 void initializeSwitches(void);
-void handleGearUp(void);
-void handleGearDown(void);
+bool isGearUpSwitchPressed(void);
+bool isGearDownSwitchPressed(void);
+void disableSwitches(void);
+void enableSwitches(void);
 
 #endif

@@ -1,40 +1,54 @@
 #include "TimerInterruptHandlers.h"
 
 #include "inc/hw_memmap.h"
+#include "inc/hw_ints.h"
 #include "driverlib/gpio.h"
 #include "driverlib/timer.h"
 #include "driverlib/sysctl.h"
+#include "driverlib/interrupt.h"
 
 #include "MagneticSensors.h"
 #include "DerailleurController.h"
 #include "SwitchGear.h"
 
-void wheelMagnetBouncingTimerHander(void) {
-	TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
-	wheelMagnetBouncingDelayInMs += 1;
-	if (wheelMagnetBouncingDelayInMs == 20) {
-		TimerDisable(TIMER1_BASE, TIMER_B);
-		wheelMagnetBouncingDelayInMs = 0;
-		wheelMagnetBouncingTimerActivated = false;
-	}
+/*
+ *_____Timers used in application______
+ *
+ *	Timer1A - wheel rotational speed
+ *	Timer1B - crank rotational speed
+ *	Timer2A - PWM signal generation
+ *	Timer3A - continous gear change
+ *	Timer3B - periodic timer for comfort mode
+ *
+ */
 
-}
+uint16_t continuousChangeTimerMs = 0;
 
-void switchBouncingTimerHandler(void) {
-	TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
-	switchBouncingDelayInMs += 1;
-	if (switchBouncingDelayInMs == 20) {
-		TimerDisable(TIMER0_BASE, TIMER_B);
-		switchBouncingDelayInMs = 0;
-		switchBouncingTimerNotActivated = true;
-	}
-
-}
-
-void wheelMagnetIntervalsTimerHander(void) {
+void wheelMagnetTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
-	wheelMagnetIntervalInMs += 1;
+	timeSinceLastWheelMagnetInt += 1;
 
+}
+
+void crankMagnetTimerHander(void) {
+	TimerIntClear(TIMER1_BASE, TIMER_TIMB_TIMEOUT);
+	timeSinceLastCrankMagnetInt += 1;
+}
+
+void continuousChangeTimerHandler(void) {
+	TimerIntClear(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
+	continuousChangeTimerMs += 1;
+	if (continuousChangeTimerMs == 500) {
+		if (isGearUpSwitchPressed()) {
+			reduceGear();
+		} else if (isGearDownSwitchPressed()) {
+			increaseGear();
+		} else {
+			turnOffConitnousChangeTimer();
+		}
+		continuousChangeTimerMs = 0;
+
+	}
 }
 
 void derailleurControlGeneratorTimerHandler(void) {
@@ -50,6 +64,17 @@ void derailleurControlGeneratorTimerHandler(void) {
 	}
 }
 
+void comfortModeTimerHandler()
+{
+	currentComfortModeTimer += 1;
+	if(currentComfortModeTimer == 200)
+	{
+		currentComfortModeTimer = 0;
+		comfortModeHandler();
+
+	}
+}
+
 void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 		uint32_t timerConfig, uint32_t timer, uint32_t intFlags,
 		uint32_t secondsDivider) {
@@ -57,4 +82,35 @@ void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 	TimerConfigure(timerBase, timerConfig);
 	TimerLoadSet(timerBase, timer, SysCtlClockGet() / secondsDivider);
 	TimerIntEnable(timerBase, intFlags);
+}
+
+void turnOnConitnousChangeTimer(void) {
+	TimerEnable(TIMER3_BASE, TIMER_A);
+}
+
+void turnOffConitnousChangeTimer(void) {
+	TimerDisable(TIMER3_BASE, TIMER_A);
+}
+
+void initialzeContinuousGearChangeTimer(void) {
+	initializeTimer(SYSCTL_PERIPH_TIMER3, TIMER3_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
+	TIMER_TIMA_TIMEOUT, 1000);
+	IntEnable(INT_TIMER3A);
+}
+
+void initializeComfortModePeriodicTimer()
+{
+	initializeTimer(SYSCTL_PERIPH_TIMER3, TIMER3_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_B_PERIODIC, TIMER_B,
+	TIMER_TIMB_TIMEOUT, 100);
+	IntEnable(INT_TIMER3B);
+}
+
+void turnOnComfortModeTimer(void) {
+	TimerEnable(TIMER3_BASE, TIMER_B);
+}
+
+void turnOffComfortModeTimer(void) {
+	TimerDisable(TIMER3_BASE, TIMER_B);
 }

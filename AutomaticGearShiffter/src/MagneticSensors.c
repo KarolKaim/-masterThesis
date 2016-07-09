@@ -13,47 +13,60 @@
 #define PI 3,14159
 #define WHEELRADIUS 0.335
 
-uint32_t bicycleVelocity = 0;
+float bicycleVelocityInMetersPerSeconds = 0;
+float cadenceInRPM = 0;
 
-uint32_t wheelMagnetBouncingDelayInMs = 0;
-uint32_t wheelMagnetIntervalInMs = 0;
-bool wheelMagnetBouncingTimerActivated = false;
+uint32_t timeSinceLastWheelMagnetInt = 0;
+uint32_t timeSinceLastCrankMagnetInt = 0;
 
 void handleWheelMagnetInt(void) {
-	if (!wheelMagnetBouncingTimerActivated) {
-		TimerEnable(TIMER1_BASE, TIMER_A);
-		TimerEnable(TIMER1_BASE, TIMER_B);
-		wheelMagnetBouncingTimerActivated = true;
-		computeBicycleVelocityInMetersPerSecond();
-		wheelMagnetIntervalInMs = 0;
+	computeVelocityInMetersPerSecond();
+	timeSinceLastWheelMagnetInt = 0;
+}
 
-		int a;
-		a = (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2) >> 2 ^ 1) << 2;
-		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, a);
-	}
+void handleCrankMagnetInt(void) {
+	computeCadence();
+	timeSinceLastCrankMagnetInt = 0;
 }
 
 void initializeMagneticSensors(void) {
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
-	GPIOPinTypeGPIOInput(GPIO_PORTC_BASE, GPIO_PIN_7);
-	GPIOIntTypeSet(GPIO_PORTC_BASE, GPIO_PIN_7, GPIO_RISING_EDGE);
-
-	initializeTimer(SYSCTL_PERIPH_TIMER1, TIMER1_BASE,
-			TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
-			TIMER_TIMA_TIMEOUT, 1000);
+	GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2 || GPIO_PIN_3);
+	GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2 || GPIO_PIN_3, GPIO_RISING_EDGE);
 
 	initializeTimer(SYSCTL_PERIPH_TIMER1, TIMER1_BASE,
-			TIMER_CFG_SPLIT_PAIR | TIMER_CFG_B_PERIODIC, TIMER_B,
-			TIMER_TIMB_TIMEOUT, 1000);
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
+	TIMER_TIMA_TIMEOUT, 1000);
+
+	initializeTimer(SYSCTL_PERIPH_TIMER1, TIMER1_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_B_PERIODIC, TIMER_B,
+	TIMER_TIMB_TIMEOUT, 1000);
 
 	IntMasterEnable();
+	IntEnable(INT_TIMER1A);
 	IntEnable(INT_TIMER1B);
-	IntEnable(INT_GPIOC);
+	IntEnable(INT_GPIOA);
 
-	GPIOIntEnable(GPIO_PORTC_BASE, GPIO_PIN_7);
+	GPIOIntEnable(GPIO_PORTC_BASE, GPIO_PIN_2 || GPIO_PIN_3);
+	TimerEnable(TIMER1_BASE, TIMER_A);
+	TimerEnable(TIMER1_BASE, TIMER_B);
 }
 
-void computeBicycleVelocityInMetersPerSecond() {
-	bicycleVelocity = 2 * PI * WHEELRADIUS / (0.001 * wheelMagnetIntervalInMs);
+void computeVelocityInMetersPerSecond() {
+	if (timeSinceLastWheelMagnetInt > 0) {
+		bicycleVelocityInMetersPerSeconds = 2 * PI * WHEELRADIUS
+				/ (0.001 * timeSinceLastWheelMagnetInt);
+	} else {
+		bicycleVelocityInMetersPerSeconds = 0;
+	}
+}
+
+void computeCadence() {
+	if (timeSinceLastCrankMagnetInt > 0) {
+		cadenceInRPM = 60 / timeSinceLastCrankMagnetInt;
+	} else {
+		cadenceInRPM = 0;
+	}
+
 }

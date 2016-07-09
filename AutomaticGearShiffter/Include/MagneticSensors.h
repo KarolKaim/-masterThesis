@@ -4,13 +4,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-extern  uint32_t bicycleVelocity;
-extern  uint32_t wheelMagnetBouncingDelayInMs;
-extern  uint32_t wheelMagnetIntervalInMs;
-extern  bool wheelMagnetBouncingTimerActivated;
+extern  float bicycleVelocityInMetersPerSeconds;
+extern float cadenceInRPM;
+extern  uint32_t timeSinceLastWheelMagnetInt;
+extern  uint32_t timeSinceLastCrankMagnetInt;
 
 void initializeMagneticSensors(void);
 void handleWheelMagnetInt(void);
-void computeBicycleVelocityInMetersPerSecond();
+void handleCrankMagnetInt(void);
+void computeVelocityInMetersPerSecond();
+void computeCadence();
 
 #endif
