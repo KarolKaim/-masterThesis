@@ -9,8 +9,10 @@ void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 		uint32_t secondsDivider);
 void turnOnConitnousChangeTimer(void);
 void turnOffConitnousChangeTimer(void);
-void initialzeContinuousGearChangeTimer(void);
-void initializeComfortModePeriodicTimer(void);
+void initialzeComfModeAndContChangeTimers(void);
+void initialzieCurrentDerailleurPosChangeTimer(void);
 void turnOnComfortModeTimer(void);
 void turnOffComfortModeTimer(void);
+void turnOnDerailleurChangeTimer(void);
+void turnOffDerailleurChangeTimer(void);
 #endif

@@ -10,7 +10,10 @@ enum GearMode {
 };
 
 extern uint32_t currentPwmTicksInUs;
-extern uint32_t gearPositions[8];
+extern uint32_t derailleurPositions[8];
+extern uint32_t derailleurUp[8];
+extern uint32_t derailleurDown[8];
+extern volatile uint32_t * currentDerailleurPosition;
 extern int8_t currentGear;
 extern uint16_t currentComfortModeTimer;
 extern enum GearMode currentMode;
