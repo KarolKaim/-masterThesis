@@ -19,9 +19,12 @@ uint16_t currentComfortModeTimer = 0;
 //minimum value to get angle 0 - 11;
 //maximu value to get angle 180 - 48
 // firt gear - 17
-uint32_t gearPositions[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
+uint32_t derailleurUp[8] = { 16, 18, 20, 22, 24, 26, 29, 30 };
+uint32_t derailleurPositions[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
+uint32_t derailleurDown[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
+volatile uint32_t * currentDerailleurPosition = derailleurPositions;
 int8_t currentGear = 0;
-enum GearMode currentMode = remote;
+enum GearMode currentMode = comfort;
 
 void initializeGearController(void) {
 
@@ -31,6 +34,7 @@ void initializeGearController(void) {
 	initializeTimer(SYSCTL_PERIPH_TIMER2, TIMER2_BASE,
 	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
 	TIMER_TIMA_TIMEOUT, 20000);
+	initialzieCurrentDerailleurPosChangeTimer();
 	IntEnable(INT_TIMER2A);
 	TimerEnable(TIMER2_BASE, TIMER_A);
 	GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_2, 0x04);
@@ -46,7 +50,8 @@ void changeCurrentGearMode(void) {
 		turnOnComfortModeTimer();
 		break;
 	case comfort:
-		setCurrentRgbState(blue);;
+		setCurrentRgbState(blue);
+		;
 		currentMode = active;
 		enableSwitches();
 		turnOffComfortModeTimer();
@@ -67,19 +72,24 @@ void changeCurrentGearMode(void) {
 void increaseGear(void) {
 	if (currentGear < 7) {
 		currentGear++;
+		currentDerailleurPosition = derailleurDown;
+		turnOnDerailleurChangeTimer();
 	}
 }
 
 void reduceGear(void) {
 	if (currentGear > 0) {
 		currentGear--;
+		currentDerailleurPosition = derailleurUp;
+		turnOnDerailleurChangeTimer();
+
 	}
 }
 
 void comfortModeHandler() {
 	if (cadenceInRPM < 50) {
 		reduceGear();
-	} else if (cadenceInRPM > 70) {
+	} else if (cadenceInRPM > 65) {
 		increaseGear();
 	}
 }

@@ -53,6 +53,9 @@ extern void wheelMagnetTimerHander(void);
 extern void crankMagnetTimerHander(void);
 extern void imuI2CHandler(void);
 extern void derailleurControlGeneratorTimerHandler(void);
+extern void continuousChangeTimerHandler(void);
+extern void comfortModeTimerHandler(void);
+extern void  derailleurChangePositionTimerHandler(void);
 
 
 //*****************************************************************************
@@ -131,8 +134,8 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port H
     IntDefaultHandler,                      // UART2 Rx and Tx
     IntDefaultHandler,                      // SSI1 Rx and Tx
-    IntDefaultHandler,                      // Timer 3 subtimer A
-    IntDefaultHandler,                      // Timer 3 subtimer B
+	continuousChangeTimerHandler,                      // Timer 3 subtimer A
+	comfortModeTimerHandler,                      // Timer 3 subtimer B
     IntDefaultHandler,                      // I2C1 Master and Slave
     IntDefaultHandler,                      // Quadrature Encoder 1
     IntDefaultHandler,                      // CAN0
@@ -166,8 +169,8 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     IntDefaultHandler,                      // I2C2 Master and Slave
 	imuI2CHandler,                      // I2C3 Master and Slave
-    IntDefaultHandler,                      // Timer 4 subtimer A
-    IntDefaultHandler,                      // Timer 4 subtimer B
+	derailleurChangePositionTimerHandler,                      // Timer 4 subtimer A
+	IntDefaultHandler,                      // Timer 4 subtimer B
     0,                                      // Reserved
     0,                                      // Reserved
     0,                                      // Reserved

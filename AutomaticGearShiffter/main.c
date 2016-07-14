@@ -10,19 +10,18 @@
 #include "UartLogger.h"
 #include "Imu.h"
 #include "DerailleurController.h"
+#include "TimerInterruptHandlers.h"
 
 int main(void) {
 
 	SysCtlClockSet(SYSCTL_SYSDIV_10 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
 	SYSCTL_XTAL_16MHZ);
-
+	initialzeComfModeAndContChangeTimers();
 	initializeSwitches();
 	initializeMagneticSensors();
-	initializeComfortModePeriodicTimer();
-	//initializeUart(115200);
-	//UARTprintf("Rakieta !!!!\n");
-	//initializeImu();
+
 	initializeGearController();
+    //turnOnComfortModeTimer();
 
 	while (true) {
 	}

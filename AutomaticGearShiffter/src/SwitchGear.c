@@ -18,17 +18,17 @@ void initializeSwitches(void) {
 	GPIOIntTypeSet(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7, GPIO_FALLING_EDGE);
 	GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
 	IntEnable(INT_GPIOB);
-	initialzeContinuousGearChangeTimer();
+	initialzeComfModeAndContChangeTimers();
 }
 
 bool isGearUpSwitchPressed(void) {
-	return (GPIOPinRead(GPIO_PORTB_BASE,
-	GPIO_PIN_6) && GPIO_PIN_6) == GPIO_PIN_6;
+	return (!GPIOPinRead(GPIO_PORTB_BASE,
+			GPIO_PIN_6)) && GPIO_PIN_6;
 }
 
 bool isGearDownSwitchPressed(void) {
-	return (GPIOPinRead(GPIO_PORTB_BASE,
-	GPIO_PIN_6) && GPIO_PIN_6) == GPIO_PIN_6;
+	return (!GPIOPinRead(GPIO_PORTB_BASE,
+			GPIO_PIN_7)) && GPIO_PIN_7;
 }
 
 void disableSwitches(void) {
