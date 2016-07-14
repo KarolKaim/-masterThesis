@@ -8,12 +8,72 @@ Układ napędowy to zestaw urządzeń wykorzystywany do napędzania, w skład kt
 Układ mechaniczny wykorzystany do przeniesienia ruchu obrotowego z elementu czynnego na element bierny nazywany jest przekładnią mechaniczną. Oprócz transmisji energii, przekładnie umożliwają również zmianę parametrów ruchu - momentu obrotowego oraz prędkości obrotowej. Przekładnie mechaniczne dzieli się na trzy grupy: cięgnowe, cierne i zębate. Przekładnie cięgnowe, które zostały opisane ze wzgędu na zastosowanie w rowerowych układach napędowych, składają się z conajmniej dwóch kół zębatych, rozsuniętych względem siebie, oraz cięgna opasającego. Ze względu na rodzaj zastosowanego cięgna, wyróżnia się przekładnie pasowe oraz łańcuchowe. Przenoszenie siły z cięgna na koło zębate jest możliwe dzięki zastosowaniu odpowiednich połączeń - połączenia cierne, kształtowe lub stałe przymocowanie cięgna do koła zębatego.
 
 \textcolor{red}{@TODO wrzucić schemat przekładni, dodać jakiś przypis doprzełkadni}
+
+Wielkością charakteryzującą przekładnie jest przełożenie. Wyróżnia się przełożenie geometryczne, kinematyczne oraz dynamiczne. Przełożenie kinematyczne to stosunek prędkości kątowej koła czynnego do prędkości kątowej koła biernego:
+\textcolor{red}{@TODO wzorek i=w1/w2}
+
+Przełożenie dynamiczne określa stosunek momentu obrotowego na kole biernym do momentu obrotowego koła czynnego.  
+
+\textcolor{red}{@TODO wzorek i=M2/M1}
+
+Przełożenie przekładni jest parametrem bezwymiarwoym. Ze względu na wartość przełożenia przekładni wyróznia się:
+\begin{itemize}
+\item
+Przekładnie przyspieszające lub tzw. multiplikatory. Przekładnie tego typu zwiększają prędkość kątową koła biernego względem prędkości kątowej koła czynnego przy jednoczesnym zmniejszeniu momentu obrotowego koła biernego względem momentu obrotowego koła czynnego. Przełożenie takiej przekładni jest liczbą z zakresu od 0 do 1.
+\item
+Przekładnie redukujące lub tzw. reduktory. Przekładnie tego typu działają w sposób odwrotny do przekładni przyspieszających - zmniejszają prędkość kątową koła biernego względem prędkości kątowej koła czynnego oraz zwiększają moment obrotowy koła biernego wzlgędem momentu obrotowego koła czynnego. Przełożenei przekładni redukującej jest zawsze większe od 1.
+\end{itemize} 
+
+
 	  
 \subsection{Układ napędowy w rowerze}
-W przypadku konwencjonalnego układu napędowego stosowanego w rowerach źródłem energii jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate na stałe przymocowoane do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy. 
+W przypadku konwencjonalnego układu napędowego stosowanego w rowerach źródłem energii jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate na stałe przymocowoane do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy.
+
 \section{Urządzenia pomiarowe}
-\subsection{Pomiar prędkości obrotowej}
+\subsection{Pomiar prędkości kątowej}
+
+Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie trybu automatycznej zmiany przełożeń. Na podstawie aktualnej prędkości kątowej tylnego koła wyznaczona zostanie chwilowa prędkość liniowa. Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotyczących pracy brana pod uwagę jest jedynie chwilowa wartość prędkości kątowej. Ta zdefiniowana jest jako zmiana drogi kątowej w czasie:
+\begin{equation}
+\omega = \frac{d\varphi}{dt}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\varphi$] droga kątowa
+	\item[$t$] czas
+\end{eqwhere}
+Wyznaczenie chwilowej wartości prędkości kątowej wykonane zostało w oparciu o czujniki zbliżeniowy załączany magnetycznie, który został na stałe przymocowany do ramy roweru, w niewielkiej odległości od tylnego koła. Zasada działania takiego czujnika jest analogiczna do działania zwykłego przycisku monostabilnego. Obwód w czujniku jest domyślnie rozwarty. Zwarcie następuje w momencie zbliżenia magnesu do czujnika. Magnes przyczepiony został do szprychy roweru. Taki sam sposób pomiaru prędkości można znaleźć w komercyjnych licznikach rowerowych oferowanych na rynku. Autor zdecydował się na zastosowanie dwóch magnesów w celu zwiększenia dokładności pomiaru. Dysponując pomiarem czasu pomiędzy kolejnymi zwarciami czujnika magnetycznego, które, ze względu na zastosowanie dwóch magnesów, następują w wyniku obrotu koła o kąt $\pi$ , można wyznaczyć chwilową wartość prędkości kątowej: 
+\begin{equation}
+\omega = \frac{\pi}{T}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$T$] czas od ostatniego zwarcia czujnika magnetycznego
+\end{eqwhere}
+Chwilowa wartość prędkości liniowej to stosunek przebytej drogi liniowej do czasu:
+\begin{equation}
+v = \frac{s}{t}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$s$] droga liniowa
+	\item[$v$] prędkość liniowa
+\end{eqwhere}
+ Związek pomiędzy drogą liniową a drogą kątową wyraża się wzorem:
+\begin{equation}
+\varphi = \frac{s}{r}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$r$] promień okręgu
+\end{eqwhere}
+W układzie pomiarowym z dwoma magnesami, wartość drogi kątowej w momencie zwarcia czujnika magnetycznego wynosi $\pi$. Biorąc pod uwagę powyższe zależnosci, chwilowa wartość prędkości liniowej poruszającego się roweru może zostać wyznaczona z zależności:
+ \begin{equation}
+v = \frac{\pi R}{T}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$R$] promień koła rowerowego
+\end{eqwhere}
 \subsection{Pomiar przyspieszeń}
+Z drugiej zasady dynamiki Newtona wynika, iż przyspieszenie jest proporcjonalne do wypadkowej siły działającej na ciało. Znajomość chwilowej wartośći oraz zwrotu przyspieszenia jest drugą istotną informacją, która została wykorzystana przy projektowaniu sterownika trybu automatycznego, gdyż może dostarczyć wiedzy na temat aktualnej dynamiki ruchu.
+
+Pomiar przyspieszenia został zrealizowany w oparciu o zastosowanie akcelerometru wykonanego w technologii MEMS( z ang. {\em Micro Electro-Mechanical Systems}). Układy MEMS to urządzenia wykonane w miniaturowej skali, które integrują ze soba elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi.
+
 \subsection{Pomiar kąta nachylenia}
 
 \section{Sterowanie}
