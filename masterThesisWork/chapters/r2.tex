@@ -29,10 +29,12 @@ Przekładnie redukujące lub tzw. reduktory. Przekładnie tego typu działają w
 \subsection{Układ napędowy w rowerze}
 W przypadku konwencjonalnego układu napędowego stosowanego w rowerach źródłem energii jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate na stałe przymocowoane do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy.
 
-\section{Urządzenia pomiarowe}
-\subsection{Pomiar prędkości kątowej}
+\section{Metody pomiarowe wielkości fizycznych}
+\subsection{Pomiar prędkości kątowej oraz prędkości liniowej}
 
-Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie trybu automatycznej zmiany przełożeń. Na podstawie aktualnej prędkości kątowej tylnego koła wyznaczona zostanie chwilowa prędkość liniowa. Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotyczących pracy brana pod uwagę jest jedynie chwilowa wartość prędkości kątowej. Ta zdefiniowana jest jako zmiana drogi kątowej w czasie:
+Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie trybu automatycznej zmiany przełożeń. Na podstawie aktualnej prędkości kątowej tylnego koła wyznaczona zostanie chwilowa prędkość liniowa. Pomiar prędkości kątowej mechanizmu korbowego umożliwi wyznaczenie aktulane wartości kadencji.
+
+Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotyczących pracy brana pod uwagę jest jedynie chwilowa wartość prędkości kątowej. Ta zdefiniowana jest jako zmiana drogi kątowej w czasie:
 \begin{equation}
 \omega = \frac{d\varphi}{dt}
 \end{equation}
@@ -47,7 +49,9 @@ Wyznaczenie chwilowej wartości prędkości kątowej wykonane zostało w oparciu
 \begin{eqwhere}[2cm]
 	\item[$T$] czas od ostatniego zwarcia czujnika magnetycznego
 \end{eqwhere}
-Chwilowa wartość prędkości liniowej to stosunek przebytej drogi liniowej do czasu:
+Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogiczny. Zbliżeniowy czujnik magnetyczny, który został na stałe przymocowany do ramy roweru, w bliskiej odległości mechanizmu korbowego, jest zwierany w każdym cyklu dzięki zastosowaniu magnesu, który został przyklejony do ramienia mechanizmu korbowego. Ze względu na zastosowanie jednego magnesu, przyrost drogi kątowej jest dwa razy większy, niż w przypadku pomiaru prędkości kątowej koła roweru i jego wartość wynosi 2$\pi$.
+
+Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
 \begin{equation}
 v = \frac{s}{t}
 \end{equation}
@@ -70,9 +74,15 @@ v = \frac{\pi R}{T}
 	\item[$R$] promień koła rowerowego
 \end{eqwhere}
 \subsection{Pomiar przyspieszeń}
-Z drugiej zasady dynamiki Newtona wynika, iż przyspieszenie jest proporcjonalne do wypadkowej siły działającej na ciało. Znajomość chwilowej wartośći oraz zwrotu przyspieszenia jest drugą istotną informacją, która została wykorzystana przy projektowaniu sterownika trybu automatycznego, gdyż może dostarczyć wiedzy na temat aktualnej dynamiki ruchu.
+Z drugiej zasady dynamiki Newtona wynika, iż przyspieszenie jest proporcjonalne do wypadkowej siły działającej na ciało. Znajomość chwilowej wartośći oraz zwrotu przyspieszenia jest drugą istotną informacją, która została wykorzystana przy projektowaniu sterownika trybu automatycznego, gdyż może dostarczyć wiedzy na temat dynamiki ruchu.
 
-Pomiar przyspieszenia został zrealizowany w oparciu o zastosowanie akcelerometru wykonanego w technologii MEMS( z ang. {\em Micro Electro-Mechanical Systems}). Układy MEMS to urządzenia wykonane w miniaturowej skali, które integrują ze soba elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi.
+Pomiar przyspieszenia został zrealizowany w oparciu o zastosowanie akcelerometru wykonanego w technologii MEMS( z ang. {\em Micro Electro-Mechanical Systems}). Układy MEMS to urządzenia wykonane w miniaturowej skali, które integrują ze soba elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi. Akcelerometry wykonane w tej technologii są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Układy sterujące poduszkami powietrznymi, systemy alarmowe w samochodach czy tzw. asysten ruszania na wzniesieniu to tylko niektóre przykłady z branży motoryzacyjnej.
+
+Akcelereometr to urządzenie pomiarowe, które umożliwia pomiar przyspieszenia dynamicznego ciała, na które działa niezerowa siła wypadkowa, oraz przyspieszenia statycznego ciała znajdującego się w ziemskim polu grawitacyjnym. Akcelerometry zazwyczaj działają na zasadzie przetworników pojemnościowych. Pomiar dokonywany jest dzięku zastosowaniu kondensatorów różnicowych, których ruchome okładki wychylane są z położenia równowagi pod wpływem działających sił bezwładności.
+
+Akcelerometr wykonany w technologii MEMS zazwyczaj umożliwia pomiar przyspieszenia w trzech różnych kierunkach(\textcolor{red}{@TODO rysunek}). Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{X} był równoległy do podłoża. Dzięki temu wskazania akcelerometru wzdłuż osi X są proporcjonalne do siły wypadkowej działającej na rower.
+
+
 
 \subsection{Pomiar kąta nachylenia}
 
