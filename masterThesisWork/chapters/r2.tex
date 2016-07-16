@@ -85,7 +85,20 @@ Akcelerometr wykonany w technologii MEMS zazwyczaj umożliwia pomiar przyspiesze
 
 
 \subsection{Pomiar kąta nachylenia}
+Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości fizycznych brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczona zostanie pośrednio, poprzez analizę danych odczytywanych z akcelerometru. 
 
+Przykład przedsatwiony na (\textcolor{red}{@TODO rysunek}) przedstawia rozkład rozkład przyspieszeń działających na caiło znajdujące się na równi pochyłej. Kąt nachylenia $\alpha$ można wyznaczyć z zależności:
+\begin{equation}
+\alpha=\arctan{\frac{a_{\parallel }}{a_{\bot }}}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\alpha$] kąt naychylenia podłoża
+	\item[$a_{\parallel }$] kąt naychylenia podłoża
+	\item[$a_{\bot }$] kąt naychylenia podłoża
+\end{eqwhere}
+\begin{center}
+\includegraphics[scale=0.5]{dupa.jpg}
+\end{center}
 \section{Sterowanie}
 
 
