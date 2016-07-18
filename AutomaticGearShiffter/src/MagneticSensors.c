@@ -10,7 +10,7 @@
 
 #include "TimerInterruptHandlers.h"
 
-#define PI 3,14159
+#define PI 3.14159
 #define WHEELRADIUS 0.335
 
 float bicycleVelocityInMetersPerSeconds = 0;

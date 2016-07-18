@@ -21,7 +21,10 @@ int main(void) {
 	initializeMagneticSensors();
 
 	initializeGearController();
-    //turnOnComfortModeTimer();
+	//turnOnComfortModeTimer();
+
+	initializeImu();
+	initializeUart(115200);
 
 	while (true) {
 	}
