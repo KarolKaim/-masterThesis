@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <math.h>
 #include "inc/hw_memmap.h"
 #include "inc/hw_ints.h"
 #include "driverlib/gpio.h"
@@ -18,6 +19,9 @@ tI2CMInstance g_sI2CInst;
 
 volatile uint_fast8_t I2CDoneFlag;
 volatile uint_fast8_t ErrorFlag;
+
+float accelerometerReadings[3] = { 0.0, 0.0, 0.0 };
+float surfaceAngle = 0;
 
 void IMU10CallBack(void *pvCallbackData, uint_fast8_t ui8Status) {
 
@@ -46,7 +50,6 @@ void initializeImu(void) {
 
 	I2CMInit(&g_sI2CInst, I2C3_BASE, INT_I2C3, 0xff, 0xff, SysCtlClockGet());
 
-	/***************************	Accelerometer initialization **************************************/
 	LSM303DLHCAccelInit(&sLSM303DLHCAccel, &g_sI2CInst,
 	LSM303DLHCAccel_I2C_ADDRESS, IMU10CallBack, &sLSM303DLHCAccel);
 	while (!I2CDoneFlag) {
@@ -78,4 +81,12 @@ void readAccelMeasurements(float resultsDestination[3]) {
 
 	LSM303DLHCAccelDataAccelGetFloat(&sLSM303DLHCAccel, resultsDestination,
 			resultsDestination + 1, resultsDestination + 2);
+}
+
+void computeSteepness(void) {
+	readAccelMeasurements(accelerometerReadings);
+
+	surfaceAngle = (180
+			* atan2f(accelerometerReadings[0], accelerometerReadings[1]))
+			/ 3.14159;
 }

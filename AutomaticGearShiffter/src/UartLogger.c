@@ -19,3 +19,24 @@ void initializeUart(uint32_t speed) {
 	UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
 	UARTStdioConfig(0, speed, 16000000);
 }
+
+printFloat(float * Data)
+{
+	int_fast32_t i32IPart, i32FPart;
+	float pfData;
+	int i=0;
+
+	pfData=*Data;
+
+
+	  i32IPart = (int32_t) pfData;
+    i32FPart = (int32_t) (pfData * 1000.0f);
+    i32FPart = i32FPart -(i32IPart * 1000);
+
+    if(i32FPart < 0)
+    {
+      i32FPart*= -1;
+		}
+
+		UARTprintf("%3d.%3d\n", i32IPart, i32FPart);
+	}
