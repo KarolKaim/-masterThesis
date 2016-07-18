@@ -2,6 +2,7 @@
 \label{cha:Zestawienie zagadnień wykorzystanych w pracy}
 
 \section{Mechaniczne układy napędowe}
+%______________________________________________________________________________________________________________
 \subsection{Przekładnie mechaniczne}
 Układ napędowy to zestaw urządzeń wykorzystywany do napędzania, w skład którego wchodzi źrodło energii, układy pośredniczące w przekazywaniu energii oraz odbiornik energi. Mianem napędu zazwyczaj określa się urządzenia pośredniczące. Najczęściej wykorzystywanymi źródłami enrgii są silniki a odbirniki energii, których zadaniem jest realizowanie odpowiednich ruchów roboczych, przyjmują różne formy zależne od aplikacji.
 
@@ -23,12 +24,29 @@ Przekładnie przyspieszające lub tzw. multiplikatory. Przekładnie tego typu zw
 \item
 Przekładnie redukujące lub tzw. reduktory. Przekładnie tego typu działają w sposób odwrotny do przekładni przyspieszających - zmniejszają prędkość kątową koła biernego względem prędkości kątowej koła czynnego oraz zwiększają moment obrotowy koła biernego wzlgędem momentu obrotowego koła czynnego. Przełożenei przekładni redukującej jest zawsze większe od 1.
 \end{itemize} 
-
-
-	  
+%____________________________________________________________________________________________________________  
 \subsection{Układ napędowy w rowerze}
 W przypadku konwencjonalnego układu napędowego stosowanego w rowerach źródłem energii jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate na stałe przymocowoane do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy.
 
+Układ napędkowy roweru wykorzystanego w pracy składa się z mechanizmu korbowego z jednym kołem zębatym, łańcucha, kasety ośmiorzędowej oraz przerzutki tylnej. Koło zebate zamontowane w mechaniźmie korbowym ma 34 zęby. Kaseta składa się z ośmiu kół zębatych, których liczba zębów należy do zakresu od 11 do 32. Przekładnia zastosowana w rowerze, niezależnie od aktualnego biegu, ma zawsze charakter mulitiplikatora.
+
+Tylna przerzutkau umożliwia zmianę przełożenia układu napędowego. Działa na zasadzie czworoboku przegubowego. Składa się z czterech członów połączonych przegubowo, tworzących zamknięty łańcuch kinamatyczny. Pozycja wózka przerzutki przymontowanego do jedenego z członów (Rys.\ref{fig:przerzutka}) utrzymywana jest dzięki zastosowaniu sprężyny napinającej oraz cięgna, połączonego z mechanizmem do zmiany przełożeń, zamontowanym w manetce. Dodatkowo przerzutka posiada mechanizm napinający łańcuch, tak aby zachować pełną funkcjonalność układu napędowego niezależnie od aktualnej pozycji wózka. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{przerzutka.jpg}
+    \caption{Zasada działania konwencjonalnej przerzutki rowerowej}
+    \label{fig:przerzutka}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{przerzutkaSerwo.jpg}
+    \caption{Zasada działania przerzutki rowerowej z wykorzystaniem serwomechanizmu}
+    \label{fig:przerzutkaSerwo}
+\end{figure}
+
+
+%____________________________________________________________________________________________________________  
 \section{Metody pomiarowe wielkości fizycznych}
 \subsection{Pomiar prędkości kątowej oraz prędkości liniowej}
 
@@ -36,7 +54,7 @@ Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie
 
 Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotyczących pracy brana pod uwagę jest jedynie chwilowa wartość prędkości kątowej. Ta zdefiniowana jest jako zmiana drogi kątowej w czasie:
 \begin{equation}
-\omega = \frac{d\varphi}{dt}
+    \omega = \frac{d\varphi}{dt}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$\varphi$] droga kątowa
@@ -44,7 +62,7 @@ Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotycz�
 \end{eqwhere}
 Wyznaczenie chwilowej wartości prędkości kątowej wykonane zostało w oparciu o czujniki zbliżeniowy załączany magnetycznie, który został na stałe przymocowany do ramy roweru, w niewielkiej odległości od tylnego koła. Zasada działania takiego czujnika jest analogiczna do działania zwykłego przycisku monostabilnego. Obwód w czujniku jest domyślnie rozwarty. Zwarcie następuje w momencie zbliżenia magnesu do czujnika. Magnes przyczepiony został do szprychy roweru. Taki sam sposób pomiaru prędkości można znaleźć w komercyjnych licznikach rowerowych oferowanych na rynku. Autor zdecydował się na zastosowanie dwóch magnesów w celu zwiększenia dokładności pomiaru. Dysponując pomiarem czasu pomiędzy kolejnymi zwarciami czujnika magnetycznego, które, ze względu na zastosowanie dwóch magnesów, następują w wyniku obrotu koła o kąt $\pi$ , można wyznaczyć chwilową wartość prędkości kątowej: 
 \begin{equation}
-\omega = \frac{\pi}{T}
+    \omega = \frac{\pi}{T}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$T$] czas od ostatniego zwarcia czujnika magnetycznego
@@ -53,16 +71,18 @@ Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogicz
 
 Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
 \begin{equation}
-v = \frac{s}{t}
+    v = \frac{s}{t}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$s$] droga liniowa
 	\item[$v$] prędkość liniowa
 \end{eqwhere}
  Związek pomiędzy drogą liniową a drogą kątową wyraża się wzorem:
+
 \begin{equation}
-\varphi = \frac{s}{r}
+    \varphi = \frac{s}{r}
 \end{equation}
+
 \begin{eqwhere}[2cm]
 	\item[$r$] promień okręgu
 \end{eqwhere}
@@ -73,6 +93,7 @@ v = \frac{\pi R}{T}
 \begin{eqwhere}[2cm]
 	\item[$R$] promień koła rowerowego
 \end{eqwhere}
+%____________________________________________________________________________________________________________  
 \subsection{Pomiar przyspieszeń}
 Z drugiej zasady dynamiki Newtona wynika, iż przyspieszenie jest proporcjonalne do wypadkowej siły działającej na ciało. Znajomość chwilowej wartośći oraz zwrotu przyspieszenia jest drugą istotną informacją, która została wykorzystana przy projektowaniu sterownika trybu automatycznego, gdyż może dostarczyć wiedzy na temat dynamiki ruchu.
 
@@ -80,33 +101,36 @@ Pomiar przyspieszenia został zrealizowany w oparciu o zastosowanie akcelerometr
 
 Akcelereometr to urządzenie pomiarowe, które umożliwia pomiar przyspieszenia dynamicznego ciała, na które działa niezerowa siła wypadkowa, oraz przyspieszenia statycznego ciała znajdującego się w ziemskim polu grawitacyjnym. Akcelerometry zazwyczaj działają na zasadzie przetworników pojemnościowych. Pomiar dokonywany jest dzięku zastosowaniu kondensatorów różnicowych, których ruchome okładki wychylane są z położenia równowagi pod wpływem działających sił bezwładności.
 
-Akcelerometr wykonany w technologii MEMS zazwyczaj umożliwia pomiar przyspieszenia w trzech różnych kierunkach(\textcolor{red}{@TODO rysunek}). Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{X} był równoległy do podłoża. Dzięki temu wskazania akcelerometru wzdłuż osi X są proporcjonalne do siły wypadkowej działającej na rower.
+Akcelerometr wykonany w technologii MEMS zazwyczaj umożliwia pomiar przyspieszenia w trzech różnych kierunkach(\textcolor{red}{@TODO rysunek}). Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{X} był równoległy do podłoża. Dzięki temu wskazania akcelerometru wzdłuż osi \textit{X} są proporcjonalne do siły wypadkowej działającej na rower.
 
-
-
+%____________________________________________________________________________________________________________  
 \subsection{Pomiar kąta nachylenia}
-Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości fizycznych brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczona zostanie pośrednio, poprzez analizę danych odczytywanych z akcelerometru. 
+Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości  brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczona zostanie pośrednio, poprzez analizę danych odczytywanych z akcelerometru. 
 
-Przykład przedsatwiony na (\textcolor{red}{@TODO rysunek}) przedstawia rozkład rozkład przyspieszeń działających na caiło znajdujące się na równi pochyłej. Kąt nachylenia $\alpha$ można wyznaczyć z zależności:
+Przykład zamieszczony na rysunku \ref{fig:równia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta równi pochyłej, której kąt nachylenia został oznaczony jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuz osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
 \begin{equation}
-\alpha=\arctan{\frac{a_{\parallel }}{a_{\bot }}}
+    \alpha=\arctan{\frac{a_x}{a_y}}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$\alpha$] kąt naychylenia podłoża
-	\item[$a_{\parallel }$] kąt naychylenia podłoża
-	\item[$a_{\bot }$] kąt naychylenia podłoża
+	\item[$a_x$] przyspieszenie akcelerometru mierzone wzłuż osi x
+	\item[$a_y$] przyspieszenie akcelerometru mierzone wzłuż osi y
 \end{eqwhere}
-\begin{center}
-\includegraphics[scale=0.5]{dupa.jpg}
-\end{center}
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{katNachylenia.jpg}
+    \caption{a nice plot}
+    \label{fig:równia}
+\end{figure}
 \section{Sterowanie}
 
-
+%____________________________________________________________________________________________________________  
 \subsection{Zamknięty układ regulacji}
+%____________________________________________________________________________________________________________  
 \subsection{Serwomechanizm}
-
+%____________________________________________________________________________________________________________  
 \section{Kondycjonowanie sygnałów}
-
-
+%____________________________________________________________________________________________________________  
 \subsection{Drganie styków}
+%____________________________________________________________________________________________________________  
 \subsection{Filtr donlnoprzepustowy}
