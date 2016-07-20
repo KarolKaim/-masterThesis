@@ -110,11 +110,20 @@ Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkoś
 Przykład zamieszczony na rysunku \ref{fig:równia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta równi pochyłej, której kąt nachylenia został oznaczony jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuz osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
 \begin{equation}
     \alpha=\arctan{\frac{a_x}{a_y}}
+    \label{eq:rowniaRadian}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$\alpha$] kąt naychylenia podłoża
 	\item[$a_x$] przyspieszenie akcelerometru mierzone wzłuż osi x
 	\item[$a_y$] przyspieszenie akcelerometru mierzone wzłuż osi y
+\end{eqwhere}
+Zależność \ref{eq:rowniaRadian} pozwala wyznaczyć wartość miary łukowej kąta wyrażonej w radianach. W odniesieniu do kąta nachylenia podłoża po którym porusza się rower, zdecydowanie bardziej intuicyjną jednostką są stopnie. Przekształcenie miary kąta wyrażonej w radianach na miarę kąta wyrażoną w stopniach opisane jest poniższą zależnością:
+\begin{equation}
+    \alpha_{deg}=\frac{180\alpha}{\pi}
+    \label{eq:rowniaStopnie}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\alpha_{deg}$] kąt naychylenia wyrażony w stopniach
 \end{eqwhere}
 \begin{figure}
     \centering
