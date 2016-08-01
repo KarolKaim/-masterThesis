@@ -84,12 +84,26 @@ Wydajność prądowa [A]: 45
 Dodatkowo zastosowany został regulator napięcia obniżający wartość napięcia pakietu do 5V, które jest źródłem zasilania zestawu uruchomieniowego EK-TM4C123GXL.
 %_______________________________________________________________________________________________________________
 \section{Narzędzia programistyczne}
+Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach typu embedded. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories, doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
 \subsection{Code Composer Studio 6.0.0}
+
+Oprogramowanie sterownika rozwijane było w oparciu o zintegorwane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC( z ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
 %_______________________________________________________________________________________________________________
-\subsection{Biblioteka TivaWare}
+\subsection{Biblioteka TivaWare Peripheral Driver}
+Texas Intrusments dostarcza bibliotekę dedkowaną do mikrokontrolerów z rodziny Tiva ARM Cortex-M - TivaWare  Peripheral Driver Library. Biblioteka stanowi zbiór funkcji umożliwiających wykorzystanie układów peryferyjnych mikrokontrolera. Biblioteka, napisana w języku C, wspiera dwa modele programowania mikrokontrolera - Direct Register Access oraz Software Driver Model. Pierwszy z nich operuje bezpośrednio na rejestrach mikrokontrolera, co pozwala pisać bardzo wydajne programy o niewielkim rozmiarze. Jednocześnie wymaga bardzo dobrej znajomości rejetrów mikrokontrolera, znaczenia poszczególnych bitów oraz zależności pomiędzy rejestrami. Software Driver Model działa na wyższym poziomie dając kontrolę nad całymi układami peryferyjnymi. Użytkownik nie musi znać dokładnej architektury mikrokontrolera, co znacząco przyspiesza proces rozwijania oprogramowania. 
 %_______________________________________________________________________________________________________________
 \subsection{Pozostałe oprogramowanie}
-
+Pozostałe oprogramowanie wykorzystane w trakcie realizacji projektu to m.in.:
+\begin{itemize}
+\item
+Saleae Logic - oprogramowanie współpracujące z analizatorem stanów logicznych
+\item
+Gnuplot - program do graficznej reprezentacji danych
+\item
+Putty - klient usług Telnet, SSH i rlogin
+\item
+Eagle - program do projektowania układów elektronicznych
+\end{itemize}
 
 
 
