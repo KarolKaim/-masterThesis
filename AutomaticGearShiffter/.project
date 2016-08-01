@@ -51,6 +51,11 @@
 			<locationURI>PARENT-4-PROJECT_LOC/usr/TivaWare/TivaWare_C_Series-2.1.0.12573/sensorlib/i2cm_drv.c</locationURI>
 		</link>
 		<link>
+			<name>linkedResources/sensorlib/l3gd20h.c</name>
+			<type>1</type>
+			<location>/usr/TivaWare/TivaWare_C_Series-2.1.0.12573/sensorlib/l3gd20h.c</location>
+		</link>
+		<link>
 			<name>linkedResources/sensorlib/lsm303dlhc_accel.c</name>
 			<type>1</type>
 			<locationURI>TIVAWARE_INSTALL/sensorlib/lsm303dlhc_accel.c</locationURI>

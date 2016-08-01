@@ -7,12 +7,17 @@
 
 extern float surfaceAngle;
 extern float accelerometerReadings[3];
+extern float gyroReadings[3];
+extern float previousGyroReadings[3];
+extern float accelOffset[3];
 
 void imuI2CHandler(void);
 void initializeImu(void);
-void readAccelMeasurements(float resultsDestination[3]);
+void readAccelMeasurements(float *resultsDestination);
+void readRawAccelMeasurements(float *resultsDestination);
+void readRawGyroMeasurements(float *resultsDestination);
 void computeSteepness(void);
-
-
+void copyReadings(float source[3], float destination[3]);
+void calibrateAccel();
 
 #endif

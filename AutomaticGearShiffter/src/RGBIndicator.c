@@ -5,9 +5,10 @@
 #include "inc/hw_memmap.h"
 
 /*
- *      GPIO_PIN_5 - red
- *      GPIO_PIN_6 - green
- *      GPIO_PIN_7 - blue
+ *      GPIO_PIN_1 - red
+ *      GPIO_PIN_2 - blue
+ *      GPIO_PIN_3 - green
+ *
  */
 void initializeRGBIndicator(void) {
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
@@ -16,29 +17,7 @@ void initializeRGBIndicator(void) {
 }
 
 void setCurrentRgbState(enum RgbColours currentColor) {
-	switch (currentColor) {
-	case red:
-		GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7, red);
-		break;
-	case green:
-		GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7, green);
-		break;
-	case yellow:
-		GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7, yellow);
-		break;
-	case blue:
-		GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7, blue);
-		break;
-	case pink:
-		GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7, pink);
-		break;
-	case cyan:
-		GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7, cyan);
-		break;
-	case white:
-		GPIOPinWrite(GPIO_PORTC_BASE, GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7, white);
-		break;
-	default:
-		break;
-	}
+	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1| GPIO_PIN_2 | GPIO_PIN_3,
+			currentColor);
+
 }

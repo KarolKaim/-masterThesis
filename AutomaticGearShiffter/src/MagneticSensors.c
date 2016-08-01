@@ -33,20 +33,12 @@ void handleCrankMagnetInt(void) {
 
 void initializeMagneticSensors(void) {
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-
 	GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3);
 	GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3, GPIO_FALLING_EDGE);
-
-	initializeTimer(SYSCTL_PERIPH_TIMER1, TIMER1_BASE,
-	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC, TIMER_A | TIMER_B,
-	TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
-
 	IntMasterEnable();
-	IntEnable(INT_TIMER1A);
-	IntEnable(INT_TIMER1B);
 	IntEnable(INT_GPIOA);
-
 	GPIOIntEnable(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3);
+	initializeMagneticSensorsTimers();
 	TimerEnable(TIMER1_BASE, TIMER_A);
 	TimerEnable(TIMER1_BASE, TIMER_B);
 }
@@ -67,8 +59,9 @@ void computeCadence() {
 		tmpCadence = 60 / (0.001 * timeSinceLastCrankMagnetInt);
 		derivateOfCaddence = (tmpCadence - oldCadence)
 				/ timeSinceLastCrankMagnetInt;
-		if(derivateOfCaddence < 1)
+		if (derivateOfCaddence < 1) {
 			cadenceInRPM = tmpCadence;
+		}
 	} else {
 		cadenceInRPM = 0;
 		derivateOfCaddence = 0;

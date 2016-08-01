@@ -5,13 +5,13 @@
 #include <stdint.h>
 
 enum RgbColours {
-	red = 0x20,
-	green = 0x40,
-	yellow = 0x60,
-	blue = 0x80,
-	pink = 0xa0,
-	cyan = 0xc0,
-	white = 0xe0
+	red = 0x2,
+	blue = 0x4,
+	pink = 0x6,
+	green = 0x8,
+	yellow = 0xa,
+	cyan = 0xc,
+	white = 0xe
 };
 
 void initializeRGBIndicator(void);

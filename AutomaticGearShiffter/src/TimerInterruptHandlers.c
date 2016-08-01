@@ -10,9 +10,13 @@
 #include "MagneticSensors.h"
 #include "DerailleurController.h"
 #include "SwitchGear.h"
+#include "GpioInterruptHandlers.h"
+#include "Imu.h"
 
 /*
  *_____Timers used in application______
+ *
+ *  Timer0A - sport mode accel readings
  *
  *	Timer1A - wheel rotational speed
  *	Timer1B - crank rotational speed
@@ -20,14 +24,21 @@
  *	Timer2A - PWM signal generation
  *
  *	Timer3A - continous gear change
- *	Timer3B - periodic timer for comfort mode
+ *	Timer3B - comfort mode
  *
  *	Timer4A - change current derailleurs position
  *
+ *  Timer5A - active mode
+ *  Timer5B - sport mode
  */
 
 uint16_t continuousChangeTimerMs = 0;
 uint16_t derailleurChangePosTimer = 0;
+uint16_t currentAutomaticChangeTimer = 0;
+uint16_t accelReadingsTimer = 0;
+
+bool sportModeTimerDone = false;
+uint16_t sportTimerTicks = 100;
 
 void wheelMagnetTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
@@ -43,7 +54,11 @@ void crankMagnetTimerHander(void) {
 void continuousChangeTimerHandler(void) {
 	TimerIntClear(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
 	continuousChangeTimerMs += 1;
-	if (continuousChangeTimerMs == 200) {
+	if (continuousChangeTimerMs == 1000) {
+
+		if (isGearDownSwitchPressed() && isGearUpSwitchPressed()) {
+			changeCurrentGearMode();
+		}
 		if (isGearUpSwitchPressed()) {
 			reduceGear();
 		} else if (isGearDownSwitchPressed()) {
@@ -52,7 +67,7 @@ void continuousChangeTimerHandler(void) {
 			turnOffConitnousChangeTimer();
 		}
 		continuousChangeTimerMs = 0;
-
+		enableSwitches();
 	}
 }
 
@@ -81,15 +96,43 @@ void derailleurChangePositionTimerHandler(void) {
 }
 
 void comfortModeTimerHandler(void) {
-	TimerIntClear(TIMER4_BASE, TIMER_TIMB_TIMEOUT);
-	currentComfortModeTimer += 1;
-	if (currentComfortModeTimer == 3000) {
-		currentComfortModeTimer = 0;
+	TimerIntClear(TIMER3_BASE, TIMER_TIMB_TIMEOUT);
+	currentAutomaticChangeTimer += 1;
+	if (currentAutomaticChangeTimer > 2500) {
+		currentAutomaticChangeTimer = 0;
 		comfortModeHandler();
 
 	}
 }
 
+void activeModeTimerHandler(void) {
+	TimerIntClear(TIMER5_BASE, TIMER_TIMA_TIMEOUT);
+	currentAutomaticChangeTimer += 1;
+	if (currentAutomaticChangeTimer > 1500) {
+		currentAutomaticChangeTimer = 0;
+		activeModeHandler();
+
+	}
+}
+void sportModeTimerHandler(void) {
+	TimerIntClear(TIMER5_BASE, TIMER_TIMB_TIMEOUT);
+	currentAutomaticChangeTimer += 1;
+	if (currentAutomaticChangeTimer > 1000) {
+		currentAutomaticChangeTimer = 0;
+		sportModeHandler();
+
+	}
+}
+
+void sportModeAccelReadings(void) {
+	TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+	accelReadingsTimer += 1;
+	if (accelReadingsTimer == sportTimerTicks) {
+		accelReadingsTimer = 0;
+		sportModeTimerDone = true;
+	}
+
+}
 void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 		uint32_t timerConfig, uint32_t timer, uint32_t intFlags,
 		uint32_t secondsDivider) {
@@ -99,20 +142,22 @@ void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 	TimerIntEnable(timerBase, intFlags);
 }
 
-void turnOnConitnousChangeTimer(void) {
-	TimerEnable(TIMER3_BASE, TIMER_A);
-}
-
-void turnOffConitnousChangeTimer(void) {
-	TimerDisable(TIMER3_BASE, TIMER_A);
-}
-
 void initialzeComfModeAndContChangeTimers(void) {
 	initializeTimer(SYSCTL_PERIPH_TIMER3, TIMER3_BASE,
 	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC,
-			TIMER_A | TIMER_B,
-			TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
+	TIMER_A | TIMER_B,
+	TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
 	IntEnable(INT_TIMER3A);
+	IntEnable(INT_TIMER3B);
+}
+
+void initializeMagneticSensorsTimers(void) {
+	initializeTimer(SYSCTL_PERIPH_TIMER1, TIMER1_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC,
+	TIMER_A | TIMER_B,
+	TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
+	IntEnable(INT_TIMER1A);
+	IntEnable(INT_TIMER1B);
 }
 
 void initialzieCurrentDerailleurPosChangeTimer(void) {
@@ -120,6 +165,31 @@ void initialzieCurrentDerailleurPosChangeTimer(void) {
 	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
 	TIMER_TIMA_TIMEOUT, 1000);
 	IntEnable(INT_TIMER4A);
+}
+
+void initializeActiveAndSportModeTimers(void) {
+	initializeTimer(SYSCTL_PERIPH_TIMER5, TIMER5_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC,
+	TIMER_A | TIMER_B,
+	TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
+	IntEnable(INT_TIMER5A);
+	IntEnable(INT_TIMER5B);
+}
+
+void initializeSportModeAccelReadings(void) {
+	initializeTimer(SYSCTL_PERIPH_TIMER0, TIMER0_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC,
+	TIMER_A,
+	TIMER_TIMA_TIMEOUT, 1000);
+	IntEnable(INT_TIMER0A);
+}
+
+void turnOnAccelReadingsTimer(void) {
+	TimerEnable(TIMER0_BASE, TIMER_A);
+}
+
+void turnOffAccelReadingsTimer(void) {
+	TimerDisable(TIMER0_BASE, TIMER_A);
 }
 
 void turnOnDerailleurChangeTimer(void) {
@@ -136,4 +206,36 @@ void turnOnComfortModeTimer(void) {
 
 void turnOffComfortModeTimer(void) {
 	TimerDisable(TIMER3_BASE, TIMER_B);
+}
+
+void turnOnConitnousChangeTimer(void) {
+	TimerEnable(TIMER3_BASE, TIMER_A);
+}
+
+void turnOffConitnousChangeTimer(void) {
+	TimerDisable(TIMER3_BASE, TIMER_A);
+}
+
+void turnOnActiveModeTimer(void) {
+	TimerEnable(TIMER5_BASE, TIMER_A);
+}
+
+void turnOffActiveModeTimer(void) {
+	TimerDisable(TIMER5_BASE, TIMER_A);
+}
+
+void turnOnSportModeTimer(void) {
+	TimerEnable(TIMER5_BASE, TIMER_B);
+}
+
+void turnOffSportModeTimer(void) {
+	TimerDisable(TIMER5_BASE, TIMER_B);
+}
+
+void turnOnMagneticSensorsTimers(void) {
+	TimerEnable(TIMER1_BASE, TIMER_A | TIMER_B);
+}
+
+void turnOffMagneticSensorsTimers(void) {
+	TimerDisable(TIMER1_BASE, TIMER_A | TIMER_B);
 }

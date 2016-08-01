@@ -15,7 +15,6 @@ extern uint32_t derailleurUp[8];
 extern uint32_t derailleurDown[8];
 extern volatile uint32_t * currentDerailleurPosition;
 extern int8_t currentGear;
-extern uint16_t currentComfortModeTimer;
 extern enum GearMode currentMode;
 
 void initializeGearController(void);
@@ -23,5 +22,7 @@ void changeCurrentGearMode(void);
 void reduceGear(void);
 void increaseGear(void);
 void comfortModeHandler();
+void activeModeHandler();
+void sportModeHandler();
 
 #endif

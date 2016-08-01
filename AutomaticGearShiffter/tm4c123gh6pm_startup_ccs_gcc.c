@@ -48,6 +48,7 @@ extern void switchBouncingTimerHandler(void);
 extern void gpioPortB(void);
 extern void gpioPortA(void);
 extern void gpioPortC(void);
+extern void gpioPortF(void);
 extern void wheelMagnetBouncingTimerHander(void);
 extern void wheelMagnetTimerHander(void);
 extern void crankMagnetTimerHander(void);
@@ -55,7 +56,10 @@ extern void imuI2CHandler(void);
 extern void derailleurControlGeneratorTimerHandler(void);
 extern void continuousChangeTimerHandler(void);
 extern void comfortModeTimerHandler(void);
+extern void activeModeTimerHandler(void);
+extern void sportModeTimerHandler(void);
 extern void  derailleurChangePositionTimerHandler(void);
+extern void sportModeAccelReadings(void);
 
 
 //*****************************************************************************
@@ -118,7 +122,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 2
     IntDefaultHandler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
-	IntDefaultHandler,                      // Timer 0 subtimer A
+	sportModeAccelReadings,                      // Timer 0 subtimer A
 	IntDefaultHandler,                      // Timer 0 subtimer B
 	wheelMagnetTimerHander,                      // Timer 1 subtimer A
 	crankMagnetTimerHander,                      // Timer 1 subtimer B
@@ -129,7 +133,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // Analog Comparator 2
     IntDefaultHandler,                      // System Control (PLL, OSC, BO)
     IntDefaultHandler,                      // FLASH Control
-    IntDefaultHandler,                      // GPIO Port F
+	gpioPortF,                      // GPIO Port F
     IntDefaultHandler,                      // GPIO Port G
     IntDefaultHandler,                      // GPIO Port H
     IntDefaultHandler,                      // UART2 Rx and Tx
@@ -191,8 +195,8 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     0,                                      // Reserved
     0,                                      // Reserved
-    IntDefaultHandler,                      // Timer 5 subtimer A
-    IntDefaultHandler,                      // Timer 5 subtimer B
+	activeModeTimerHandler,                      // Timer 5 subtimer A
+	sportModeTimerHandler,                      // Timer 5 subtimer B
     IntDefaultHandler,                      // Wide Timer 0 subtimer A
     IntDefaultHandler,                      // Wide Timer 0 subtimer B
     IntDefaultHandler,                      // Wide Timer 1 subtimer A

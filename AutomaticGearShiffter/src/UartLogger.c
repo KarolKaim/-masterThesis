@@ -20,11 +20,10 @@ void initializeUart(uint32_t speed) {
 	UARTStdioConfig(0, speed, 16000000);
 }
 
-printFloat(float * Data)
+void printFloat(float * Data)
 {
 	int_fast32_t i32IPart, i32FPart;
 	float pfData;
-	int i=0;
 
 	pfData=*Data;
 
@@ -38,5 +37,5 @@ printFloat(float * Data)
       i32FPart*= -1;
 		}
 
-		UARTprintf("%3d.%3d\n", i32IPart, i32FPart);
+		UARTprintf("%3d.%3d ", i32IPart, i32FPart);
 	}

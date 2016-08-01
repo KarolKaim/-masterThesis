@@ -15,7 +15,7 @@
 #include "RGBIndicator.h"
 
 uint32_t currentPwmTicksInUs = 0;
-uint16_t currentComfortModeTimer = 0;
+
 //minimum value to get angle 0 - 11;
 //maximu value to get angle 180 - 48
 // firt gear - 17
@@ -24,7 +24,7 @@ uint32_t derailleurPositions[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
 uint32_t derailleurDown[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
 volatile uint32_t * currentDerailleurPosition = derailleurPositions;
 int8_t currentGear = 0;
-enum GearMode currentMode = comfort;
+enum GearMode currentMode = remote;
 
 void initializeGearController(void) {
 
@@ -46,21 +46,26 @@ void changeCurrentGearMode(void) {
 	case remote:
 		setCurrentRgbState(green);
 		currentMode = comfort;
-		disableSwitches();
+		turnOnMagneticSensorsTimers();
 		turnOnComfortModeTimer();
 		break;
 	case comfort:
-		setCurrentRgbState(blue);
-		;
-		currentMode = active;
-		enableSwitches();
 		turnOffComfortModeTimer();
+		setCurrentRgbState(blue);
+		currentMode = active;
+		turnOnActiveModeTimer();
 		break;
 	case active:
+		turnOffActiveModeTimer();
 		setCurrentRgbState(pink);
 		currentMode = sport;
+		turnOnSportModeTimer();
+		turnOnAccelReadingsTimer();
 		break;
 	case sport:
+		turnOffSportModeTimer();
+		turnOffAccelReadingsTimer();
+		turnOffMagneticSensorsTimers();
 		setCurrentRgbState(yellow);
 		currentMode = remote;
 		break;
@@ -87,9 +92,41 @@ void reduceGear(void) {
 }
 
 void comfortModeHandler() {
-	if (cadenceInRPM < 50) {
+	if(timeSinceLastWheelMagnetInt > 2000)
+	{
+		return;
+	}
+	if(timeSinceLastWheelMagnetInt > 2000)
+	{
+		return;
+	}
+	if (cadenceInRPM < 45) {
 		reduceGear();
-	} else if (cadenceInRPM > 65) {
+	} else if (cadenceInRPM > 60) {
+		increaseGear();
+	}
+}
+
+void activeModeHandler() {
+	if(timeSinceLastWheelMagnetInt > 2000)
+	{
+		return;
+	}
+	if (cadenceInRPM < 52) {
+		reduceGear();
+	} else if (cadenceInRPM > 67) {
+		increaseGear();
+	}
+}
+
+void sportModeHandler() {
+	if(timeSinceLastWheelMagnetInt > 2000)
+	{
+		return;
+	}
+	if (cadenceInRPM < 55) {
+		reduceGear();
+	} else if (cadenceInRPM > 74) {
 		increaseGear();
 	}
 }

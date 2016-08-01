@@ -11,31 +11,29 @@
 
 #include "TimerInterruptHandlers.h"
 #include "DerailleurController.h"
+#include "GpioInterruptHandlers.h"
 
 void initializeSwitches(void) {
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
-	GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
-	GPIOIntTypeSet(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7, GPIO_FALLING_EDGE);
-	GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
-	IntEnable(INT_GPIOB);
-	initialzeComfModeAndContChangeTimers();
+	initializeGpioAsSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE,
+	GPIO_PIN_0 | GPIO_PIN_1, GPIO_FALLING_EDGE, INT_GPIOB);
+
 }
 
 bool isGearUpSwitchPressed(void) {
 	return (!GPIOPinRead(GPIO_PORTB_BASE,
-			GPIO_PIN_6)) && GPIO_PIN_6;
+	GPIO_PIN_0)) && GPIO_PIN_0;
 }
 
 bool isGearDownSwitchPressed(void) {
 	return (!GPIOPinRead(GPIO_PORTB_BASE,
-			GPIO_PIN_7)) && GPIO_PIN_7;
+	GPIO_PIN_1)) && GPIO_PIN_1;
 }
 
 void disableSwitches(void) {
-	GPIOIntDisable(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
+	GPIOIntDisable(GPIO_PORTB_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 }
 
 void enableSwitches(void) {
-	GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_7);
+	GPIOIntEnable(GPIO_PORTB_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 }
 

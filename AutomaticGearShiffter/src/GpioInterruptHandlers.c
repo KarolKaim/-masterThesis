@@ -35,7 +35,7 @@ void gpioPortA(void) {
 	uint32_t status = clearGpioInt(GPIO_PORTA_BASE);
 	if ((status & GPIO_PIN_2) == GPIO_PIN_2) {
 		handleWheelMagnetInt();
-	} else if((status & GPIO_PIN_3) == GPIO_PIN_3){
+	} else if ((status & GPIO_PIN_3) == GPIO_PIN_3) {
 		handleCrankMagnetInt();
 
 	}
@@ -43,12 +43,13 @@ void gpioPortA(void) {
 
 void gpioPortB(void) {
 	uint32_t status = clearGpioInt(GPIO_PORTB_BASE);
-	if ((status & GPIO_PIN_6) == GPIO_PIN_6) {
+	if ((status & GPIO_PIN_0) == GPIO_PIN_0 && currentMode != comfort) {
 		reduceGear();
-	} else if ((status & GPIO_PIN_7) == GPIO_PIN_7) {
+	} else if ((status & GPIO_PIN_1) == GPIO_PIN_1 && currentMode != comfort) {
 		increaseGear();
 	}
 	turnOnConitnousChangeTimer();
+	disableSwitches();
 }
 
 void gpioPortC(void) {
@@ -59,10 +60,36 @@ void gpioPortC(void) {
 	}
 }
 
+void gpioPortF(void) {
+	uint32_t status = clearGpioInt(GPIO_PORTF_BASE);
+
+	if ((status & GPIO_PIN_0) == GPIO_PIN_0) {
+		changeCurrentGearMode();
+	}
+}
+
 uint32_t clearGpioInt(uint32_t intPort) {
 	uint32_t status = 0;
 	status = GPIOIntStatus(intPort, true);
 	GPIOIntClear(intPort, status);
 	return status;
+}
+
+void initializeGpioAsSwitch(uint32_t portClk, uint32_t gpioPort, uint8_t pins,
+		uint32_t intType, uint32_t portInt) {
+	SysCtlPeripheralEnable(portClk);
+	GPIOPinTypeGPIOInput(gpioPort, pins);
+	GPIOIntTypeSet(gpioPort, pins, intType);
+	GPIOIntEnable(gpioPort, pins);
+	IntEnable(portInt);
+
+}
+
+void turnOffGPIO(uint32_t gpioPort, uint8_t pins) {
+	GPIOIntDisable(gpioPort, pins);
+}
+
+void turnOnGPIO(uint32_t gpioPort, uint8_t pins) {
+	GPIOIntEnable(gpioPort, pins);
 }
 
