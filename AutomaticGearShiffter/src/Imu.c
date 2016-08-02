@@ -27,6 +27,7 @@ float gyroReadings[3] = { 0.0, 0.0, 0.0 };
 float previousGyroReadings[3] = { 0.0, 0.0, 0.0 };
 float accelOffset[3] = { 0.0, 0.0, 0.0 };
 float surfaceAngle = 0;
+float tmpSurfaceAngle = 0;
 float gravityAcceleration = 9.8102;
 float accelerometerReadings[3] = { 0.0, 0.0, 0.0 };
 
@@ -166,13 +167,12 @@ void computeSteepness(void) {
 	float accelAngle = 0;
 	readAccelMeasurements(accelerometerReadings);
 	readRawGyroMeasurements(gyroReadings);
-	gyroAngleDerivative = gyroReadings[0] - previousGyroReadings[0] / 0.1;
-
+	surfaceAngle += gyroReadings[2] * 0.01;
 	accelAngle = (180
 			* atan2f(accelerometerReadings[0], accelerometerReadings[1]))
 			/ 3.14159;
-	surfaceAngle = 0.5 * (surfaceAngle + gyroAngleDerivative)
-			+ 0.5 * accelAngle;
+	surfaceAngle = 0.95 * surfaceAngle + 0.05 * accelAngle;
+	tmpSurfaceAngle = accelAngle;
 }
 
 void copyReadings(float *source, float *destination) {

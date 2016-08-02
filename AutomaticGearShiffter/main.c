@@ -31,6 +31,10 @@ int main(void) {
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,
 	GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, yellow);
+	int a = 0;
+
+	currentMode = active;
+	changeCurrentGearMode();
 
 	while (true) {
 		if (sportModeTimerDone && currentMode == sport) {
@@ -38,7 +42,15 @@ int main(void) {
 			computeSteepness();
 
 		}
+		a += 1;
+		if (a == 20000) {
+			a = 0;
+			printFloat(&surfaceAngle);
+			printFloat(&tmpSurfaceAngle);
+			printFloat(gyroReadings + 2);
 
+			UARTprintf("\n");
+		}
 
 	}
 	return 0;

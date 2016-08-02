@@ -38,7 +38,7 @@ uint16_t currentAutomaticChangeTimer = 0;
 uint16_t accelReadingsTimer = 0;
 
 bool sportModeTimerDone = false;
-uint16_t sportTimerTicks = 100;
+uint16_t sportTimerTicks = 10;
 
 void wheelMagnetTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);

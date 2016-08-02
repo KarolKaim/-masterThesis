@@ -10,6 +10,7 @@ extern float accelerometerReadings[3];
 extern float gyroReadings[3];
 extern float previousGyroReadings[3];
 extern float accelOffset[3];
+extern float tmpSurfaceAngle;
 
 void imuI2CHandler(void);
 void initializeImu(void);
