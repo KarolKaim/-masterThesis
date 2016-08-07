@@ -107,41 +107,75 @@ Akcelerometr wykonany w technologii MEMS zazwyczaj umożliwia pomiar przyspiesze
 \subsection{Estymata kąta nachylenia - filtr komplementarny}
 Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości  brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczona zostanie pośrednio poprzez zastosowanie filtru komplementarnego.
 
-Zasada działania filtru komplementarnego polega na odpowiedniej fuzji danych pochodzących z różnych czujników pomiarowych. Sygnał każdego z nich zawiera istotną informację o mierzonej wielkości jak również zakłócenia, które powinny zostać wyeliminowane. Fuzja danych polega na zastosowaniu odpowiednich filtrów, dolnoprzepustowych, środkowoprzepustowych i górnoprzepustowych, które eliminują zakłócenia charakterystyczne dla danego czujnika jednocześnie przuszczając informacje użyteczne. Warunkiem koniecznym uzyskania dokładniejszych wartości estymwoanych od wartości mierzonych jest zastosowanie czujników pomiarowych o różnej charakterystyce częśtotliwości błędów pomiarowych. Schemat przedstawiający ogólną idę filtru komplementarnego przedstawiony został na rys(\textcolor{red}{@TODO Rysunek + odnośnik do rysunku})
-Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancja operatorowa określająca stosunek transformaty Laplace'a sygnału wyjściowego do transformaty Laplace'a sygnału wejściowego, powinna spełniać zależność:
+Zasada działania filtru komplementarnego polega na odpowiedniej fuzji danych pochodzących z różnych czujników pomiarowych. Sygnał każdego z nich zawiera istotną informację o mierzonej wielkości jak również zakłócenia, które powinny zostać wyeliminowane. Fuzja danych polega na zastosowaniu odpowiednich filtrów, dolnoprzepustowych, środkowoprzepustowych i górnoprzepustowych, które eliminują zakłócenia charakterystyczne dla danego czujnika jednocześnie przuszczając informacje użyteczne. Warunkiem koniecznym uzyskania dokładniejszych wartości estymwoanych od wartości mierzonych jest zastosowanie czujników pomiarowych o różnej charakterystyce częśtotliwości błędów pomiarowych. Schemat przedstawiający ogólną idę filtru komplementarnego przedstawiony został na rys \ref{fig:kompGeneral}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.3]{filtrKomp.png}
+    \caption{Zasada działania filtru komplementarnego. $x_1$ : $x_N$ - sygnały wejściowe, $G_1(s) : G_N(s)$ - transmitancje operatorowe poszególnych filtrów, $\hat{x}$ - estymowana wartość wyjściowa }
+    \label{fig:kompGeneral}
+\end{figure}
+
+Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancja operatorowa, określająca stosunek transformaty Laplace'a sygnału wyjściowego do transformaty Laplace'a sygnału wejściowego, powinna spełniać zależność:
 \begin{equation}
-    G(s)=\sum_{i=1}^{n}G_{i}(s)=1
+    G(s)=\sum_{i=1}^{N}G_{i}(s)=1
     \label{eq:zasadaKomplementarnosci}
 \end{equation}
-W odniesieniu do estymacji wartości kąta nachylania podłoża, schmat filtru komplementarnego, wykorzystującego wartości kątów wyznaczonych na podstawie danych pomiarowych pochodzących z akcelerometru oraz żyroskopu, przedstawiony został na rys(\textcolor{red}{@TODO schemat}). Dane pochodzące z akcelerometru zakłócone są sygnałem o wysokich częstotliwościach. Błędy powstałe w wyniku dryfu żyroskopowego są sygnałami wolnozmiennymi. Należy zastem zastosować filtr dolnoprzeustowy, eliminujący szybkozmienne wartości sygnału pochodzące z akcelerometru, oraz filtr górnoprzepustowy elimnujący wpływ wolnozmiennego dryfu żyroskopowego. 
 
-Fliltr dolnoprzepustowy odpowiada obiektowi inercyjnemu I rzędu:
+W odniesieniu do estymacji wartości kąta nachylania podłoża, schmat filtru komplementarnego, wykorzystującego wartości kątów wyznaczonych na podstawie danych pomiarowych pochodzących z akcelerometru oraz żyroskopu, przedstawiony został na rys \ref{fig:kompKat}. 
+
+Pomiar składowych przyspieszenia ziemskiego umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{pomiaryAkcel}). Ta metoda znajduje swoje zastosowanie wtedy, gdy układ pomiarowy nie porusza się lub porusza się ruchem jednostanym. W ruchu przyspieszonym dane pomiarowe akcelerometru uwzględniają siły powodujące ten ruch, a brak możliwości odseparowania składowych przyspieszenia ziemskiego sprawia, że kąt nachylenia obarczony jest błędem. Należy zastem zastosować filtr dolnoprzeustowy, eliminujący szybkozmienne wartości kąta nachylenia pochodzące z akcelerometru.
+
+Żyroskop umożliwia pomiar prędkości obrotowej. Całkowanie prędkości obrotowej umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{gyro}). Jednak zakłócenia toru pomiarowego oraz wrażliwość na warunki pracy, a w szczególności temepraturę, powodują zjawisko tzw. dryfu żyroskopowego. Dryf spowodowany jest ciągłym narastaniem błędów w wyniku całkowania zakłóconych danych pomiarowyych. Błędy powstałe w wyniku dryfu żyroskopowego są sygnałami wolnozmiennymi. Zastosowanie filtru górnoprzepustowego pozwala je wyeliminować. 
+
+Fliltr dolnoprzepustowy może zostać zrealizowany poprzez obiekt inercyjny I rzędu:
 \begin{equation}
-    G_{1}(s)=\frac{1}{Ts+1}
+    G_{low}(s)=\frac{1}{Ts+1}
     \label{eq:lowPass}
 \end{equation}
-Zgodnie z równaniem \ref{zasadaKomplementarnosci}, filtr górnoprzepustowy powinien spełniać zależność:
+Zgodnie z równaniem \ref{eq:zasadaKomplementarnosci}, filtr górnoprzepustowy powinien spełniać zależność:
 \begin{equation}
-    G_{2}(s)=1-G_{1}(s)=\frac{Ts}{Ts+1}
+    G_{high}(s)=1-G_{1}(s)=\frac{Ts}{Ts+1}
     \label{eq:highPass}
 \end{equation}
-Transmitancja $G_{2}(s)$ odpowiada transmitancji filtru górnoprzepustowego RC.
- 
+Transmitancja $G_{high}(s)$ odpowiada transmitancji filtru górnoprzepustowego RC.
 
-akcelerometru oraz żyroskopu. Pomiar składowych przyspieszenia ziemskiego umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{pomiaryAkcel}). Ta metoda znajduje swoje zastosowanie w sytuacjach, w których układ pomiarowy nie porusza się lub porusza się ruchem jednostanym. W ruchu przyspieszonym dane pomiarowe akcelerometru uwzględniają siły powodujące ten ruch, a brak możliwości odseparowania składowych przyspieszenia ziemskiego sprawia, że kąt nachylenia obarczony jest błędem. Dlatego niezbędne jest wykorzystanie żyroskpu. Sposóbu wyznaczenia kąta nachylenia na podstawie danych pochodzących z tego czujnika zostało dokładnie przedsatwione w pkt \ref{gyro} i polega na numerycznym całkowaniu prędkości obrotowej układu pomiarowego. To rozwiązanie dobrze sprawdza się w ruchu przyspieszonym. Jednak zakłócenia toru pomiarowego oraz wrażliwość na warunki pracy, a w szczególności temepraturę, powodują zjawisko tzw. dryfu żyroskopowego. Dryf spowodowany jest ciągłym narastaniem błędów w wyniku całkowania zakłóconych danych pomiarowyych.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.3]{filtrKompKat.png}
+    \caption{Schemat filtru komplementarnego estymującego kąt nachylenia.}
+    \label{fig:kompKat}
+\end{figure}
 
-Idea działania filtra komplementarnego polega na 
-
-Filtr komplementarny 
+Estymowana wartość kąta nachylenia $\hat{\alpha}$ spełnia zależność:
 \begin{equation}
-    \alpha=\arctan{\frac{a_x}{a_y}}
-    \label{eq:rowniaRadian}
+    \hat{\alpha} = \frac{1}{Ts+1}\alpha_{acc}+\frac{Ts}{Ts+1}\frac{1}{s}\omega = \frac{\alpha_{acc}+T\omega}{Ts + 1}
+    \label{eq:alpha}
 \end{equation}
 \begin{eqwhere}[2cm]
-	\item[$\alpha_{deg}$] kąt naychylenia wyrażony w stopniach
+	\item[$\hat{\alpha}$] estymata kąta nachylenia
+	\item[$\alpha_{acc}$] kąt nachylania wyznaczony na podstawie danych z akcelerometru
+	\item[$\omega$] prędkość obrotowa
 \end{eqwhere}
 
+Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym, powyższe równanie należy zdyskretyzować w dziedzinie czasu. Można tego dokonać stosując metodę Eulera wstecz\textcolor{red}{GREGA przypis} jako przybliżenie operacji różniczkowania w czasie\textcolor{red}{sprawdz rownianei i dopisz oznaczenia}:
+\begin{equation}
+    s=\frac{t_0z}{z-1}
+    \label{eq:eulerWstecz}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$t_{0}$] długość kroku dyskretyzacji
+\end{eqwhere}
 
+Podstawiając zależność \ref{eq:eulerWstecz} do równania \ref{eq:alpha} równanie różnicowe estymujące wartość kąta nachylania podłoża przyjmuje postać:
+\begin{equation}
+    \hat{\alpha_{k}} = p(\hat{\alpha}_{k-1} + \omega_{k}t_0) + (1-p)\alpha_{acc}
+\end{equation}
+\begin{equation}
+    p = \frac{T}{T + t_0}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$t_{0}$] długość kroku dyskretyzacji
+\end{eqwhere}
 %____________________________________________________________________________________________________________ 
 \subsubsection{Analiza danych pomiarowych akcelerometru}
 \label{pomiaryAkcel}
