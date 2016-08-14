@@ -26,9 +26,11 @@ Miktrokontroler, filtry RC, pakiet zasilający, regulator napięcia oraz jednost
 
 \section{Część programowa}
 \subsection{Struktura programu}
-Zasada działania programu przedstawiona zotała na rys. \ref{fig:schematAlgorytmu} i może zotać porównana do skończonej maszyny stanów. Autor rozważał wykorzystanie systemu czasu rzeczywistego \textit{freeRTOS}, w którym poszczególne stany będą odpowiadały nowym zadaniom, odpalanym sekwencyjnie. Jednak właśnie ze względu na sekwencyjne wykonywanie głównych zadań oraz brak ostrych wymagań czasowych, pomysł ten został odrzucony. Dlatego porównanie zasady działanai programu do skończonej maszyny stanów ma na celu jedynie zilustrowanie zasady jego działania.
 
-Cel pracy to wykonanie układu zmiany przełożeń, który oferuje dwa tryby pracy - tryb ręczny oraz automatyczny. Autor zdecydował, że w ramach trybu automatycznego wykonany zostanie podział na tryb comfort, active i sport. Inspiracją  takiego rozwiązania jest branża motoryzacyjna, w której coraz częściej można spotkać układy automatycznej zmiany przełożeń, oferujące możliwość profilowania charakterystyki działania zmiany biegów, poprzez wybór jednego z trybów jazdy.
+Cel pracy to wykonanie układu zmiany przełożeń, który oferuje dwa tryby pracy - tryb ręczny oraz automatyczny. Autor zdecydował, że w ramach trybu automatycznego wykonany zostanie podział na tryb comfort, active i sport. Inspiracją  takiego rozwiązania jest branża motoryzacyjna, w której coraz częściej można spotkać układy automatycznej zmiany przełożeń, oferujące możliwość profilowania charakterystyki działania zmiany biegów, poprzez wybór jednego z trybów jazdy. 
+
+Zasada działania programu przedstawiona zotała na rys. \ref{fig:schematAlgorytmu} i może zotać porównana do skończonej maszyny stanów. Maszyna stanów jest pojęciem abstrakcyjnym, które definiuje zachowanie systemu jako skończony zbóir stanów oraz przejść pomiędzy stanami. Autor rozważał wykorzystanie systemu czasu rzeczywistego \textit{freeRTOS}, w którym poszczególne stany będą odpowiadały nowym zadaniom, odpalanym sekwencyjnie. Jednak właśnie ze względu na sekwencyjne wykonywanie głównych zadań oraz brak ostrych wymagań czasowych, pomysł ten został odrzucony. Program działa na prostej zasadzie pętli nieskończonej, w której poszczególne zadania wyzwalane są przez układy czasowo-licznikowe. Dlatego porównanie programu do skończonej maszyny stanów odnisi się jedynie do wysokopoziomowego opisu zasady działania kontrolera. Wszystkie stany, poza stanem inicjalizacji, odpowiadają zaprojektowanym trybom jady, dlatego w dalszej części pracy te dwa określenia stosowane są wymiennie. Przejścia pomiędzy stanami następują w wyniku naciśnięcia przycisku zmiany aktualnego trybu jazdy. Kolejność przejść przedstawiona została na rys. \ref{fig:schematAlgorytmu}.
+
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.3]{schematAlgorytmu.png}
@@ -57,26 +59,76 @@ Tryb ręczny jest pierwszym stanem, w którym użytkownik może korzystać z fun
 Naciśnięcie przycisku zmiany trybu pracy układu powoduje przejście do kolejnego stanu - trybu comfort.
 
 \subsubsection{Tryb comfort}
-Stan comfort jest pierwszym z zaimplementowanych trybów automatycznej zmiany przełożeń. Ten tryb jest przeznaczony do spokojnego przemieszczania się na rowerze po płaskim terenie. Jest to najprostszy z trybów automatycznych, który nie powinien angażować użytkownika do podejmowania żadnych decyzji. Możliwość zmiany ręcznej jest wyłączona. Mierzona jest jedynie chwilowa wartość kadencji. Płaski charakter trasy sprawia, że cykliczne zadanie, w trakcie którego dobierane jest przełożenie, zależne od wartości kadencji, uruchamiane jest z niską częstotliwością. Zakres kadencji jest stały dla każdego przełożenia i dobrany w taki sposób, aby umożliwić spokojną i komfortową jazdę na rowerze.  
+Stan comfort jest pierwszym z zaimplementowanych trybów automatycznej zmiany przełożeń. Ten tryb jest przeznaczony do spokojnego przemieszczania się na rowerze po płaskim terenie. Jest to najprostszy z trybów automatycznych, w którym użytkownik nie powinien angażować się w podejmowanie wyboru przełożenia. Możliwość zmiany ręcznej jest wyłączona. Mierzona jest jedynie chwilowa wartość kadencji. Płaski charakter trasy sprawia, że cykliczne zadanie, w trakcie którego dobierane jest przełożenie, zależne od wartości kadencji, uruchamiane jest z niską częstotliwością. Zakres kadencji jest stały dla każdego przełożenia i dobrany w taki sposób, aby umożliwić spokojną i komfortową jazdę na rowerze.  
 
 \subsubsection{Tryb active}
+
+
 \subsubsection{Tryb sport}  
  
-
-
-\subsubsection{Tryb manualny}
 %_______________________________________________________________________________________________________________
 
 \subsection{Szczegóły implementacji}
-
-
 %_______________________________________________________________________________________________________________
 \subsubsection{Kontrola serwomechanizmu}
-%_______________________________________________________________________________________________________________
+Pozycja serwomechanizmu modelarskiego sterowana jest przez sygnał PWM (z ang. {\em Pulse-Width Modulation}). Jest to metoda regulacji sygnałem napięciowym, o stałej częstotliwości i amplitudzie, polegająca na zmianie wypełnienia sygnału. Częstotliwość sygnału wynosi 50Hz. Wartości napęcia, które zmianiają się w sposób skokowy, wynoszą 0 i 3.3V. Pełny zakres ruchu serwomechanizmu osiągalny jest przez zmianę wypełnienia sygnału sterującego z zkresu od 2.5 do 12.5 \%. Innymi słowy - podanie prostokątnego sygnału sterującego o okresie 20ms, w którym stan wysoki utrzymany jest przez czas z zakresu od 0.5ms do 2.5 ms, umożliwia obrót wału serwomechanizmu z zakresu od 0 do 180$^{\circ}$.
+
+Przerzutka, do której został przymocowany serwomechaznim, ogranicza pełny zakres ruchu serwomechanizmu. Minimalne oraz maksymalne wychylenie wózka przerzutki wiąże się z obrotem wału serwomechanizmu odpowiednio o kąt 31 i 95$^{\circ}$. W tym zakresie obsługiwane sa wszystkie dostępne przełożenia. Każdemu z ośmiu przełożeń odpowiada inna pozycja serwomechanizmu (tabela \ref{tab:przelozenia}). Pozycje serwomechanizmu zostały dobrane eksperymentalnie. Można zaobserwować liniowy przyrost czasu wypełnienia sygnału. 
+\begin{table}[h]
+    \caption{Pozycja serwomechanizmu oraz czas wypełnienia sygnału PWM w zależności od aktualnego przełożenia.}
+    \begin{center}
+		\label{tab:przelozenia}
+		\begin{tabular}{|m{2.5cm}|m{5cm}|m{5cm}|}
+			\hline
+ 			Nr przełożenia & Pozycja serwomechanizmu [$^{\circ}$] & Czas wypełnienia sygnału [$us$] \\
+ 			\hline
+ 			1 & 31.5 & 850 \\  
+			2 & 40.5 & 950 \\
+			3 & 49.5 & 1050 \\  
+			4 & 58.5 & 1150 \\  
+			5 & 67.5 & 1250 \\  
+			6 & 76.5 & 1350 \\  
+			7 & 85.5 & 1450 \\  
+			8 & 94.5 & 1550 \\  
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalynch układach napędowych działa znacznie lepiej, jeśli w trakcie zmiany beigu następuje chwilowe przeciągnięcie pozycji wózka przerzutki. Jest to szczególnie dobrze widoczne w trakcie redukowania przełożenia, kiedy łańcuch powinien trafić na koło zębate o większej średnicy. Można wtedy zaobserwować opóźnienie w zmianie przełożenia, niekorzystne przeskoki łańcucha pomiędzy kołami zębatymi, a w źle wyregulowanych układach napędowych może nawet dochodzić do braku reakcji układu napędowego. Takie zjawisko zostało zaobserwowane w trakcie pracy nad projektem. Zmiana biegów polegająca na pozycjonowaniu serwomechanizmu w nowej pozycji, zależnej od dobranego przełożenia, działała z wyraźnym opóźnieniem. Problem, podobnie jak w układach mechanicznych, został rozwiązany przez chwilowe przeciągnięcie pozycji wózka przerzutki. Zdefiniowanie zostały dwa pomocnicze zestawy pozycji serwomechanizmu, specyficzne dla redukowania oraz zwiększania przełożenia(tabela \ref{tab:przelozeniaPomocniczne}). Wszystkie trzy zestawy pozycji przechowywane są w postaci tablic, które zawierają czasy wypełnienia sygnału sterującego. W momencie rozpoczęcia zmiany przełożenia, na skutek naciśnięcia przycisku lub w wyniku decyzji kontrolera automatycznej zmiany przełożeń, zmienna, która do tej pory wskazywała na główny zestaw pozycji, zaczyna wskazywać na jeden z zestawów pomocniczych zależny od rodzaju zmiany. Jednocześnie uruchominy zostaje układ czasowo-licznikowy. Po upływie 500ms, w trakcie obsługi przerwania tego układu, następuje przypisanie adresu, pod którym znajduje się w pamięci główny zestaw parametrów. Następuje również wyłączenie układu czasowo-licznikowego. 
+
+
+\begin{table}[h]
+    \caption{Pomocnicze zestawy pozycji serwomechanizmu}
+    \begin{center}
+		\label{tab:przelozeniaPomocniczne}
+		\begin{tabular}{|p{2.5cm}|p{5cm}|p{5cm}|}
+			\hline
+ 			Nr przełożenia & Wypełnienie sygnału w trakcie redukcji przełożenia [$us$] & 
+Wypełnienie sygnału w trakcie zwiększenia przełożenia [$us$] \\
+ 			\hline
+ 			1 & 800 & 900 \\  
+			2 & 900 & 1000 \\
+			3 & 1000 & 1100 \\  
+			4 & 1100 & 1200 \\  
+			5 & 1200 & 1300 \\  
+			6 & 1300 & 1400 \\  
+			7 & 1400 & 1500 \\  
+			8 & 1500 & 1600 \\  
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+%______________________________________________________________________________________________________________
 \subsubsection{Obsługa przycisków}
-%_______________________________________________________________________________________________________________
+W projekcie wykorzystane zostały trzy przyciski przewlekane monostabilne. Ich naciśnięcie powoduje redukcję lub zwiększenie przełożenia oraz zmianę trybu pracy kontrolera. Przyciski do zmiany przełożenia zamontowane zostały w miejscu konwencjonalnej manetki. Przycisk do zmiany trybu pracy został przymocowany do mosktka kierownicy.
+
+Wszystkie przyciski wykorzystują rezystor pull-up, podciągający do portu wejściowego napięcie 3.3V(\textcolor{red}{schematEagle}). Zwarcie przycisku powoduje ustalenie sygnału na poziomie 0V. Pojawienie się na magistrali zbocza opadającego powoduje zgłoszenie przerwania od odpowiedniego pinu portu wejściowego. 
+
+Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwiearania przycisku. Są to drgania mechaniczne, które moga trwać od kilku mikrosekund do nawet kilkunastu milisekund. Powoduje to niezdefiniowane zachowanie całego systemu, np. zmianę kilku przełożeń na raz. Szybkozmienne zmiany stanu logicznego sygnału, wynikające z drgań sytków przycisku, przedstawione zostały na rys(\textcolor{red}{...}). Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykoanne zostały proste filtry dolnoprzepustowe RC.   
+%______________________________________________________________________________________________________________
 \subsubsection{Kontrola zbliżeniowych czujników magnetycznych}
-%_______________________________________________________________________________________________________________
+%______________________________________________________________________________________________________________
 \subsubsection{Obsługa Pololu AltIMU10}
 %_______________________________________________________________________________________________________________
 
