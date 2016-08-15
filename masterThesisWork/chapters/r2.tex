@@ -48,8 +48,8 @@ Tylna przerzutkau umożliwia zmianę przełożenia układu napędowego. Działa 
 %____________________________________________________________________________________________________________  
 \subsection{Serwomechanizm}
 %____________________________________________________________________________________________________________  
-\subsection{Filtr donlnoprzepustowy}
-
+\subsection{Filtr donlnoprzepustowy RC}
+\label{filtrRc}
 %____________________________________________________________________________________________________________  
 \section{Metody pomiarowe wielkości fizycznych}
 \subsection{Pomiar prędkości kątowej koła napędowego oraz prędkości liniowej roweru}
@@ -93,7 +93,8 @@ Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
 \end{eqwhere}
 W układzie pomiarowym z dwoma magnesami, wartość drogi kątowej w momencie zwarcia czujnika magnetycznego wynosi $\pi$. Biorąc pod uwagę powyższe zależnosci, chwilowa wartość prędkości liniowej poruszającego się roweru może zostać wyznaczona z zależności:
  \begin{equation}
-v = \frac{\pi R}{T}
+    \label{eq:zaleznoscNaPredkosc}
+    v = \frac{\pi R}{T}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$R$] promień koła rowerowego

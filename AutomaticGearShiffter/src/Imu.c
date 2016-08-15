@@ -105,7 +105,7 @@ void initializeGyro(void) {
 	SysCtlDelay(10000);
 
 	L3GD20HReadModifyWrite(&sl3gd20h, L3GD20H_O_CTRL4, ~L3GD20H_CTRL4_FS_M,
-	L3GD20H_CTRL4_FS_500DPS, IMU10CallBack, 0);
+	L3GD20H_CTRL4_FS_245DPS, IMU10CallBack, 0);
 	while (!I2CDoneFlag) {
 	}
 	I2CDoneFlag = 0;
@@ -163,7 +163,6 @@ void readRawGyroMeasurements(float * resultsDestination) {
 }
 
 void computeSteepness(void) {
-	float gyroAngleDerivative = 0;
 	float accelAngle = 0;
 	readAccelMeasurements(accelerometerReadings);
 	readRawGyroMeasurements(gyroReadings);
@@ -171,7 +170,7 @@ void computeSteepness(void) {
 	accelAngle = (180
 			* atan2f(accelerometerReadings[0], accelerometerReadings[1]))
 			/ 3.14159;
-	surfaceAngle = 0.95 * surfaceAngle + 0.05 * accelAngle;
+	surfaceAngle = 0.92 * surfaceAngle + 0.08 * accelAngle;
 	tmpSurfaceAngle = accelAngle;
 }
 

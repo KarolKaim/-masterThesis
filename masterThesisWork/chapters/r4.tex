@@ -78,7 +78,7 @@ Przerzutka, do której został przymocowany serwomechaznim, ogranicza pełny zak
     \caption{Pozycja serwomechanizmu oraz czas wypełnienia sygnału PWM w zależności od aktualnego przełożenia.}
     \begin{center}
 		\label{tab:przelozenia}
-		\begin{tabular}{|m{2.5cm}|m{5cm}|m{5cm}|}
+		\begin{tabular}{|m{2.3cm}|m{3cm}|m{3cm}|}
 			\hline
  			Nr przełożenia & Pozycja serwomechanizmu [$^{\circ}$] & Czas wypełnienia sygnału [$us$] \\
  			\hline
@@ -102,7 +102,7 @@ Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalynch
     \caption{Pomocnicze zestawy pozycji serwomechanizmu}
     \begin{center}
 		\label{tab:przelozeniaPomocniczne}
-		\begin{tabular}{|p{2.5cm}|p{5cm}|p{5cm}|}
+		\begin{tabular}{|p{2.3cm}|p{5cm}|p{5cm}|}
 			\hline
  			Nr przełożenia & Wypełnienie sygnału w trakcie redukcji przełożenia [$us$] & 
 Wypełnienie sygnału w trakcie zwiększenia przełożenia [$us$] \\
@@ -125,12 +125,59 @@ W projekcie wykorzystane zostały trzy przyciski przewlekane monostabilne. Ich n
 
 Wszystkie przyciski wykorzystują rezystor pull-up, podciągający do portu wejściowego napięcie 3.3V(\textcolor{red}{schematEagle}). Zwarcie przycisku powoduje ustalenie sygnału na poziomie 0V. Pojawienie się na magistrali zbocza opadającego powoduje zgłoszenie przerwania od odpowiedniego pinu portu wejściowego. 
 
-Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwiearania przycisku. Są to drgania mechaniczne, które moga trwać od kilku mikrosekund do nawet kilkunastu milisekund. Powoduje to niezdefiniowane zachowanie całego systemu, np. zmianę kilku przełożeń na raz. Szybkozmienne zmiany stanu logicznego sygnału, wynikające z drgań sytków przycisku, przedstawione zostały na rys(\textcolor{red}{...}). Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykoanne zostały proste filtry dolnoprzepustowe RC.   
+Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwiearania przycisku. Są to drgania mechaniczne, które moga trwać od kilku mikrosekund do nawet kilkunastu milisekund. Powoduje to niezdefiniowane zachowanie całego systemu, np. zmianę kilku przełożeń na raz. Szybkozmienne zmiany stanu logicznego sygnału, wynikające z drgań sytków przycisku, przedstawione zostały na rys \ref{fig:drganiaPrzyciskow}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.2]{drganiaPrzyciskow.png}
+    \caption{Porównanie przebiegów sygnałów interpretowanych przez analizator stanów logicznych dla przycisku bez filtra - kanał 0, oraz z filtrem RC - kanał 1.}
+    \label{fig:drganiaPrzyciskow}
+\end{figure}
+Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykoanne zostały proste filtry dolnoprzepustowe RC. Zasada działania filtru RC została opisana w pkt. \ref{filtrRc}. W dokumentacji mikrokontrolera(\textcolor{red}{link}) można znaleźć informację na temat minimalnego poziomu napięcia, interpretowanego jako stan wysoki - $0.6V_{in}$. Podobny poziom napięcia osiągany jest na wyjściu filtru RC, po skokowej zmianie napięcia wejściowego, po czasie równym stałej czasowej filtra. Autor założył, że zmiany biegów, oraz zmiana tryb jazdy, nie mogą być dokonywane częciej, niż 10 razy na sekundę. Z tego wynika, że stała czasowa filtru powinna wynosić około $100ms$. Wszystkie 3 filtry zostały wykonane w oparciu o opornik o rezystancji $200k\Omega$ i kondensator o pojemności 470$nF$. Tak dobór elementów pasywnych pozwala zbudować filtr, którego stała czasowa wynosi około $94ms$ 
 %______________________________________________________________________________________________________________
 \subsubsection{Kontrola zbliżeniowych czujników magnetycznych}
+Zbliżeniowe czujniki magnetyczne działają w sposób analogiczny do przycisków monostablilnych. Różnica polega na tym, że styki zwierane są w wyniku działania zewnętrznego pola magnetycznego, pochodzącego od magnesu trwałego. W trakcie zwierania/rozwierania czujnika magnetycznego również pojwia się problem mechanicznych grań styków. Problem został wyeliminowany w taki sam sposób, jak w przypadku przycisków, czyli przez zastosowanie filtrów dolnoprzepustówych RC. Elementy pasywne filtrów RC Stałe dla czujników magnetycznych zostały dobrane zgodnie z poniższymi założeniami.
+
+Czujnik magnetyczny, wykorzystany do wyznaczania chwilowej wartości prędkości roweru, korzysta z dwóch magnesów trwałych. Doświadczenia przeprowadzone z wykorzystaniem analizatora stanów logicznych przy dużych prędkościach obrotowych tylego koła wykazały, że drgania czujników magnetycznych trwają nie dłużej niż $1ms$.  Autor założył, że maksymalna prędkość roweru możliwa do osiągnięcia to $100\frac{km}{h}$, czyli około $28\frac{m}{s}$. Promień koła roweru wynosi około $0.33m$. Z zależności \ref{eq:zaleznoscNaPredkosc} wynika, że dla prędkości maksymalnej, magnes trwały znajduje się w pobliżu czujnika magnetycznego co $37ms$. Należy uwzględnić również to, że w tym czasie dochodzi do zwarcia i rozwarcia czujnika magnetycznego. Stała czasowa filtru RC, powinna być zatem co njamniej dwa razy krótsza. Ostatecznie filtr RC został wykonany z opornika o rezystancji $100k\Omega$ i kondensatora o pojemności $100nF$, co zapewnia wartość stałej czasowej filtra na poziomie $10ms$. Wartość ta jest o rząd wielkości większa od zarejestrowanych okresów drgań, a jednocześnie zwarcie i rozwarcie czujnika z filtrem trwa prawie dwa razy krócej, niż okres obrotu magnesu trwałego dla przyjętej prędkości maksymalnej.
+
+Czujnik magnetyczny wykorzystywany do wyznaczenia chwilowej wartości kadencji jest zwierany przez jeden magnes trwały, przymocowany do ramienia mechanizmu korbowego. Autor przyjął, że maksymalna kadencja możliwa do osiągnięcia przez rowerzystę, to $250\frac{obr}{min}$. Pełny obrót przy takie kadencji zajmuje $240ms$. Zastosowanie filtru o takej samej stałej czasowej, jak filtr czujnika magnetycznego prędkości roweru, spełnia wymagania wynikające z przyjętego założenia o maksymalnej kadencji. 
 %______________________________________________________________________________________________________________
 \subsubsection{Obsługa Pololu AltIMU10}
-%_______________________________________________________________________________________________________________
+Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w trybie active i sport. Kąt nachylenia podłoża wyznaczany jest co $10ms$ przy użyciu filtru komplementarnego (pkt. \ref{kompZasadaDzialania}). 
+ 
+Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi $100kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
+\begin{itemize}
+    \item
+    SCL(z ang. {\em Serial Clock Line}) - linia zergarowa wykorzystana do synchronizacji transferu danych
+    \item
+    SDA(z ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych
+    \item
+    Vin - zasilanie jednoski pomiarowej, które przyjmuje napięce z zakresu od 2.5V do 5.5V
+    \item
+    Gnd - wspólna masa
+\end{itemize} 
+
+Komunikacja w standardzie I2C jest komunikacją typu master/slave. Urządzeniem nadrzędnym, odpowiedzialnym za inicjowanie, prowadzenie oraz kontrolę transmisji, jest mikrokontroler. Urządzenia pomiarowe to urządzenia typu slave. Każdy z układów pomiarowych posiada swój unikalny, 7-bitowy adres. Każde z urządzeń typu slave udziela odpowiedzi na rozkazy wysyłane przez mikrokontroler. Adresy urządzeń jednostki pomiarowej:
+
+\begin{table}[h]
+    \caption{Adresy urządzeń pomiarowych}
+    \begin{center}
+		\label{tab:adresyImu}
+		\begin{tabular}{|c|c|}
+			\hline
+ 			Urządzenie & Adres \\
+ 			\hline
+ 			Akcelerometr & 0x19 \\  
+ 			\hline
+			Żyroskop & 0x6B \\
+			\hline
+			Magnetometr & 0x1E \\  
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+Biblioteka TivaWare udostępnia metody do obsługi komunikacji I2C. Akcelerometr został skonfigurowany w taki sposób, aby obsługiwał zakres przyspieszeń $\pm2g$. Żyroskop obsługuje zakres pomiarowy $\pm245dps$.
+%______________________________________________________________________________________________________________
 
 
 
