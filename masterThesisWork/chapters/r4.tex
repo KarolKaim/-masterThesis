@@ -14,6 +14,12 @@ Przymocowanie serwomechanizmu do przerzutki, zgodnie ze schematem przedstawionym
 Pierwszy etap to usunięcie sprężyny, która występuje w konwencjonalnych przerzutkach tylnych. Wiąże się to ze zniszczeniem połączeń nitowych do których przymocowana jest sprężyna. Zniszczone połączenia nitowe zastąpione zostały przez połączenia śrubowe. Wykorzystane zostały śruby z gwintem metrycznym M4 o średnicy 4 mm.
 
 Następny etap to wykonanie elementu mocującego serwomechanizm do przerzutki. Element został wykonany zgodnie z projektem przedstawionym na rysunku technicznym:.\textcolor{red}{@TODO rysunek}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{lacznik.png}
+    \caption{Schemat ilustrujący zasadę działania programu kontrolera}
+    \label{fig:lacznik}
+\end{figure}
 
 Wykonany element wraz z połączeniami śrubowymi umożliwa przymocowanie serwomechanizmu Hitec Hs-8335SH do przerzutki SRAM X5. Ostatni etap tej części projektu to wykonanie połączenia przegłubowego łączącego wał serwomechanizmu z jednym z członów ruchomych przerzutki. Autor zdecydwał się na zastosowanie modelarskiego drążka kierwoniczego o zmiennej długości oraz dedykowanego aluminowego orczyka serwomechanizmu. Takie rozwiązanie pozwala dokładnie dopasować długość  połączenia, bez konieczności projektowania oraz wykonania dodatkowych elementów.
 
@@ -22,6 +28,12 @@ W wyniku poywższych czynności powstała w pełni funkcjonalna przerzutka tylna
 %_______________________________________________________________________________________________________________
 \subsection{Integracja elementow elektronicznych}
 Miktrokontroler, filtry RC, pakiet zasilający, regulator napięcia oraz jednostka pomiarowa IMU zamontowane zostały w hermetycznej puszcze elektrycznej, przymocowanej na stałe do dolnej rury przedniego trójkąta ramy rowerowej. Szczegłówy schemat połączeń znajduje się na rys. \textcolor{red}{SCHEMAT EAGLE}. Ze względu na rozwojowy charakter projektu oraz częste zmiany wprowadzane na etapie realizacji, autor pracy nie zdecydował się na wykonanie dedykowanego obwodu drukowanego.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.7]{connectionSchematic.png}
+    \caption{Schemat ilustrujący zasadę działania programu kontrolera}
+    \label{fig:schematPolaczen}
+\end{figure}
 %_______________________________________________________________________________________________________________
 
 \section{Część programowa}
