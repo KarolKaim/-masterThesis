@@ -20,6 +20,7 @@
  *  GPIO_B6 - gear Up switch
  *  GPIO_B7 - gear down switch
  *  GPIO_C4 - gear mode switch
+ *  GPIO_E4 - battery level ADC AIN9
  *
  *  GPIO Output pins:
  *  GPIO_C5 - RBG indication

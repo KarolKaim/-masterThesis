@@ -14,7 +14,8 @@ void initialzeComfModeAndContChangeTimers(void);
 void initialzieCurrentDerailleurPosChangeTimer(void);
 void initializeMagneticSensorsTimers(void);
 void initializeActiveAndSportModeTimers(void);
-void initializeSportModeAccelReadings(void);
+void initializeSportModeAccelReadingsAndPosChange(void);
+void initialzeRgbAndBatteryLevelCheckTimers(void);
 
 void turnOnDerailleurChangeTimer(void);
 void turnOffDerailleurChangeTimer(void);
@@ -30,4 +31,8 @@ void turnOnMagneticSensorsTimers(void);
 void turnOffMagneticSensorsTimers(void);
 void turnOnAccelReadingsTimer(void);
 void turnOffAccelReadingsTimer(void);
+void turnOnRgbTimer(void);
+void turnOffRgbTimer(void);
+void turnOnBatteryTimer(void);
+void turnOffBatteryTimer(void);
 #endif

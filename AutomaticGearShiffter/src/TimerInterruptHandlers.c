@@ -12,11 +12,14 @@
 #include "SwitchGear.h"
 #include "GpioInterruptHandlers.h"
 #include "Imu.h"
+#include "BatteryChecker.h"
+#include "RGBIndicator.h"
 
 /*
  *_____Timers used in application______
  *
  *  Timer0A - sport mode accel readings
+ *  Timer0B - change current derailleurs position
  *
  *	Timer1A - wheel rotational speed
  *	Timer1B - crank rotational speed
@@ -26,7 +29,8 @@
  *	Timer3A - continous gear change
  *	Timer3B - comfort mode
  *
- *	Timer4A - change current derailleurs position
+ *	Timer4A - RGB
+ *	Timer4B - battery level check
  *
  *  Timer5A - active mode
  *  Timer5B - sport mode
@@ -36,9 +40,11 @@ uint16_t continuousChangeTimerMs = 0;
 uint16_t derailleurChangePosTimer = 0;
 uint16_t currentAutomaticChangeTimer = 0;
 uint16_t accelReadingsTimer = 0;
+uint16_t rgbTimer = 0;
+uint16_t batteryTimer = 0;
 
 bool sportModeTimerDone = false;
-uint16_t sportTimerTicks = 10;
+uint16_t sportTimerTicks = 200;
 
 void wheelMagnetTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
@@ -85,7 +91,7 @@ void derailleurControlGeneratorTimerHandler(void) {
 }
 
 void derailleurChangePositionTimerHandler(void) {
-	TimerIntClear(TIMER4_BASE, TIMER_TIMA_TIMEOUT);
+	TimerIntClear(TIMER0_BASE, TIMER_TIMB_TIMEOUT);
 	derailleurChangePosTimer += 1;
 	if (derailleurChangePosTimer == 500) {
 		currentDerailleurPosition = derailleurPositions;
@@ -133,6 +139,36 @@ void sportModeAccelReadings(void) {
 	}
 
 }
+
+void rgbTimerHandler(void) {
+	int32_t currentState;
+	TimerIntClear(TIMER4_BASE, TIMER_TIMA_TIMEOUT);
+	rgbTimer += 1;
+	if (rgbTimer == 500) {
+		rgbTimer = 0;
+		currentState = GPIOPinRead(GPIO_PORTF_BASE,
+		GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
+		if (currentState != 0) {
+			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3,
+					0x0);
+		} else {
+			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3,
+					currentRgbColor);
+		}
+	}
+
+}
+
+void batteryTimerHandler(void) {
+	TimerIntClear(TIMER4_BASE, TIMER_TIMB_TIMEOUT);
+	batteryTimer += 1;
+	if (batteryTimer == 1000) {
+		readBatteryLevel();
+		batteryTimer = 0;
+	}
+
+}
+
 void initializeTimer(uint32_t timerPeripheral, int32_t timerBase,
 		uint32_t timerConfig, uint32_t timer, uint32_t intFlags,
 		uint32_t secondsDivider) {
@@ -151,6 +187,15 @@ void initialzeComfModeAndContChangeTimers(void) {
 	IntEnable(INT_TIMER3B);
 }
 
+void initialzeRgbAndBatteryLevelCheckTimers(void) {
+	initializeTimer(SYSCTL_PERIPH_TIMER4, TIMER4_BASE,
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC,
+	TIMER_A | TIMER_B,
+	TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
+	IntEnable(INT_TIMER4A);
+	IntEnable(INT_TIMER4B);
+}
+
 void initializeMagneticSensorsTimers(void) {
 	initializeTimer(SYSCTL_PERIPH_TIMER1, TIMER1_BASE,
 	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC,
@@ -158,13 +203,6 @@ void initializeMagneticSensorsTimers(void) {
 	TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
 	IntEnable(INT_TIMER1A);
 	IntEnable(INT_TIMER1B);
-}
-
-void initialzieCurrentDerailleurPosChangeTimer(void) {
-	initializeTimer(SYSCTL_PERIPH_TIMER4, TIMER4_BASE,
-	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC, TIMER_A,
-	TIMER_TIMA_TIMEOUT, 1000);
-	IntEnable(INT_TIMER4A);
 }
 
 void initializeActiveAndSportModeTimers(void) {
@@ -176,12 +214,13 @@ void initializeActiveAndSportModeTimers(void) {
 	IntEnable(INT_TIMER5B);
 }
 
-void initializeSportModeAccelReadings(void) {
+void initializeSportModeAccelReadingsAndPosChange(void) {
 	initializeTimer(SYSCTL_PERIPH_TIMER0, TIMER0_BASE,
-	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC,
-	TIMER_A,
-	TIMER_TIMA_TIMEOUT, 1000);
+	TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PERIODIC | TIMER_CFG_B_PERIODIC,
+	TIMER_A | TIMER_B,
+	TIMER_TIMA_TIMEOUT | TIMER_TIMB_TIMEOUT, 1000);
 	IntEnable(INT_TIMER0A);
+	IntEnable(INT_TIMER0B);
 }
 
 void turnOnAccelReadingsTimer(void) {
@@ -193,11 +232,11 @@ void turnOffAccelReadingsTimer(void) {
 }
 
 void turnOnDerailleurChangeTimer(void) {
-	TimerEnable(TIMER4_BASE, TIMER_A);
+	TimerEnable(TIMER0_BASE, TIMER_B);
 }
 
 void turnOffDerailleurChangeTimer(void) {
-	TimerDisable(TIMER4_BASE, TIMER_A);
+	TimerDisable(TIMER0_BASE, TIMER_B);
 }
 
 void turnOnComfortModeTimer(void) {
@@ -238,4 +277,19 @@ void turnOnMagneticSensorsTimers(void) {
 
 void turnOffMagneticSensorsTimers(void) {
 	TimerDisable(TIMER1_BASE, TIMER_A | TIMER_B);
+}
+
+void turnOnRgbTimer(void) {
+	TimerEnable(TIMER4_BASE, TIMER_A);
+}
+
+void turnOffRgbTimer(void) {
+	TimerDisable(TIMER4_BASE, TIMER_A);
+}
+
+void turnOnBatteryTimer(void) {
+	TimerEnable(TIMER4_BASE, TIMER_B);
+}
+void turnOffBatteryTimer(void) {
+	TimerDisable(TIMER4_BASE, TIMER_B);
 }

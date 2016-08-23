@@ -58,8 +58,11 @@ extern void continuousChangeTimerHandler(void);
 extern void comfortModeTimerHandler(void);
 extern void activeModeTimerHandler(void);
 extern void sportModeTimerHandler(void);
-extern void  derailleurChangePositionTimerHandler(void);
+extern void derailleurChangePositionTimerHandler(void);
 extern void sportModeAccelReadings(void);
+extern void adcIntHandler(void);
+extern void batteryTimerHandler(void);
+extern void rgbTimerHandler(void);
 
 
 //*****************************************************************************
@@ -117,13 +120,13 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // PWM Generator 1
     IntDefaultHandler,                      // PWM Generator 2
     IntDefaultHandler,                      // Quadrature Encoder 0
-    IntDefaultHandler,                      // ADC Sequence 0
-    IntDefaultHandler,                      // ADC Sequence 1
-    IntDefaultHandler,                      // ADC Sequence 2
-    IntDefaultHandler,                      // ADC Sequence 3
+	adcIntHandler,                      // ADC Sequence 0
+	adcIntHandler,                      // ADC Sequence 1
+	adcIntHandler,                      // ADC Sequence 2
+	adcIntHandler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
 	sportModeAccelReadings,                      // Timer 0 subtimer A
-	IntDefaultHandler,                      // Timer 0 subtimer B
+	derailleurChangePositionTimerHandler,                      // Timer 0 subtimer B
 	wheelMagnetTimerHander,                      // Timer 1 subtimer A
 	crankMagnetTimerHander,                      // Timer 1 subtimer B
 	derailleurControlGeneratorTimerHandler,                      // Timer 2 subtimer A
@@ -173,8 +176,8 @@ void (* const g_pfnVectors[])(void) =
     0,                                      // Reserved
     IntDefaultHandler,                      // I2C2 Master and Slave
 	imuI2CHandler,                      // I2C3 Master and Slave
-	derailleurChangePositionTimerHandler,                      // Timer 4 subtimer A
-	IntDefaultHandler,                      // Timer 4 subtimer B
+	rgbTimerHandler,                      // Timer 4 subtimer A
+	batteryTimerHandler,                      // Timer 4 subtimer B
     0,                                      // Reserved
     0,                                      // Reserved
     0,                                      // Reserved

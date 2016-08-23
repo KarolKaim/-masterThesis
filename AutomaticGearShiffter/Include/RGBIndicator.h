@@ -14,6 +14,9 @@ enum RgbColours {
 	white = 0xe
 };
 
+extern enum RgbColours currentRgbColor;
+
 void initializeRGBIndicator(void);
 void setCurrentRgbState(enum RgbColours currentColor);
+void setBlinkingState(enum RgbColours currentColor);
 #endif

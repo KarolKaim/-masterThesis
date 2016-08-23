@@ -12,6 +12,7 @@
 #include "DerailleurController.h"
 #include "TimerInterruptHandlers.h"
 #include "RGBIndicator.h"
+#include "BatteryChecker.h"
 
 int main(void) {
 
@@ -19,37 +20,33 @@ int main(void) {
 	SYSCTL_XTAL_16MHZ);
 	initialzeComfModeAndContChangeTimers();
 	initializeActiveAndSportModeTimers();
-	initializeSportModeAccelReadings();
+	initializeSportModeAccelReadingsAndPosChange();
 
 	initializeMagneticSensors();
-	initializeImu();
+	//initializeImu();
 	initializeGearController();
 	initializeSwitches();
 	initializeUart(115200);
+	initialzeRgbAndBatteryLevelCheckTimers();
+	initializeBatteryLevelCheck();
+	initializeRGBIndicator();
 
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,
-	GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, yellow);
-	int a = 0;
 
 	currentMode = active;
 	changeCurrentGearMode();
 
 	while (true) {
 		if (sportModeTimerDone && currentMode == sport) {
-			sportModeTimerDone = false;
-			computeSteepness();
+//			sportModeTimerDone = false;
+//			computeSteepness();
+//			if (surfaceAngle < 0 && surfaceAngle > -1) {
+//				UARTprintf("-");
+//			}
+//			printFloat(&surfaceAngle);
+//			printFloat(&tmpSurfaceAngle);
+//
+//			UARTprintf("\n");
 
-		}
-		a += 1;
-		if (a == 20000) {
-			a = 0;
-			printFloat(&surfaceAngle);
-			printFloat(&tmpSurfaceAngle);
-			printFloat(gyroReadings + 2);
-
-			UARTprintf("\n");
 		}
 
 	}
