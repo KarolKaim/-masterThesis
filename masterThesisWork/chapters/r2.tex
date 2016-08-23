@@ -4,18 +4,35 @@
 \section{Mechaniczne układy napędowe}
 %______________________________________________________________________________________________________________
 \subsection{Przekładnie mechaniczne}
-Układ napędowy to zestaw urządzeń wykorzystywany do napędzania, w skład którego wchodzi źrodło energii, układy pośredniczące w przekazywaniu energii oraz odbiornik energi. Mianem napędu zazwyczaj określa się urządzenia pośredniczące. Najczęściej wykorzystywanymi źródłami enrgii są silniki a odbirniki energii, których zadaniem jest realizowanie odpowiednich ruchów roboczych, przyjmują różne formy zależne od aplikacji.
+Układ napędowy to zestaw urządzeń wykorzystywany do napędzania, w skład którego wchodzi źrodło energii, układy pośredniczące w przekazywaniu energii oraz odbiornik energi. Mianem napędu zazwyczaj określa się urządzenia pośredniczące. Najczęściej wykorzystywanymi źródłami enrgii są silniki, a odbiorniki energii, których zadaniem jest realizowanie odpowiednich ruchów roboczych, przyjmują różne formy zależne od aplikacji.
 
-Układ mechaniczny wykorzystany do przeniesienia ruchu obrotowego z elementu czynnego na element bierny nazywany jest przekładnią mechaniczną. Oprócz transmisji energii, przekładnie umożliwają również zmianę parametrów ruchu - momentu obrotowego oraz prędkości obrotowej. Przekładnie mechaniczne dzieli się na trzy grupy: cięgnowe, cierne i zębate. Przekładnie cięgnowe, które zostały opisane ze wzgędu na zastosowanie w rowerowych układach napędowych, składają się z conajmniej dwóch kół zębatych, rozsuniętych względem siebie, oraz cięgna opasającego. Ze względu na rodzaj zastosowanego cięgna, wyróżnia się przekładnie pasowe oraz łańcuchowe. Przenoszenie siły z cięgna na koło zębate jest możliwe dzięki zastosowaniu odpowiednich połączeń - połączenia cierne, kształtowe lub stałe przymocowanie cięgna do koła zębatego.
-
-\textcolor{red}{@TODO wrzucić schemat przekładni, dodać jakiś przypis doprzełkadni}
+Układ mechaniczny wykorzystany do przeniesienia ruchu obrotowego z elementu czynnego na element bierny nazywany jest przekładnią mechaniczną. Element czynny to element napędzający, natomiast element bierny to element napędzany. Oprócz transmisji energii, przekładnie umożliwają również zmianę parametrów ruchu - momentu obrotowego oraz prędkości obrotowej. Przekładnie mechaniczne dzieli się na trzy grupy: cięgnowe, cierne i zębate. Przekładnie cięgnowe, które zostały opisane ze wzgędu na zastosowanie w rowerowych układach napędowych, składają się z conajmniej dwóch kół, rozsuniętych względem siebie, oraz cięgna opasającego. Ze względu na rodzaj zastosowanego cięgna, wyróżnia się przekładnie pasowe oraz łańcuchowe. Przenoszenie mocy oraz momentu obrotowego jest możliwe dzięki występującym siłą tarcia pomiędzy kołem a cięgnem(połączenia cierne), lub poprzez zazębianie się koła z cięgnem(połączenia kształtowe).
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{przekladnie.png}
+    \caption{Różne rodzaje przekładni mechanicznych: a) przekładnia cierna, b) przekładnia cięgnowa pasowa, c) przekładnia cięgnowa łańcuchowa, d - e) przekładnie zębate }
+    \label{fig:przekladnia}
+\end{figure}
 
 Wielkością charakteryzującą przekładnie jest przełożenie. Wyróżnia się przełożenie geometryczne, kinematyczne oraz dynamiczne. Przełożenie kinematyczne to stosunek prędkości kątowej koła czynnego do prędkości kątowej koła biernego:
-\textcolor{red}{@TODO wzorek i=w1/w2}
+\begin{equation}
+    i = \frac{\omega_1}{\omega_2}
+    \label{eq:przelozenieKinematyczne}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\omega_1$] prędkość kątowa koła czynnego
+	\item[$\omega_2$] prędkość kątowa koła biernego
+\end{eqwhere}
 
-Przełożenie dynamiczne określa stosunek momentu obrotowego na kole biernym do momentu obrotowego koła czynnego.  
-
-\textcolor{red}{@TODO wzorek i=M2/M1}
+Przełożenie dynamiczne określa stosunek momentu obrotowego na kole biernym do momentu obrotowego koła czynnego:
+\begin{equation}
+    i = \frac{M_2}{M_1}
+    \label{eq:przelozenieDynamiczne}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$M_1$] moment obrotowy koła czynnego
+	\item[$M_2$] moment obrotowy koła biernego
+\end{eqwhere}
 
 Przełożenie przekładni jest parametrem bezwymiarwoym. Ze względu na wartość przełożenia przekładni wyróznia się:
 \begin{itemize}
@@ -30,7 +47,7 @@ W przypadku konwencjonalnego układu napędowego stosowanego w rowerach źródł
 
 Układ napędkowy roweru wykorzystanego w pracy składa się z mechanizmu korbowego z jednym kołem zębatym, łańcucha, kasety ośmiorzędowej oraz przerzutki tylnej. Koło zebate zamontowane w mechaniźmie korbowym ma 34 zęby. Kaseta składa się z ośmiu kół zębatych, których liczba zębów należy do zakresu od 11 do 32. Przekładnia zastosowana w rowerze, niezależnie od aktualnego biegu, ma zawsze charakter mulitiplikatora.
 
-Tylna przerzutkau umożliwia zmianę przełożenia układu napędowego. Działa na zasadzie czworoboku przegubowego. Składa się z czterech członów połączonych przegubowo, tworzących zamknięty łańcuch kinamatyczny. Pozycja wózka przerzutki przymontowanego do jedenego z członów (Rys.\ref{fig:przerzutka}) utrzymywana jest dzięki zastosowaniu sprężyny napinającej oraz cięgna, połączonego z mechanizmem do zmiany przełożeń, zamontowanym w manetce. Dodatkowo przerzutka posiada mechanizm napinający łańcuch, tak aby zachować pełną funkcjonalność układu napędowego niezależnie od aktualnej pozycji wózka przerzutki. 
+Tylna przerzutkau umożliwia zmianę przełożenia układu napędowego. Działa na zasadzie czworoboku przegubowego. Składa się z czterech członów połączonych przegubowo, tworzących zamknięty łańcuch kinamatyczny. Pozycja wózka przerzutki przymontowanego do jedenego z członów (Rys.\ref{fig:przerzutka}) utrzymywana jest dzięki zastosowaniu sprężyny napinającej oraz cięgna, połączonego z mechanizmem do zmiany przełożeń, zamontowanym w manetce. Dodatkowo przerzutka posiada mechanizm napinający łańcuch, tak aby zachować jego odpowiedni zwis, gwarantujący pełną funkcjonalność układu napędowego niezależnie od aktualnej pozycji wózka przerzutki. 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{przerzutka.jpg}
