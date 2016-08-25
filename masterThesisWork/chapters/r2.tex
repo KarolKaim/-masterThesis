@@ -10,11 +10,11 @@ Układ mechaniczny wykorzystany do przeniesienia ruchu obrotowego z elementu czy
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{przekladnie.png}
-    \caption{Różne rodzaje przekładni mechanicznych: a) przekładnia cierna, b) przekładnia cięgnowa pasowa, c) przekładnia cięgnowa łańcuchowa, d - e) przekładnie zębate }
+    \caption{Różne rodzaje przekładni mechanicznych: a) przekładnia cierna, b) przekładnia cięgnowa pasowa, c) przekładnia cięgnowa łańcuchowa, d - e) przekładnie zębate. Grafika opracowana na podstawie \cite{maszyny1}}
     \label{fig:przekladnia}
 \end{figure}
 
-Wielkością charakteryzującą przekładnie jest przełożenie. Wyróżnia się przełożenie geometryczne, kinematyczne oraz dynamiczne. Przełożenie kinematyczne to stosunek prędkości kątowej koła czynnego do prędkości kątowej koła biernego:
+Wielkością charakteryzującą przekładnie jest przełożenie. Wyróżnia się przełożenie geometryczne, kinematyczne oraz dynamiczne. Przełożenie kinematyczne to stosunek prędkości kątowej koła czynnego do prędkości kątowej koła biernego\cite{przekladnie}:
 \begin{equation}
     i = \frac{\omega_1}{\omega_2}
     \label{eq:przelozenieKinematyczne}
@@ -43,7 +43,7 @@ Przekładnie redukujące lub tzw. reduktory. Przekładnie tego typu działają w
 \end{itemize} 
 %____________________________________________________________________________________________________________  
 \subsection{Układ napędowy w rowerze}
-W przypadku konwencjonalnego układu napędowego stosowanego w rowerach źródłem energii jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate na stałe przymocowoane do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy.
+W przypadku konwencjonalnego układu napędowego stosowanego w rowerach elementem napędzającym jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate przymocowoane na stałe do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy.
 
 Układ napędkowy roweru wykorzystanego w pracy składa się z mechanizmu korbowego z jednym kołem zębatym, łańcucha, kasety ośmiorzędowej oraz przerzutki tylnej. Koło zebate zamontowane w mechaniźmie korbowym ma 34 zęby. Kaseta składa się z ośmiu kół zębatych, których liczba zębów należy do zakresu od 11 do 32. Przekładnia zastosowana w rowerze, niezależnie od aktualnego biegu, ma zawsze charakter mulitiplikatora.
 
@@ -51,16 +51,16 @@ Tylna przerzutkau umożliwia zmianę przełożenia układu napędowego. Działa 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{przerzutka.jpg}
-    \caption{Zasada działania konwencjonalnej przerzutki rowerowej}
+    \caption{Schemat ilutrujący zasadę działania konwencjonalnej tylnej przerzutki rowerowej}
     \label{fig:przerzutka}
 \end{figure}
 %____________________________________________________________________________________________________________ 
 
-\section{Zagadnienia z Automatyki}
+\section{Serwomechanizm}
 %____________________________________________________________________________________________________________  
 \subsection{Zamknięty układ regulacji}
 %____________________________________________________________________________________________________________
-\subsection{Transmitancja operatorowa}
+\subsection{Budowa serwomechanizmu}
 
 %____________________________________________________________________________________________________________  
 \subsection{Serwomechanizm}
@@ -69,9 +69,9 @@ Tylna przerzutkau umożliwia zmianę przełożenia układu napędowego. Działa 
 \label{filtrRc}
 %____________________________________________________________________________________________________________  
 \section{Metody pomiarowe wielkości fizycznych}
-\subsection{Pomiar prędkości kątowej koła napędowego oraz prędkości liniowej roweru}
+\subsection{Pomiar prędkości kątowych koła i mechanizmu korbowego prędkości liniowej roweru}
 
-Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie trybu automatycznej zmiany przełożeń. Na podstawie aktualnej prędkości kątowej tylnego koła wyznaczona zostanie chwilowa prędkość liniowa. Pomiar prędkości kątowej mechanizmu korbowego umożliwi wyznaczenie aktulane wartości kadencji.
+Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie trybu automatycznej zmiany przełożeń. Pomiar prędkości kątowej mechanizmu korbowego umożliwi wyznaczenie aktulane wartości kadencji.
 
 Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotyczących pracy brana pod uwagę jest jedynie chwilowa wartość prędkości kątowej. Ta zdefiniowana jest jako zmiana drogi kątowej w czasie:
 \begin{equation}
@@ -84,13 +84,19 @@ Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotycz�
 \end{eqwhere}
 Wyznaczenie chwilowej wartości prędkości kątowej wykonane zostało w oparciu o czujniki zbliżeniowy załączany magnetycznie, który został na stałe przymocowany do ramy roweru, w niewielkiej odległości do tylnego koła. Zasada działania takiego czujnika jest analogiczna do działania zwykłego przycisku monostabilnego. Obwód w czujniku jest domyślnie rozwarty. Zwarcie następuje w momencie zbliżenia magnesu do czujnika. Magnes przyczepiony został do szprychy roweru. Taki sam sposób pomiaru prędkości można znaleźć w komercyjnych licznikach rowerowych oferowanych na rynku. Autor zdecydował się na zastosowanie dwóch magnesów w celu zwiększenia dokładności pomiaru. Dysponując pomiarem czasu pomiędzy kolejnymi zwarciami czujnika magnetycznego, które, ze względu na zastosowanie dwóch magnesów, następują w wyniku obrotu koła o kąt $\pi$ , można wyznaczyć chwilową wartość prędkości kątowej: 
 \begin{equation}
-    \omega = \frac{\pi}{T}
+    \omega_{wheel} = \frac{\pi}{T_{wheel}}
 \end{equation}
 \begin{eqwhere}[2cm]
-	\item[$T$] czas od ostatniego zwarcia czujnika magnetycznego
+	\item[$T_{wheel}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego koła
 \end{eqwhere}
-Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogiczny. Zbliżeniowy czujnik magnetyczny, który został na stałe przymocowany do ramy roweru, w bliskiej odległości mechanizmu korbowego, jest zwierany w każdym cyklu dzięki zastosowaniu magnesu, który został przyklejony do ramienia mechanizmu korbowego. Ze względu na zastosowanie jednego magnesu, przyrost drogi kątowej jest dwa razy większy, niż w przypadku pomiaru prędkości kątowej koła roweru i jego wartość wynosi 2$\pi$.
-
+Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogiczny. Zbliżeniowy czujnik magnetyczny, który został na stałe przymocowany do ramy roweru, w bliskiej odległości mechanizmu korbowego, jest zwierany w każdym cyklu dzięki zastosowaniu magnesu, który został przyklejony do ramienia mechanizmu korbowego. Ze względu na zastosowanie jednego magnesu, przyrost drogi kątowej jest dwa razy większy, niż w przypadku pomiaru prędkości kątowej koła roweru i jego wartość wynosi 2$\pi$:
+\begin{equation}
+    \omega_{crank} = \frac{2\pi}{T_{crank}}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$T_{crank}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego mechanizmu korbowego
+\end{eqwhere}
+\subsection{Prędkość liniowa roweru}
 Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
 \begin{equation}
     v = \frac{s}{t}
@@ -99,19 +105,16 @@ Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
 	\item[$s$] droga liniowa
 	\item[$v$] prędkość liniowa
 \end{eqwhere}
- Związek pomiędzy drogą liniową a drogą kątową wyraża się wzorem:
+ Związek pomiędzy drogą liniową a drogą kątową, punktu poruszającego się po okręgu o promieniu $r$,wyraża się wzorem:
 
 \begin{equation}
     \varphi = \frac{s}{r}
 \end{equation}
 
-\begin{eqwhere}[2cm]
-	\item[$r$] promień okręgu
-\end{eqwhere}
-W układzie pomiarowym z dwoma magnesami, wartość drogi kątowej w momencie zwarcia czujnika magnetycznego wynosi $\pi$. Biorąc pod uwagę powyższe zależnosci, chwilowa wartość prędkości liniowej poruszającego się roweru może zostać wyznaczona z zależności:
+W układzie pomiarowym prędkości kątowej koła roweru, który wykorzystuje dwa magnesy, wartość drogi kątowej w momencie zwarcia czujnika magnetycznego wynosi $\pi$. Dysponując pomiarem czasu $T_{wheel}$, chwilowa wartość prędkości liniowej tylnego koła, a zarazem całego roweru, może zostać wyznaczona z zależności:
  \begin{equation}
     \label{eq:zaleznoscNaPredkosc}
-    v = \frac{\pi R}{T}
+    v = \frac{\pi R}{T_{wheel}}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$R$] promień koła rowerowego
@@ -126,9 +129,9 @@ Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy ż
 \subsubsection{Pomiar przyspieszeń - akcelerometr}
 Akcelereometr to urządzenie pomiarowe, które umożliwia pomiar przyspieszenia dynamicznego ciała, na które działa niezerowa siła wypadkowa, oraz przyspieszenia statycznego ciała znajdującego się w ziemskim polu grawitacyjnym. Akcelerometry zazwyczaj działają na zasadzie przetworników pojemnościowych. Pomiar dokonywany jest dzięku zastosowaniu kondensatorów różnicowych, których ruchome okładki wychylane są z położenia równowagi pod wpływem działających sił bezwładności.
 
-Akcelerometry są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Układy sterujące poduszkami powietrznymi, systemy alarmowe w samochodach czy tzw. asysten ruszania na wzniesieniu to tylko niektóre przykłady z branży motoryzacyjnej.
+Akcelerometry są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Układy sterujące poduszkami powietrznymi, systemy alarmowe w samochodach czy tzw. asysten ruszania na wzniesieniu to tylko niektóre przykłady z branży motoryzacyjnej\cite{stAkcel}.
 
-Akcelerometr wykonany w technologii MEMS zazwyczaj umożliwia pomiar przyspieszenia w trzech różnych kierunkach(\textcolor{red}{@TODO rysunek}). Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{X} był równoległy do podłoża. Dzięki temu wskazania akcelerometru wzdłuż osi \textit{X} są proporcjonalne do siły wypadkowej działającej na rower.
+Układy do pomiaru przyspieszenia wykonane w technologii MEMS zazwyczaj składają się z trzech akcelerometrów, które umożliwiają pomiar przyspieszenia w trzech różnych kierunkach. Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{X} był równoległy do podłoża(rys. \ref{fig:rownia}).
 %____________________________________________________________________________________________________________  
 \subsubsection{Pomiar prędkości kątowych - żyroskop}
 Żyrosko to urządzenie pomiarowe dostarczające informacji na temat chwilowej prędkości obrotowej układu pomiarowego. Żyroskopy wykonane w technologii MEMS to czujniki pojemnościowe wykorzystujące efekt Coriolisa. Układ dwóch wybrujących mas, umieszczony na obrotowej tarczy, zmienia swoje położenie względem osi obrotu w zależności od chwilowej prędkości obrotowej. W wyniku zmiany położenia układu mas odkształceniu ulega tarcza, która stanowi okładkę kondensatora. W efekcie następuje różnicowa zmiana pojemności kondensatora, która przetwarzana jest na chwilową prędkość obrotową.
@@ -142,7 +145,7 @@ Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkoś
 %____________________________________________________________________________________________________________ 
 \subsection{Analiza danych pomiarowych akcelerometru}
 \label{pomiaryAkcel}
-Przykład zamieszczony na rysunku \ref{fig:równia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta równi pochyłej, której kąt nachylenia został oznaczony jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuz osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
+Przykład zamieszczony na rysunku \ref{fig:rownia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta równi pochyłej, której kąt nachylenia został oznaczony jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuz osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
 \begin{equation}
     \alpha=\arctan{\frac{a_x}{a_y}}
     \label{eq:rowniaRadian}
@@ -160,11 +163,11 @@ Zależność \ref{eq:rowniaRadian} pozwala wyznaczyć wartość miary łukowej k
 \begin{eqwhere}[2cm]
 	\item[$\alpha_{deg}$] kąt naychylenia wyrażony w stopniach
 \end{eqwhere}
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[scale=0.5]{katNachylenia.jpg}
     \caption{a nice plot}
-    \label{fig:równia}
+    \label{fig:rownia}
 \end{figure}
 %____________________________________________________________________________________________________________ 
 \subsection{Analiza danych pomiarowych żyroskopu}
@@ -229,7 +232,7 @@ Estymowana wartość kąta nachylenia $\hat{\alpha}$ spełnia zależność:
 	\item[$\omega$] prędkość obrotowa
 \end{eqwhere}
 
-Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym, powyższe równanie należy zdyskretyzować w dziedzinie czasu. Można tego dokonać stosując metodę Eulera wstecz\textcolor{red}{GREGA przypis} jako przybliżenie operacji różniczkowania w czasie\textcolor{red}{sprawdz rownianei i dopisz oznaczenia, czy aby na pewno RÓŻNICZKOWANIA ?!}:
+Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym, należy znaleźć równoważny model dyskretny, który aproksymuje własności dynamiczne modelu ciągłego. Można tego dokonać stosując metodę Eulera wstecz\cite{grega}:
 \begin{equation}
     s=\frac{t_0z}{z-1}
     \label{eq:eulerWstecz}
@@ -238,13 +241,7 @@ Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym,
 	\item[$t_{0}$] długość kroku dyskretyzacji
 \end{eqwhere}
 
-Podstawiając zależność \ref{eq:eulerWstecz} do równania \ref{eq:alpha} równanie różnicowe estymujące wartość kąta nachylania podłoża przyjmuje postać:
+Podstawiając zależność \ref{eq:eulerWstecz} do równania \ref{eq:alpha} oraz przyjmując podstawienie $p = \frac{T}{T + t_0}$,  równanie różnicowe estymujące wartość kąta nachylania podłoża przyjmuje postać:
 \begin{equation}
     \hat{\alpha_{k}} = p(\hat{\alpha}_{k-1} + \omega_{k}t_0) + (1-p)\alpha_{acc}
 \end{equation}
-\begin{equation}
-    p = \frac{T}{T + t_0}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$t_{0}$] długość kroku dyskretyzacji
-\end{eqwhere}
