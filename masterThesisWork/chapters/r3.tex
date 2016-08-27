@@ -2,10 +2,10 @@
 %_______________________________________________________________________________________________________________
 \section{Wykaz podzespołów}
 \subsection{Przerzutka tylna}
-Autor zdecydował się na wykorzytanie tylnej przerzutki SRAM X5. Głónym atutem tej przerzutki jest jej konstrukcja, która ze względu na długie ramiona wózka przerzutki, umożliwia bezproblemowe zamontowanie serwomechanizmu. Przerzutka oferuje pełny zakres ruchu do obsługi ośmiu przełożeń. Dodatkowo jest solidną propozycją z niskiej półki cenowej.
+Autor zdecydował się na wykorzystanie tylnej przerzutki SRAM X5. Głównym atutem tej przerzutki jest jej konstrukcja, która ze względu na długie ramiona wózka przerzutki, umożliwia bezproblemowe zamontowanie serwomechanizmu. Przerzutka oferuje pełny zakres ruchu do obsługi ośmiu przełożeń. Dodatkowo jest solidną propozycją z niskiej półki cenowej.
 %_______________________________________________________________________________________________________________
 \subsection{Serwomechanizm}
-Serwomechaznim odpowiedzialny za pozycjonowanie wózka przerzutki to Hitec Hs-8335SH. Jest to tzw. cyfrowy serwomechanizm, przeznaczony do zastosowań modelarskich. Od analogowych odpowieników odróżnia się większą precyzją w osiąganiu zadanej pozycji oraz wyższym momentem obrotowym. Autor zdecydował się na zaostosowanie gotowego serwomechanizmu z kilku powodów. Takie rozwiązanie zdecydowanie przyspieszyło prace nad projektem. W dodatku gotowy serwomechanizm charakteryzuje się kompaktowymi rozmiarami oraz odpornością na warunki atmosferyczne.  
+Serwomechanizm odpowiedzialny za pozycjonowanie wózka przerzutki to Hitec Hs-8335SH. Jest to tzw. cyfrowy serwomechanizm, przeznaczony do zastosowań modelarskich. Od analogowych odpowiedników odróżnia się większą precyzją w osiąganiu zadanej pozycji oraz wyższym momentem obrotowym. Autor zdecydował się na zastosowanie gotowego serwomechanizmu z kilku powodów. Takie rozwiązanie zdecydowanie przyspieszyło prace nad projektem. W dodatku gotowy serwomechanizm charakteryzuje się kompaktowymi rozmiarami oraz odpornością na warunki atmosferyczne.  
 
 Parametry techniczne serwomechanizmu Hitec Hs-8335SH:
 \begin{itemize}
@@ -18,10 +18,10 @@ Prędkość (7.4V)[sek/$60^{\circ}$]: 0.13
 \item
 Metalowe tryby przekładni
 \end{itemize} 
+\label{serwo}
 %_______________________________________________________________________________________________________________
 \subsection{Mikrokontroler}
-Sterownik nadzorujący pracę całego układu został wykonany w oparciu o zestaw uruchomieniowy Texas Instruments Tiva C-Series EK-TM4C123GXL. Zestaw zawiera 32-bitowy mikrokontroler TM4C123GH6PM wykorzystujący rdzeń ARM Cortex-M4F. Posiada wbubowany regulator 3.3V, port micro USB oraz wyprowadzenia niezbędnych portów I/O. Charakteryzuje się kompaktowymi rozmiarami oraz niską wagą. Mikrokontroler zastosowany w zestawie 	oferuje wysoką wydajność oraz niski pobór prądu. Kontroler przerwań sprzętowych NVIC ( z ang. {\em Nested Vectored Interrupt Controller}) umożliwia efektywne zarządzanie przewaniami w zależności od zaprogramowanych priorytetów.
-\textcolor{red}{@TODO przypisik z pracyInz}
+Sterownik nadzorujący pracę całego układu został wykonany w oparciu o zestaw uruchomieniowy Texas Instruments Tiva C-Series EK-TM4C123GXL. Zestaw zawiera 32-bitowy mikrokontroler TM4C123GH6PM wykorzystujący rdzeń ARM Cortex-M4F. Posiada wbudowany regulator 3.3V, port micro USB oraz wyprowadzenia niezbędnych portów I/O. Charakteryzuje się kompaktowymi rozmiarami oraz niską wagą. Mikrokontroler zastosowany w zestawie 	oferuje wysoką wydajność oraz niski pobór prądu. Kontroler przerwań sprzętowych NVIC ( z ang. {\em Nested Vectored Interrupt Controller}) umożliwia efektywne zarządzanie przerwaniami w zależności od zaprogramowanych priorytetów \cite{tiva}.
 
 Parametry techniczne mikrokontrolera:
 \begin{itemize}
@@ -51,7 +51,7 @@ Układy czasowo-licznikowe
 %_______________________________________________________________________________________________________________
 \subsubsection{Pololu AltIMU 10}
 
-Pololu AltIMU10 to inercyjna jednoskta pomiarowa, w skład której wchodzą czujniki wykoanane w technologii MEMS:
+Pololu AltIMU10 to inercyjna jednoskta pomiarowa, w skład której wchodzą czujniki wykonane w technologii MEMS:
 \begin{itemize}
 \item
 Trzyosiowy akcelerometr ST LSM303DLHC
@@ -61,10 +61,10 @@ Trzyosiowy żyroskop ST L3GD20
 Trzyosiowy magnetometr ST LSM303DLHC
 \end{itemize}
 
-Wszystkie czujniki zamontowane w jednostce komunikują się z urządzeniem nadrzędnym z wykorzystaniem magistrali I2C(z ang. {\em Inter-Intergrated Circuit}). Magistrala I2C jest szerogowym, dwukierunkowym interfejsem komunikacyjnym opracowanym przez fimę Philips. Układ AltImu10 posiada elementy pasywne, gwarantujące poprawne działanie magistrali, oraz wbudowany regulator napięcia.\textcolor{red}{@TODO przypisik z pracyInz}
+Wszystkie czujniki zamontowane w jednostce komunikują się z urządzeniem nadrzędnym z wykorzystaniem magistrali I2C(z ang. {\em Inter-Intergrated Circuit}). Magistrala I2C jest szeregowym, dwukierunkowym interfejsem komunikacyjnym opracowanym przez firmę Philips. Układ AltImu10 posiada elementy pasywne, gwarantujące poprawne działanie magistrali, oraz wbudowany regulator napięcia \cite{Pololu}.
 %______________________________________________________________________________________________________________
 \subsubsection{Zbliżeniowe czujniki magnetyczne}
-Zbliżeniwe czujniki załączane magnetycznie wykorzystane są do wyznaczania prędkosci obrotowych tylnego koła oraz mechanizmu korbowego. W wyniki działania pola magnetycznego, pochodzącego z magnesu trwałego, czujnik zwiera swoje styki. 
+Zbliżenie czujniki załączane magnetycznie wykorzystane są do wyznaczania prędkości obrotowych tylnego koła oraz mechanizmu korbowego. W wyniki działania pola magnetycznego, pochodzącego z magnesu trwałego, czujnik zwiera swoje styki. 
  
 Parametry techniczne:
 \begin{itemize}
@@ -79,11 +79,11 @@ Styk normalnie otwarty
 \end{itemize}
 %_______________________________________________________________________________________________________________
 \subsection{Układ zasilania}
-Zródłem zasilania całego układu jest pakiet litowo-polimerowy BRAINERGY 1000mAh.
+Źródłem zasilania całego układu jest pakiet litowo-polimerowy BRAINERGY 1000mAh.
 Parametry techniczne pakietu zasilającego:
 \begin{itemize}
 \item
-Pojemność [mAh]: 500 \textcolor{red}{Ostaeczna pojemnosc pakietu ?!}
+Pojemność [mAh]: 1000
 \item
 Liczba ogniw: 2
 \item
@@ -95,27 +95,27 @@ Wydajność prądowa [A]: 45
 Dodatkowo zastosowany został regulator napięcia obniżający wartość napięcia pakietu do 5V, które jest źródłem zasilania zestawu uruchomieniowego EK-TM4C123GXL.
 %_______________________________________________________________________________________________________________
 \section{Narzędzia programistyczne}
-Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach typu embedded. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories, doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
+Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach typu embedded. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories \cite{prata}. Doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
 \subsection{Code Composer Studio 6.0.0}
 
-Oprogramowanie sterownika rozwijane było w oparciu o zintegorwane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC( z ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
+Oprogramowanie sterownika rozwijane było w oparciu o zintegrowane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC( z ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
 %_______________________________________________________________________________________________________________
 \subsection{Biblioteka TivaWare Peripheral Driver}
-Texas Intrusments dostarcza bibliotekę dedkowaną do mikrokontrolerów z rodziny Tiva ARM Cortex-M - TivaWare  Peripheral Driver Library. Biblioteka stanowi zbiór funkcji umożliwiających wykorzystanie układów peryferyjnych mikrokontrolera. Biblioteka, napisana w języku C, wspiera dwa modele programowania mikrokontrolera - Direct Register Access oraz Software Driver Model. Pierwszy z nich operuje bezpośrednio na rejestrach mikrokontrolera, co pozwala pisać bardzo wydajne programy o niewielkim rozmiarze. Jednocześnie wymaga bardzo dobrej znajomości rejetrów mikrokontrolera, znaczenia poszczególnych bitów oraz zależności pomiędzy rejestrami. Software Driver Model działa na wyższym poziomie dając kontrolę nad całymi układami peryferyjnymi. Użytkownik nie musi znać dokładnej architektury mikrokontrolera, co znacząco przyspiesza proces rozwijania oprogramowania. 
+Texas Intrusments dostarcza bibliotekę dedykowaną do mikrokontrolerów z rodziny Tiva ARM Cortex-M - TivaWare  Peripheral Driver Library. Biblioteka stanowi zbiór funkcji umożliwiających wykorzystanie układów peryferyjnych mikrokontrolera. Biblioteka, napisana w języku C, wspiera dwa modele programowania mikrokontrolera - Direct Register Access oraz Software Driver Model. Pierwszy z nich operuje bezpośrednio na rejestrach mikrokontrolera, co pozwala pisać bardzo wydajne programy o niewielkim rozmiarze. Jednocześnie wymaga bardzo dobrej znajomości rejestrów mikrokontrolera, znaczenia poszczególnych bitów oraz zależności pomiędzy rejestrami. Software Driver Model działa na wyższym poziomie dając kontrolę nad całymi układami peryferyjnymi. Użytkownik nie musi znać dokładnej architektury mikrokontrolera, co znacząco przyspiesza proces rozwijania oprogramowania. 
 %_______________________________________________________________________________________________________________
 \subsection{Pozostałe oprogramowanie}
 Pozostałe oprogramowanie wykorzystane w trakcie realizacji projektu to m.in.:
 \begin{itemize}
 \item
-Saleae Logic - oprogramowanie współpracujące z analizatorem stanów logicznych
+Saleae Logic - oprogramowanie współpracujące z analizatorem stanów logicznych.
 \item
-Gnuplot - program do graficznej reprezentacji danych
+Gnuplot - program do graficznej reprezentacji danych.
 \item
-Putty - klient usług Telnet, SSH i rlogin
+Putty - klient usług Telnet, SSH i rlogin, wykorzystany do logowania danych.
 \item
-Eagle - program do projektowania układów elektronicznych
+Eagle - program do projektowania układów elektronicznych.
 \item
-FreeCad - program do modelowania parametrycznego 3D
+FreeCad - program do modelowania parametrycznego 3D.
 \end{itemize}
 
 
