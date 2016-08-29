@@ -33,11 +33,11 @@ void handleCrankMagnetInt(void) {
 
 void initializeMagneticSensors(void) {
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-	GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3);
-	GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3, GPIO_FALLING_EDGE);
+	GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_4);
+	GPIOIntTypeSet(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_4, GPIO_FALLING_EDGE);
 	IntMasterEnable();
 	IntEnable(INT_GPIOA);
-	GPIOIntEnable(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3);
+	GPIOIntEnable(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_4);
 	initializeMagneticSensorsTimers();
 	TimerEnable(TIMER1_BASE, TIMER_A);
 	TimerEnable(TIMER1_BASE, TIMER_B);
@@ -50,6 +50,10 @@ void computeVelocityInMetersPerSecond() {
 	} else {
 		bicycleVelocityInMetersPerSeconds = 0;
 	}
+}
+
+uint8_t getBikeVelocityInKmPerH() {
+	return 3.6 * bicycleVelocityInMetersPerSeconds;
 }
 
 void computeCadence() {

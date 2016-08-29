@@ -13,6 +13,7 @@ void initializeMagneticSensors(void);
 void handleWheelMagnetInt(void);
 void handleCrankMagnetInt(void);
 void computeVelocityInMetersPerSecond();
+uint8_t getBikeVelocityInKmPerH();
 void computeCadence();
 
 #endif

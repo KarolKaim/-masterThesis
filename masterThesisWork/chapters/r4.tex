@@ -228,23 +228,23 @@ Wszystkie przyciski wykorzystują rezystor pull-up, podciągający do portu wej�
 Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwierania przycisku. Są to drgania mechaniczne, które mogą trwać od kilku mikrosekund do nawet kilkunastu milisekund. Powoduje to niezdefiniowane zachowanie całego systemu, np. zmianę kilku przełożeń na raz. Szybkozmienne zmiany stanu logicznego sygnału, wynikające z drgań styków przycisku, przedstawione zostały na rys \ref{fig:drganiaPrzyciskow}.
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.2]{drganiaPrzyciskow.png}
+    \includegraphics[scale=0.35]{drganiaPrzyciskow.png}
     \caption{Porównanie przebiegów sygnałów interpretowanych przez analizator stanów logicznych dla przycisku z filtrem RC - kanał 0, oraz bez filtra- kanał 1.}
     \label{fig:drganiaPrzyciskow}
 \end{figure}
 Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykonane zostały proste filtry dolnoprzepustowe RC. Zasada działania filtru RC została opisana w pkt. \ref{filtrRc}. W dokumentacji mikrokontrolera(\cite{tiva}) można znaleźć informację na temat minimalnego poziomu napięcia, interpretowanego jako stan wysoki - $0.6V_{in}$. Podobny poziom napięcia osiągany jest na wyjściu filtru RC, po skokowej zmianie napięcia wejściowego, po czasie równym stałej czasowej filtra. Autor założył, że zmiany biegów, oraz zmiana tryb jazdy, nie mogą być dokonywane częściej, niż 10 razy na sekundę. Z tego wynika, że stała czasowa filtru powinna wynosić około $100ms$. Wszystkie 3 filtry zostały wykonane w oparciu o opornik o rezystancji $200k\Omega$ i kondensator o pojemności 470$nF$. Tak dobór elementów pasywnych pozwala zbudować filtr, którego stała czasowa wynosi około $94ms$ 
 %______________________________________________________________________________________________________________
-\subsection{Kontrola zbliżeniowych czujników magnetycznych}
+\subsection{Obsługa zbliżeniowych czujników magnetycznych}
 Zbliżeniowe czujniki magnetyczne działają w sposób analogiczny do przycisków monostablilnych. Różnica polega na tym, że styki zwierane są w wyniku działania zewnętrznego pola magnetycznego, pochodzącego od magnesu trwałego. W trakcie zwierania/rozwierania czujnika magnetycznego również pojawia się problem mechanicznych grań styków. Problem został wyeliminowany w taki sam sposób, jak w przypadku przycisków, czyli przez zastosowanie filtrów dolnoprzepustowych RC. Elementy pasywne filtrów RC Stałe dla czujników magnetycznych zostały dobrane zgodnie z poniższymi założeniami.
 
-Czujnik magnetyczny, wykorzystany do wyznaczania chwilowej wartości prędkości roweru, korzysta z dwóch magnesów trwałych. Doświadczenia przeprowadzone z wykorzystaniem analizatora stanów logicznych przy dużych prędkościach obrotowych tylego koła wykazały, że drgania czujników magnetycznych trwają nie dłużej niż $1ms$.  Autor założył, że maksymalna prędkość roweru możliwa do osiągnięcia to $100\frac{km}{h}$, czyli około $28\frac{m}{s}$. Promień koła roweru wynosi około $0.33m$. Z zależności \ref{eq:zaleznoscNaPredkosc} wynika, że dla prędkości maksymalnej, magnes trwały znajduje się w pobliżu czujnika magnetycznego co $37ms$. Należy uwzględnić również to, że w tym czasie dochodzi do zwarcia i rozwarcia czujnika magnetycznego. Stała czasowa filtru RC, powinna być zatem co najmniej dwa razy krótsza. Ostatecznie filtr RC został wykonany z opornika o rezystancji $100k\Omega$ i kondensatora o pojemności $100nF$, co zapewnia wartość stałej czasowej filtra na poziomie $10ms$. Wartość ta jest o rząd wielkości większa od zarejestrowanych okresów drgań, a jednocześnie zwarcie i rozwarcie czujnika z filtrem trwa prawie dwa razy krócej, niż okres obrotu magnesu trwałego dla przyjętej prędkości maksymalnej.
+Czujnik magnetyczny, wykorzystany do wyznaczania chwilowej wartości prędkości roweru, korzysta z dwóch magnesów trwałych. Doświadczenia przeprowadzone z wykorzystaniem analizatora stanów logicznych przy dużych prędkościach obrotowych tylego koła wykazały, że drgania czujników magnetycznych trwają nie dłużej niż 1ms.  Autor założył, że maksymalna prędkość roweru możliwa do osiągnięcia to 100$\frac{km}{h}$, czyli około 28$\frac{m}{s}$. Promień koła roweru wynosi około 0.33m. Z zależności \ref{eq:zaleznoscNaPredkosc} wynika, że dla prędkości maksymalnej, magnes trwały znajduje się w pobliżu czujnika magnetycznego co 37ms. Należy uwzględnić również to, że w tym czasie dochodzi do zwarcia i rozwarcia czujnika magnetycznego. Stała czasowa filtru RC, powinna być zatem co najmniej dwa razy krótsza. Ostatecznie filtr RC został wykonany z opornika o rezystancji 100k$\Omega$ i kondensatora o pojemności 100nF, co zapewnia wartość stałej czasowej filtra na poziomie 10ms. Wartość ta jest o rząd wielkości większa od zarejestrowanych okresów drgań, a jednocześnie zwarcie i rozwarcie czujnika z filtrem trwa prawie dwa razy krócej, niż okres obrotu magnesu trwałego dla przyjętej prędkości maksymalnej.
 
-Czujnik magnetyczny wykorzystywany do wyznaczenia chwilowej wartości kadencji jest zwierany przez jeden magnes trwały, przymocowany do ramienia mechanizmu korbowego. Autor przyjął, że maksymalna kadencja możliwa do osiągnięcia przez rowerzystę, to $250\frac{obr}{min}$. Pełny obrót przy takie kadencji zajmuje $240ms$. Zastosowanie filtru o takiej samej stałej czasowej, jak filtr czujnika magnetycznego prędkości roweru, spełnia wymagania wynikające z przyjętego założenia o maksymalnej kadencji. 
+Czujnik magnetyczny wykorzystywany do wyznaczenia chwilowej wartości kadencji jest zwierany przez jeden magnes trwały, przymocowany do ramienia mechanizmu korbowego. Autor przyjął, że maksymalna kadencja możliwa do osiągnięcia przez rowerzystę, to 250$\frac{obr}{min}$. Pełny obrót przy takie kadencji zajmuje 240ms. Zastosowanie filtru o takiej samej stałej czasowej, jak filtr czujnika magnetycznego prędkości roweru, spełnia wymagania wynikające z przyjętego założenia o maksymalnej kadencji. 
 %______________________________________________________________________________________________________________
 \subsection{Obsługa jednostki pomiarowej Pololu AltIMU10}
-Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w trybie active i sport. Kąt nachylenia podłoża wyznaczany jest co $10ms$ przy użyciu filtru komplementarnego (pkt. \ref{kompZasadaDzialania}). 
+Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w trybie active i sport. Kąt nachylenia podłoża wyznaczany jest co 10ms przy użyciu filtru komplementarnego (pkt. \ref{kompZasadaDzialania}). 
  
-Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi $100kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
+Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi 100$kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
 \begin{itemize}
     \item
     SCL(z ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych.
@@ -296,7 +296,7 @@ Napięcie na wyjściu dzielnika napięcia określone jest zależnością:
     \label{eq:rownanieDzielnik}
 \end{equation}
 
-Zakładając maksymalną wartość napięcia pakietu, napięcie wejściowe na przetworniku analogowo-cyfrowym powinno wynosić 3.3V a rezystancja $R_2$ jest równa $10k\Omega$, to zgodnie z zależnością \ref{eq:rownanieDzielnik} rezystancja $R_1$ powinna przyjąć około $15k\Omega$.
+Zakładając maksymalną wartość napięcia pakietu, napięcie wejściowe na przetworniku analogowo-cyfrowym powinno wynosić 3.3V a rezystancja $R_2$ jest równa 10k$\Omega$, to zgodnie z zależnością \ref{eq:rownanieDzielnik} rezystancja $R_1$ powinna przyjąć około 15k$\Omega$.
 
 Przetwornik analogowo-cyfrowy przetwarza sygnał analogowy na równoważną postać cyfrową. Mikrokontroler wyposażony jest w przetwornik 12-bitowy. Oznacza to, że do reprezentacji całego zakresu pomiarowego używa dwunastu bitów. Zakres pomiarowy określony jest przez sygnały referencyjne - 0V i 3.3V(\cite{tiva}). Wartość zwracana przez przetwornik dla napięcia 0V wynosi 0, natomiast dla napięcia 3.3V przetwornik zwraca liczbę 4096. Rozdzielczość przetwornika wynosi około 0.8mV
 
@@ -325,6 +325,8 @@ Biorąc pod uwagę powyższe zależności i założenia, można wyznaczyć warto
 		\end{tabular}
 	\end{center}
 \end{table}
+
+Pomiar poziomu napięcia wyzwalany jest przy użycia zadania cyklicznego, wyzwalanego przez układ czasowo-licznikowy z częstotliwością 1Hz.
 
 
 

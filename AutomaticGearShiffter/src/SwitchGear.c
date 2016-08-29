@@ -16,6 +16,8 @@
 void initializeSwitches(void) {
 	initializeGpioAsSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE,
 	GPIO_PIN_0 | GPIO_PIN_1, GPIO_FALLING_EDGE, INT_GPIOB);
+	initializeGpioAsSwitch(SYSCTL_PERIPH_GPIOC, GPIO_PORTC_BASE,
+		GPIO_PIN_4, GPIO_FALLING_EDGE, INT_GPIOC);
 
 }
 

@@ -23,29 +23,21 @@ int main(void) {
 	initializeSportModeAccelReadingsAndPosChange();
 
 	initializeMagneticSensors();
-	//initializeImu();
+	initializeImu();
 	initializeGearController();
 	initializeSwitches();
 	initializeUart(115200);
 	initialzeRgbAndBatteryLevelCheckTimers();
-	initializeBatteryLevelCheck();
+	//initializeBatteryLevelCheck();
 	initializeRGBIndicator();
-
 
 	currentMode = active;
 	changeCurrentGearMode();
 
 	while (true) {
 		if (sportModeTimerDone && currentMode == sport) {
-//			sportModeTimerDone = false;
-//			computeSteepness();
-//			if (surfaceAngle < 0 && surfaceAngle > -1) {
-//				UARTprintf("-");
-//			}
-//			printFloat(&surfaceAngle);
-//			printFloat(&tmpSurfaceAngle);
-//
-//			UARTprintf("\n");
+			sportModeTimerDone = false;
+			computeSteepness();
 
 		}
 

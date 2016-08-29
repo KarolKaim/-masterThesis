@@ -60,11 +60,8 @@ void crankMagnetTimerHander(void) {
 void continuousChangeTimerHandler(void) {
 	TimerIntClear(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
 	continuousChangeTimerMs += 1;
-	if (continuousChangeTimerMs == 1000) {
+	if (continuousChangeTimerMs == 500) {
 
-		if (isGearDownSwitchPressed() && isGearUpSwitchPressed()) {
-			changeCurrentGearMode();
-		}
 		if (isGearUpSwitchPressed()) {
 			reduceGear();
 		} else if (isGearDownSwitchPressed()) {
@@ -73,7 +70,6 @@ void continuousChangeTimerHandler(void) {
 			turnOffConitnousChangeTimer();
 		}
 		continuousChangeTimerMs = 0;
-		enableSwitches();
 	}
 }
 
@@ -123,7 +119,7 @@ void activeModeTimerHandler(void) {
 void sportModeTimerHandler(void) {
 	TimerIntClear(TIMER5_BASE, TIMER_TIMB_TIMEOUT);
 	currentAutomaticChangeTimer += 1;
-	if (currentAutomaticChangeTimer > 1000) {
+	if (currentAutomaticChangeTimer > 1500) {
 		currentAutomaticChangeTimer = 0;
 		sportModeHandler();
 

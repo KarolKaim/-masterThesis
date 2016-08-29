@@ -1,7 +1,5 @@
 #include "DerailleurController.h"
 
-#include <stdbool.h>
-
 #include "inc/hw_memmap.h"
 #include "inc/hw_ints.h"
 #include "driverlib/sysctl.h"
@@ -13,6 +11,7 @@
 #include "SwitchGear.h"
 #include "MagneticSensors.h"
 #include "RGBIndicator.h"
+#include "Imu.h"
 
 uint32_t currentPwmTicksInUs = 0;
 
@@ -25,6 +24,9 @@ uint32_t derailleurDown[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
 volatile uint32_t * currentDerailleurPosition = derailleurPositions;
 int8_t currentGear = 0;
 enum GearMode currentMode = remote;
+bool pedalingStoped = false;
+bool gearChangedManualy = false;
+uint8_t secondsCounter = 0;
 
 void initializeGearController(void) {
 
@@ -91,41 +93,84 @@ void reduceGear(void) {
 }
 
 void comfortModeHandler() {
-	if(timeSinceLastWheelMagnetInt > 2000)
-	{
+	if (timeSinceLastWheelMagnetInt > 1800) {
+		pedalingStoped = true;
 		return;
 	}
-	if(timeSinceLastWheelMagnetInt > 2000)
-	{
-		return;
-	}
-	if (cadenceInRPM < 45) {
-		reduceGear();
-	} else if (cadenceInRPM > 60) {
-		increaseGear();
-	}
+	changeGearInCadenceRange(45, 60);
 }
 
 void activeModeHandler() {
-	if(timeSinceLastWheelMagnetInt > 2000)
-	{
+	if (timeSinceLastWheelMagnetInt > 1800) {
+		pedalingStoped = true;
 		return;
 	}
-	if (cadenceInRPM < 52) {
+	if (pedalingStoped) {
+		pedalingStoped = false;
+		setGearAccordingToSpeed();
+		return;
+	}
+	if (gearChangedManualy) {
+		secondsCounter += 1;
+		if (secondsCounter == 7) {
+			gearChangedManualy = false;
+		} else {
+			return;
+		}
+	}
+	changeGearInCadenceRange(55, 70);
+}
+
+void sportModeHandler() {
+	if (timeSinceLastWheelMagnetInt > 1800) {
+		pedalingStoped = true;
+		return;
+	}
+	if (pedalingStoped) {
+		pedalingStoped = false;
+		setGearAccordingToSpeed();
+		return;
+	}
+	if (gearChangedManualy) {
+		secondsCounter += 1;
+		if (secondsCounter == 7) {
+			gearChangedManualy = false;
+		} else {
+			return;
+		}
+	}
+	if (surfaceAngle < -3 || surfaceAngle > 3) {
+		changeGearInCadenceRange(55, 70);
+	} else {
+		changeGearInCadenceRange(65, 80);
+	}
+}
+
+void changeGearInCadenceRange(uint8_t lowerLimit, uint8_t upperLimit) {
+	if (cadenceInRPM < lowerLimit) {
 		reduceGear();
-	} else if (cadenceInRPM > 67) {
+	} else if (cadenceInRPM > upperLimit) {
 		increaseGear();
 	}
 }
 
-void sportModeHandler() {
-	if(timeSinceLastWheelMagnetInt > 2000)
-	{
-		return;
-	}
-	if (cadenceInRPM < 55) {
-		reduceGear();
-	} else if (cadenceInRPM > 74) {
-		increaseGear();
+void setGearAccordingToSpeed() {
+	uint8_t bikeVeloInKmPerH = getBikeVelocityInKmPerH();
+	if (bikeVeloInKmPerH < 2) {
+		currentGear = 0;
+	} else if (bikeVeloInKmPerH < 5) {
+		currentGear = 1;
+	} else if (bikeVeloInKmPerH < 10) {
+		currentGear = 2;
+	} else if (bikeVeloInKmPerH < 14) {
+		currentGear = 3;
+	} else if (bikeVeloInKmPerH < 18) {
+		currentGear = 4;
+	} else if (bikeVeloInKmPerH < 22) {
+		currentGear = 5;
+	} else if (bikeVeloInKmPerH < 26) {
+		currentGear = 6;
+	} else if (bikeVeloInKmPerH < 100) {
+		currentGear = 7;
 	}
 }

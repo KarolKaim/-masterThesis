@@ -16,9 +16,9 @@
  *  GPIO Input pins:
  *
  *  GPIO_A2 - wheel magnet
- *  GPIO_A3 - crank magnet
- *  GPIO_B6 - gear Up switch
- *  GPIO_B7 - gear down switch
+ *  GPIO_A4 - crank magnet
+ *  GPIO_B0 - gear Up switch
+ *  GPIO_B1 - gear down switch
  *  GPIO_C4 - gear mode switch
  *  GPIO_E4 - battery level ADC AIN9
  *
@@ -36,7 +36,7 @@ void gpioPortA(void) {
 	uint32_t status = clearGpioInt(GPIO_PORTA_BASE);
 	if ((status & GPIO_PIN_2) == GPIO_PIN_2) {
 		handleWheelMagnetInt();
-	} else if ((status & GPIO_PIN_3) == GPIO_PIN_3) {
+	} else if ((status & GPIO_PIN_4) == GPIO_PIN_4) {
 		handleCrankMagnetInt();
 
 	}
@@ -50,7 +50,10 @@ void gpioPortB(void) {
 		increaseGear();
 	}
 	turnOnConitnousChangeTimer();
-	disableSwitches();
+	if(currentMode == active || currentMode == sport)
+	{
+		gearChangedManualy = true;
+	}
 }
 
 void gpioPortC(void) {

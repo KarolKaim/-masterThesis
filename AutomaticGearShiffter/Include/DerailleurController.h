@@ -2,6 +2,7 @@
 #define INCLUDE_DERAILLEURCONTROLLER_H_
 
 #include "stdint.h"
+#include <stdbool.h>
 
 #define PWM_PERIOD_IN_HUND_OF_US 400
 
@@ -16,6 +17,7 @@ extern uint32_t derailleurDown[8];
 extern volatile uint32_t * currentDerailleurPosition;
 extern int8_t currentGear;
 extern enum GearMode currentMode;
+extern bool gearChangedManualy;
 
 void initializeGearController(void);
 void changeCurrentGearMode(void);
@@ -24,5 +26,7 @@ void increaseGear(void);
 void comfortModeHandler();
 void activeModeHandler();
 void sportModeHandler();
+void changeGearInCadenceRange(uint8_t lowerLimit, uint8_t upperLimit);
+void setGearAccordingToSpeed();
 
 #endif
