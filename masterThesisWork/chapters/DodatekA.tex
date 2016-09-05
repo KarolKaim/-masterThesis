@@ -1,0 +1,101 @@
+\chapter{Dodatek A}
+
+Zbiorcze podsumowanie szczegółów implementacji:
+\begin{table}[h]
+    \caption{Porty wejściowe mikrokontrolera}
+    \begin{center}
+		\label{tab:portyGPIO}
+		\begin{tabular}{|c|>{\centering}m{6.5cm}|}
+ 			\hline
+ 			\textbf{Port wejściowy GPIO} & \textbf{Funkcja} \tabularnewline
+ 			\hline
+ 			GPIO\_A2 & Obsługa czujnika magnetycznego do pomiaru prędkości kątowej koła roweru. \tabularnewline
+ 			\hline
+ 			GPIO\_A3 &  Obsługa czujnika magnetycznego do pomiaru kadencji. \tabularnewline
+ 			\hline
+ 			GPIO\_B6 & Obsługa przycisku zwiększającego przełożenie. \tabularnewline
+ 			\hline
+ 			GPIO\_B7 &  Obsługa przycisku redukującego przełożenie.\tabularnewline
+ 			\hline
+ 			GPIO\_C4 & Obsługa przycisku zmiany trybu jazdy. \tabularnewline
+ 			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{Porty wyjściowe mikrokontrolera}
+    \begin{center}
+		\label{tab:portyGPIO}
+		\begin{tabular}{|c|>{\centering}m{6.5cm}|}
+ 			\hline
+ 			\textbf{Port wyjściowy GPIO} & \textbf{Funkcja} \tabularnewline
+ 			\hline
+ 			GPIO\_D0 & Obsługa linii zegarowej magistrali I2C \tabularnewline
+ 			\hline
+ 			GPIO\_D1 & Obsługa linii danych magistrali I2C \tabularnewline
+ 			\hline
+ 			GPIO\_E2 & Generowanie sygnału sterującego pozycją serwomechanizmu \tabularnewline
+ 			\hline
+ 			GPIO\_F1 & Wskaźnik RGB - kolor czerwony  \tabularnewline
+			\hline
+ 			GPIO\_F2 &  Wskaźnik RGB - kolor zielony\tabularnewline
+			\hline
+ 			GPIO\_F3 &  Wskaźnik RGB - kolor niebieski\tabularnewline
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{Układy czasowo-licznikowe mikrokontrolera}
+    \begin{center}
+		\label{tab:portyGPIO}
+		\begin{tabular}{| >{\centering}m{3.5cm}| >{\centering}m{5.5cm}|>{\centering}m{3cm}|}
+ 			\hline
+ 			\textbf{Układ czasowo-licznikowy} & \textbf{Zadanie cykliczne} & \textbf{Częstotliwość zadania $[Hz]$}\tabularnewline
+ 			\hline
+            TIMER\_0A & Odczyt danych z jednostki pomiarowej IMU & 5 \tabularnewline
+ 			\hline
+            TIMER\_0B & Czas trwania pozycji pomocniczych & nd.\tabularnewline
+ 			\hline
+            TIMER\_1A & Pomiar prędkości obrotowej koła & 1000\tabularnewline
+ 			\hline
+            TIMER\_1B & Pomiar kadencji & 1000 \tabularnewline
+ 			\hline
+            TIMER\_2A & Generowanie sygnału sterującego pozycją serwomechanizmu & 20 000\tabularnewline
+ 			\hline
+            TIMER\_3A & Ciągła zmiana przełożeń & 1000\tabularnewline
+ 			\hline
+            TIMER\_3B & Tryb comfort & 0.33\tabularnewline
+ 			\hline
+            TIMER\_4A & Wskaźnik RGB tryb migający & 2\tabularnewline
+ 			\hline
+            TIMER\_4B & Pomiar stanu pakietu zasilającego & 1 \tabularnewline
+ 			\hline
+            TIMER\_5A & Tryb active i sport & 0.5 \tabularnewline
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[h]
+    \caption{Parametry filtrów RC}
+    \begin{center}
+		\label{tab:portyGPIO}
+		\begin{tabular}{| >{\centering}m{4cm}|>{\centering}m{3.5cm}|c|c|}
+ 			\hline
+            \textbf{Przeznaczenie filtru RC} & \textbf{Rezystancja R $[k\Omega]$} & \textbf{Pojemność C $[uF]$} & \textbf{Stała czasowa $[ms]$} \tabularnewline
+			\hline
+			Przyciski & 200 & 470 & 94\tabularnewline
+			\hline
+			Czujnik magnetyczny koła & 100 & 100 & 10 \tabularnewline
+			\hline
+			Czujnik magnetyczny mechanizmu korbowego & 100 & 100 & 10 \tabularnewline
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+
+
