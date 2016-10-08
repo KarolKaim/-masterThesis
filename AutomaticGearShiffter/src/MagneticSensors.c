@@ -44,15 +44,13 @@ void initializeMagneticSensors(void) {
 }
 
 void computeVelocityInMetersPerSecond() {
-	if (timeSinceLastWheelMagnetInt > 0) {
+	if (timeSinceLastWheelMagnetInt > 20) {
 		bicycleVelocityInMetersPerSeconds = 2 * PI * WHEELRADIUS
 				/ (0.001 * timeSinceLastWheelMagnetInt);
-	} else {
-		bicycleVelocityInMetersPerSeconds = 0;
 	}
 }
 
-uint8_t getBikeVelocityInKmPerH() {
+float getBikeVelocityInKmPerH() {
 	return 3.6 * bicycleVelocityInMetersPerSeconds;
 }
 
@@ -66,9 +64,5 @@ void computeCadence() {
 		if (derivateOfCaddence < 1) {
 			cadenceInRPM = tmpCadence;
 		}
-	} else {
-		cadenceInRPM = 0;
-		derivateOfCaddence = 0;
 	}
-
 }

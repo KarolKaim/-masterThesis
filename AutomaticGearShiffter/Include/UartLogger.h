@@ -4,6 +4,8 @@
 #include <stdint.h>
 
 void initializeUart(uint32_t speed);
-void printFloat(float * Data);
+void uartPrintFloat(float floatNumber);
+void distributeFloat(int *intPart, int *fracPart, float *floatNumber);
+void sendSystemData(void);
 
 #endif

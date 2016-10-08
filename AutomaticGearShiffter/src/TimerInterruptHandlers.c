@@ -44,7 +44,7 @@ uint16_t rgbTimer = 0;
 uint16_t batteryTimer = 0;
 
 bool sportModeTimerDone = false;
-uint16_t sportTimerTicks = 200;
+const uint16_t sportTimerTicks = 50;
 
 void wheelMagnetTimerHander(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);

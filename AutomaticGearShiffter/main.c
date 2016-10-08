@@ -4,11 +4,10 @@
 #include "inc/hw_memmap.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/gpio.h"
-
+#include "Imu.h"
 #include "SwitchGear.h"
 #include "MagneticSensors.h"
 #include "UartLogger.h"
-#include "Imu.h"
 #include "DerailleurController.h"
 #include "TimerInterruptHandlers.h"
 #include "RGBIndicator.h"
@@ -33,14 +32,16 @@ int main(void) {
 
 	currentMode = active;
 	changeCurrentGearMode();
+	turnOnAccelReadingsTimer();
 
 	while (true) {
-		if (sportModeTimerDone && currentMode == sport) {
+		if (sportModeTimerDone) {
 			sportModeTimerDone = false;
-			computeSteepness();
+			if (currentMode == sport)
+				computeSteepness();
+			sendSystemData();
 
 		}
-
 	}
 	return 0;
 }

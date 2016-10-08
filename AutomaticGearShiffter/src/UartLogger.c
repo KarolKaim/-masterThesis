@@ -9,6 +9,10 @@
 
 #include "driverlib/uart.h"
 #include "utils/uartstdio.h"
+#include "MagneticSensors.h"
+#include "Imu.h"
+#include "DerailleurController.h"
+#include "SwitchGear.h"
 
 void initializeUart(uint32_t speed) {
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
@@ -20,22 +24,23 @@ void initializeUart(uint32_t speed) {
 	UARTStdioConfig(0, speed, 16000000);
 }
 
-void printFloat(float * Data)
-{
-	int_fast32_t i32IPart, i32FPart;
-	float pfData;
-
-	pfData=*Data;
-
-
-	  i32IPart = (int32_t) pfData;
-    i32FPart = (int32_t) (pfData * 1000.0f);
-    i32FPart = i32FPart -(i32IPart * 1000);
-
-    if(i32FPart < 0)
-    {
-      i32FPart*= -1;
-		}
-
-		UARTprintf("%3d.%3d ", i32IPart, i32FPart);
+void distributeFloat(int *intPart, int *fracPart, float *floatNumber) {
+	*intPart = (int32_t) *floatNumber;
+	*fracPart = (int32_t) (*floatNumber * 1000.0f);
+	*fracPart = *fracPart - (*intPart * 1000);
+	if (*fracPart < 0) {
+		*fracPart *= -1;
 	}
+}
+
+void sendSystemData() {
+	float velocity = getBikeVelocityInKmPerH();
+	int intCadence, fracCadence, intAngle, fracAngle, intVelo, fracVelo;
+	distributeFloat(&intVelo, &fracVelo, &velocity);
+	distributeFloat(&intCadence, &fracCadence, &cadenceInRPM);
+	distributeFloat(&intAngle, &fracAngle, &surfaceAngle);
+	UARTprintf("%d;%d;%d;%d;%d.%d;%d.%d;%d.%d", currentGear, currentMode,
+			isGearDownSwitchPressed(), isGearUpSwitchPressed(), intVelo, fracVelo, intAngle, fracAngle,
+			intCadence, fracCadence);
+}
+

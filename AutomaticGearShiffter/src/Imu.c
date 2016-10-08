@@ -16,6 +16,8 @@
 #include "sensorlib/l3gd20h.h"
 #include "sensorlib/hw_l3gd20h.h"
 
+#include "TimerInterruptHandlers.h"
+
 tLSM303DLHCAccel sLSM303DLHCAccel;
 tI2CMInstance g_sI2CInst;
 tL3GD20H sl3gd20h;
@@ -166,11 +168,11 @@ void computeSteepness(void) {
 	float accelAngle = 0;
 	readAccelMeasurements(accelerometerReadings);
 	readRawGyroMeasurements(gyroReadings);
-	surfaceAngle += gyroReadings[2] * 0.01;
+	surfaceAngle += gyroReadings[2] * (sportTimerTicks / 1000);
 	accelAngle = (180
 			* atan2f(accelerometerReadings[0], accelerometerReadings[1]))
 			/ 3.14159;
-	surfaceAngle = 0.92 * surfaceAngle + 0.08 * accelAngle;
+	surfaceAngle = 0.98 * surfaceAngle + 0.02 * accelAngle;
 	tmpSurfaceAngle = accelAngle;
 }
 

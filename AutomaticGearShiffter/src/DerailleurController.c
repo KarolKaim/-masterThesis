@@ -24,7 +24,6 @@ uint32_t derailleurDown[8] = { 17, 19, 21, 23, 25, 27, 29, 32 };
 volatile uint32_t * currentDerailleurPosition = derailleurPositions;
 int8_t currentGear = 0;
 enum GearMode currentMode = remote;
-bool pedalingStoped = false;
 bool gearChangedManualy = false;
 uint8_t secondsCounter = 0;
 
@@ -61,11 +60,11 @@ void changeCurrentGearMode(void) {
 		setCurrentRgbState(pink);
 		currentMode = sport;
 		turnOnSportModeTimer();
-		turnOnAccelReadingsTimer();
+		//turnOnAccelReadingsTimer();
 		break;
 	case sport:
 		turnOffSportModeTimer();
-		turnOffAccelReadingsTimer();
+		//turnOffAccelReadingsTimer();
 		turnOffMagneticSensorsTimers();
 		setCurrentRgbState(yellow);
 		currentMode = remote;
@@ -93,21 +92,21 @@ void reduceGear(void) {
 }
 
 void comfortModeHandler() {
-	if (timeSinceLastWheelMagnetInt > 1800) {
-		pedalingStoped = true;
+	if (timeSinceLastWheelMagnetInt > 2000) {
+		bicycleVelocityInMetersPerSeconds = 0;
+		return;
+	}
+	if (timeSinceLastCrankMagnetInt > 1800) {
+		cadenceInRPM = 0;
 		return;
 	}
 	changeGearInCadenceRange(45, 60);
 }
 
 void activeModeHandler() {
-	if (timeSinceLastWheelMagnetInt > 1800) {
-		pedalingStoped = true;
-		return;
-	}
-	if (pedalingStoped) {
-		pedalingStoped = false;
-		setGearAccordingToSpeed();
+	//reset velocity
+	if (timeSinceLastWheelMagnetInt > 2000) {
+		bicycleVelocityInMetersPerSeconds = 0;
 		return;
 	}
 	if (gearChangedManualy) {
@@ -118,17 +117,21 @@ void activeModeHandler() {
 			return;
 		}
 	}
+
+	if (timeSinceLastCrankMagnetInt > 1800) {
+		cadenceInRPM = 0;
+	}
+	if (cadenceInRPM == 0) {
+		setGearAccordingToSpeed();
+		return;
+	}
+
 	changeGearInCadenceRange(55, 70);
 }
 
 void sportModeHandler() {
-	if (timeSinceLastWheelMagnetInt > 1800) {
-		pedalingStoped = true;
-		return;
-	}
-	if (pedalingStoped) {
-		pedalingStoped = false;
-		setGearAccordingToSpeed();
+	if (timeSinceLastWheelMagnetInt > 2000) {
+		bicycleVelocityInMetersPerSeconds = 0;
 		return;
 	}
 	if (gearChangedManualy) {
@@ -139,6 +142,13 @@ void sportModeHandler() {
 			return;
 		}
 	}
+
+	if (timeSinceLastCrankMagnetInt > 1800) {
+		cadenceInRPM = 0;
+		setGearAccordingToSpeed();
+		return;
+	}
+
 	if (surfaceAngle < -3 || surfaceAngle > 3) {
 		changeGearInCadenceRange(55, 70);
 	} else {
