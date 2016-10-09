@@ -26,6 +26,8 @@ int8_t currentGear = 0;
 enum GearMode currentMode = remote;
 bool gearChangedManualy = false;
 uint8_t secondsCounter = 0;
+bool peddalingStoped = false;
+bool peddalingWasStopped = false;
 
 void initializeGearController(void) {
 
@@ -60,6 +62,7 @@ void changeCurrentGearMode(void) {
 		setCurrentRgbState(pink);
 		currentMode = sport;
 		turnOnSportModeTimer();
+		gearChangedManualy = false;
 		//turnOnAccelReadingsTimer();
 		break;
 	case sport:
@@ -68,6 +71,9 @@ void changeCurrentGearMode(void) {
 		turnOffMagneticSensorsTimers();
 		setCurrentRgbState(yellow);
 		currentMode = remote;
+		peddalingStoped = false;
+		peddalingWasStopped = false;
+		gearChangedManualy = false;
 		break;
 	default:
 		break;
@@ -104,6 +110,7 @@ void comfortModeHandler() {
 }
 
 void activeModeHandler() {
+
 	//reset velocity
 	if (timeSinceLastWheelMagnetInt > 2000) {
 		bicycleVelocityInMetersPerSeconds = 0;
@@ -117,15 +124,11 @@ void activeModeHandler() {
 			return;
 		}
 	}
-
 	if (timeSinceLastCrankMagnetInt > 1800) {
 		cadenceInRPM = 0;
-	}
-	if (cadenceInRPM == 0) {
-		setGearAccordingToSpeed();
+		peddalingStoped = true;
 		return;
 	}
-
 	changeGearInCadenceRange(55, 70);
 }
 
@@ -145,10 +148,15 @@ void sportModeHandler() {
 
 	if (timeSinceLastCrankMagnetInt > 1800) {
 		cadenceInRPM = 0;
-		setGearAccordingToSpeed();
+		peddalingStoped = true;
+		peddalingWasStopped = true;
 		return;
 	}
-
+    if(peddalingWasStopped)
+    {
+    	peddalingWasStopped = false;
+    	return;
+    }
 	if (surfaceAngle < -3 || surfaceAngle > 3) {
 		changeGearInCadenceRange(55, 70);
 	} else {

@@ -60,7 +60,7 @@ void crankMagnetTimerHander(void) {
 void continuousChangeTimerHandler(void) {
 	TimerIntClear(TIMER3_BASE, TIMER_TIMA_TIMEOUT);
 	continuousChangeTimerMs += 1;
-	if (continuousChangeTimerMs == 500) {
+	if (continuousChangeTimerMs == 700) {
 
 		if (isGearUpSwitchPressed()) {
 			reduceGear();

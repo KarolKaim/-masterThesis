@@ -18,6 +18,7 @@ extern volatile uint32_t * currentDerailleurPosition;
 extern int8_t currentGear;
 extern enum GearMode currentMode;
 extern bool gearChangedManualy;
+extern bool peddalingStoped;
 
 void initializeGearController(void);
 void changeCurrentGearMode(void);

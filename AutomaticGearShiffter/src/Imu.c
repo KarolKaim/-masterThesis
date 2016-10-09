@@ -172,8 +172,7 @@ void computeSteepness(void) {
 	accelAngle = (180
 			* atan2f(accelerometerReadings[0], accelerometerReadings[1]))
 			/ 3.14159;
-	surfaceAngle = 0.98 * surfaceAngle + 0.02 * accelAngle;
-	tmpSurfaceAngle = accelAngle;
+	surfaceAngle = 0.99 * surfaceAngle + 0.01* accelAngle;
 }
 
 void copyReadings(float *source, float *destination) {

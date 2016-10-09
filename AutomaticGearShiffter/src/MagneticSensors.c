@@ -9,6 +9,7 @@
 #include "driverlib/timer.h"
 
 #include "TimerInterruptHandlers.h"
+#include "DerailleurController.h"
 
 #define PI 3.14159
 #define WHEELRADIUS 0.335
@@ -27,6 +28,11 @@ void handleWheelMagnetInt(void) {
 }
 
 void handleCrankMagnetInt(void) {
+	if(peddalingStoped)
+	{
+		peddalingStoped = false;
+		setGearAccordingToSpeed();
+	}
 	computeCadence();
 	timeSinceLastCrankMagnetInt = 0;
 }
