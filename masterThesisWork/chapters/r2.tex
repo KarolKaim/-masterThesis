@@ -1,50 +1,5 @@
 \chapter{Zestawienie zagadnień wykorzystanych w trakcie realizacji projektu}
-\label{cha:Zestawienie zagadnień wykorzystanych w pracy}
-
-\section{Mechaniczne układy napędowe}
-%______________________________________________________________________________________________________________
-\subsection{Przekładnie mechaniczne}
-Układ napędowy to zestaw urządzeń wykorzystywany do napędzania, w skład którego wchodzi źródło energii, układy pośredniczące w przekazywaniu energii oraz odbiornik energii. Mianem napędu zazwyczaj określa się urządzenia pośredniczące. Najczęściej wykorzystywanymi źródłami energii są silniki, a odbiorniki energii, których zadaniem jest realizowanie odpowiednich ruchów roboczych, przyjmują różne formy zależne od aplikacji.
-
-Układ mechaniczny wykorzystany do przeniesienia ruchu obrotowego z elementu czynnego na element bierny nazywany jest przekładnią mechaniczną. Element czynny to element napędzający, natomiast element bierny to element napędzany. Oprócz transmisji energii, przekładnie umożliwiają również zmianę parametrów ruchu - momentu obrotowego oraz prędkości obrotowej. Przekładnie mechaniczne dzieli się na trzy grupy: cięgnowe, cierne i zębate. Przekładnie cięgnowe, które zostały opisane ze względu na zastosowanie w rowerowych układach napędowych, składają się z co najmniej dwóch kół, rozsuniętych względem siebie, oraz cięgna opasającego. Ze względu na rodzaj zastosowanego cięgna, wyróżnia się przekładnie pasowe oraz łańcuchowe. Przenoszenie mocy oraz momentu obrotowego jest możliwe dzięki występującym siłą tarcia pomiędzy kołem a cięgnem(połączenia cierne), lub poprzez zazębianie się koła z cięgnem(połączenia kształtowe).
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.4]{przekladnie.png}
-    \caption{Różne rodzaje przekładni mechanicznych: a) przekładnia cierna, b) przekładnia cięgnowa pasowa, c) przekładnia cięgnowa łańcuchowa, d - e) przekładnie zębate. Grafika opracowana na podstawie \cite{maszyny1}.}
-    \label{fig:przekladnia}
-\end{figure}
-
-Wielkością charakteryzującą przekładnie jest przełożenie. Wyróżnia się przełożenie geometryczne, kinematyczne oraz dynamiczne. Przełożenie kinematyczne to stosunek prędkości kątowej koła czynnego do prędkości kątowej koła biernego\cite{przekladnie}:
-\begin{equation}
-    i = \frac{\omega_1}{\omega_2}
-    \label{eq:przelozenieKinematyczne}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$\omega_1$] prędkość kątowa koła czynnego
-	\item[$\omega_2$] prędkość kątowa koła biernego
-\end{eqwhere}
-
-Przełożenie przekładni jest parametrem bezwymiarowym. Ze względu na wartość przełożenia przekładni wyróżnia się:
-\begin{itemize}
-\item
-Przekładnie przyspieszające lub tzw. multiplikatory. Przekładnie tego typu zwiększają prędkość kątową koła biernego względem prędkości kątowej koła czynnego przy jednoczesnym zmniejszeniu momentu obrotowego koła biernego względem momentu obrotowego koła czynnego. Przełożenie takiej przekładni jest liczbą z zakresu od 0 do 1.
-\item
-Przekładnie redukujące lub tzw. reduktory. Przekładnie tego typu działają w sposób odwrotny do przekładni przyspieszających - zmniejszają prędkość kątową koła biernego względem prędkości kątowej koła czynnego oraz zwiększają moment obrotowy koła biernego względem momentu obrotowego koła czynnego. Przełożenie przekładni redukującej jest zawsze większe od 1.
-\end{itemize} 
-%____________________________________________________________________________________________________________  
-\subsection{Układ napędowy w rowerze}
-W przypadku konwencjonalnego układu napędowego stosowanego w rowerach elementem napędzającym jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate przymocowane na stałe do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy.
-
-Układ napędowy roweru wykorzystanego w pracy składa się z mechanizmu korbowego z jednym kołem zębatym, łańcucha, kasety ośmiorzędowej oraz przerzutki tylnej. Koło zębate zamontowane w mechanizmie korbowym ma 34 zęby. Kaseta składa się z ośmiu kół zębatych, których liczba zębów należy do zakresu od 11 do 32. Przekładnia zastosowana w rowerze, niezależnie od aktualnego biegu, ma zawsze charakter multiplikatora.
-
-Przerzutka tylna umożliwia zmianę przełożenia układu napędowego. Działa na zasadzie czworoboku przegubowego. Składa się z czterech członów połączonych przegubowo, tworzących zamknięty łańcuch kinematyczny. Pozycja wózka przerzutki, przymocowanego do jednego z członów, (Rys.\ref{fig:przerzutka}) utrzymywana jest dzięki zastosowaniu sprężyny napinającej oraz cięgna, połączonego z mechanizmem do zmiany przełożeń, zamontowanym w manetce. Dodatkowo przerzutka posiada mechanizm napinający łańcuch, tak aby zachować jego odpowiedni zwis, gwarantujący pełną funkcjonalność układu napędowego, niezależnie od aktualnej pozycji wózka przerzutki. 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.4]{przerzutka.jpg}
-    \caption{Schemat ilustrujący zasadę działania konwencjonalnej tylnej przerzutki rowerowej.}
-    \label{fig:przerzutka}
-\end{figure}
-%____________________________________________________________________________________________________________ 
+\label{cha:Zestawienie zagadnien wykorzystanych w pracy}
 
 \section{Serwomechanizm - budowa i zasada działania}
 Serwomechanizm to układ automatycznej regulacji, który służy do precyzyjnego sterowania silnikiem elektrycznym. Serwomechanizm wykorzystany w pracy pozycjonuje wózek przerzutki w zadanym położeniu.
@@ -169,9 +124,9 @@ W układzie pomiarowym prędkości kątowej koła roweru, który wykorzystuje dw
 \end{eqwhere}
 %____________________________________________________________________________________________________________  
 \subsection{Inercyjna jednostka pomiarowa IMU}
-Inercyjna jednostka pomiarowa ( z ang. {\em Inertial Measurement Unit}) to układ składający się z kilku czujników pomiarowych, pozwalających wyznaczyć orientację obiektu w przestrzeni trójwymiarowej. Stosowane m.in. w systemach stabilizacji bezzałogowych statków powietrznych. W realizowanym projekcie wykorzystana zostanie możliwość wyznaczenia kąta nachylenia podłoża, po którym porusza się rower z zamontowaną jednostką pomiarową IMU.
+Inercyjna jednostka pomiarowa (ang. {\em Inertial Measurement Unit}) to układ składający się z kilku czujników pomiarowych, pozwalających wyznaczyć orientację obiektu w przestrzeni trójwymiarowej. Stosowane m.in. w systemach stabilizacji bezzałogowych statków powietrznych. W realizowanym projekcie wykorzystana zostanie możliwość wyznaczenia kąta nachylenia podłoża, po którym porusza się rower z zamontowaną jednostką pomiarową IMU.
 
-Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy żyroskop oraz magnetometr. Wszystkie czujniki to urządzenia wykonane w miniaturowej skali oraz technologii MEMS ( z ang. {\em Micro Electro-Mechanical Systems}), które integrują elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi. 
+Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy żyroskop oraz magnetometr. Wszystkie czujniki to urządzenia wykonane w miniaturowej skali oraz technologii MEMS ( ang. {\em Micro Electro-Mechanical Systems}), które integrują elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi. 
 
 %____________________________________________________________________________________________________________  
 \subsubsection{Pomiar przyspieszeń - akcelerometr}

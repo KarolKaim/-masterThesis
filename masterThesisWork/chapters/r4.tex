@@ -159,7 +159,7 @@ Kodowanie stanów w postaci kolorów diody RGB przedstawione zostało w tabeli \
 \section{Szczegóły implementacji}
 %_______________________________________________________________________________________________________________
 \subsection{Kontrola serwomechanizmu}
-Pozycja serwomechanizmu modelarskiego sterowana jest przez sygnał PWM (z ang. {\em Pulse-Width Modulation}). Jest to metoda regulacji sygnałem napięciowym, o stałej częstotliwości i amplitudzie, polegająca na zmianie wypełnienia sygnału. Częstotliwość sygnału wynosi 50Hz. Wartości napięcia, które zmieniają się w sposób skokowy, wynoszą 0 i 3.3V. Pełny zakres ruchu serwomechanizmu osiągalny jest przez zmianę wypełnienia sygnału sterującego z zakresu od 2.5 do 12.5 \%. Innymi słowy - podanie prostokątnego sygnału sterującego o okresie 20ms, w którym stan wysoki utrzymany jest przez czas z zakresu od 0.5ms do 2.5 ms, umożliwia obrót wału serwomechanizmu z zakresu od 0 do 180$^{\circ}$.
+Pozycja serwomechanizmu modelarskiego sterowana jest przez sygnał PWM (ang. {\em Pulse-Width Modulation}). Jest to metoda regulacji sygnałem napięciowym, o stałej częstotliwości i amplitudzie, polegająca na zmianie wypełnienia sygnału. Częstotliwość sygnału wynosi 50Hz. Wartości napięcia, które zmieniają się w sposób skokowy, wynoszą 0 i 3.3V. Pełny zakres ruchu serwomechanizmu osiągalny jest przez zmianę wypełnienia sygnału sterującego z zakresu od 2.5 do 12.5 \%. Innymi słowy - podanie prostokątnego sygnału sterującego o okresie 20ms, w którym stan wysoki utrzymany jest przez czas z zakresu od 0.5ms do 2.5 ms, umożliwia obrót wału serwomechanizmu z zakresu od 0 do 180$^{\circ}$.
 
 Przerzutka, do której został przymocowany serwomechanizm, ogranicza pełny zakres ruchu serwomechanizmu. Minimalne oraz maksymalne wychylenie wózka przerzutki wiąże się z obrotem wału serwomechanizmu odpowiednio o kąt 31 i 95$^{\circ}$. W tym zakresie obsługiwane są wszystkie dostępne przełożenia. Każdemu z ośmiu przełożeń odpowiada inna pozycja serwomechanizmu (tabela \ref{tab:przelozenia}). Pozycje serwomechanizmu zostały dobrane eksperymentalnie. Można zaobserwować liniowy przyrost czasu wypełnienia sygnału. 
 \begin{table}[h]
@@ -249,9 +249,9 @@ Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w 
 Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi 100$kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
 \begin{itemize}
     \item
-    SCL(z ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych.
+    SCL(ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych.
     \item
-    SDA(z ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych.
+    SDA(ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych.
     \item
     Vin - zasilanie jednostki pomiarowej, które przyjmuje napięcie z zakresu od 2.5V do 5.5V.
     \item
