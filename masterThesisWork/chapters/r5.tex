@@ -22,13 +22,14 @@ Na potrzeby testów, wykonana została aplikacja przedstawiająca, w formie prze
  trybu pracy sterownia.
  \end{itemize}
  
-Slot czasowy dla danych prezentowanych na przebiegach jest stały i wynosi 16 sekund. We wszystkich trybach automatycznych przedstawione są również przyjęte zakresy kadencji, a w trybie sportowym dodatkowo zakres kąta nachylenia podłoża.
+We wszystkich trybach automatycznych przedstawione są również przyjęte zakresy kadencji, a w trybie sportowym dodatkowo zakres kąta nachylenia podłoża.
  
 \section{Wyniki tesów}
 
 Poniżej zaprezentowano wyniki testów wybranych scenariuszy, potwierdzające zgodność działania sterownika układu z założeniami, przedstawionymi w pkt. \textcolor{red}{pktFinalny}
 \subsection{Tryb ręczny}
-Podstawowa funkcjonalność układu to zmiana przełożeń w trybie ręcznym. 
+Podstawowa funkcjonalność układu to zmiana przełożeń w trybie ręcznym. Naciśnięcie odpowiedniego przycisku powoduje zmianę przełożenia.
+ 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.36]{tests_randomChange1.jpg}
@@ -36,14 +37,28 @@ Podstawowa funkcjonalność układu to zmiana przełożeń w trybie ręcznym.
     \label{fig:tests_randomChange}
 \end{figure}
 
+Kolejna funkcjonalność to możliwość zmiany kilku przełożeń w wyniku naciśniecia i przytrzymania odpowiedniego przycisku. Funkcjonalność ciągłej zmiany przełożeń zaprojektowana została z myślą o możliwości szybkiego doboru przełożenia. Początkowo zakładano, że zmiana biegów wyzwalana będzie z częstotliwością 1Hz. Jednak w trakcie przeprowadzania eksperymentów uznano, że należy zmniejszyć opóźnienie pomiędzy kolejnymi zmianami, które ostatecznie wynosi 0.7 sekundy.
+
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.36]{tests_continousChange.jpg}
-    \caption{Ciągła zmiana przełożeń}
+    \caption{Ciągła zmiana przełożeń w trybie ręcznym}
     \label{fig:tests_continousChange}
 \end{figure}
 \subsection{Tryb comfort}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.36]{tests_trybComfort.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Comfort}
+    \label{fig:tests_continousChange}
+\end{figure}
+\textcolor{red}{zlapac lepszy brak zmiany w trybie comfort}
 \subsection{Tryb active}
-
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.35]{tests_trybActive.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Active}
+    \label{fig:tests_continousChange}
+\end{figure}
 \subsection{Tryb sport}
