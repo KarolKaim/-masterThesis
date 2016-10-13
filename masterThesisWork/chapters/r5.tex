@@ -46,13 +46,16 @@ Kolejna funkcjonalność to możliwość zmiany kilku przełożeń w wyniku naci
     \label{fig:tests_continousChange}
 \end{figure}
 \subsection{Tryb comfort}
+W trybie comfort przeprowadzono dwa scenariusze testowe. 
 
+Pierwsza przetestowana funkcjonalność to utrzymywanie kadencji w zadanym zakresie. W trybie comfort kadencja powinna zostać utrzymana w zakresie od $45$ do $60$ obrotów na minutę. Szare linie naniesione na wykres kadencji obejmują ten zakres. Przebiegi zamieszczone na rys. \ref{fig:tests_continousChange} potwierdzają poprawne działanie tej funkcjonalności. W wyniku przekroczenia górnej granicy wartości kadencji następuje automatyczna zmiana przełożenia. Stan przycisków do zmiany ręcznej nie zmienia się. Przełożenie zmieniane jest dwukrotnie. Kolejne zmiany przełożeń nie są konieczne w wyniku stabilizacji wartości kadencji w zadanym zakresie. 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.36]{tests_trybComfort.jpg}
     \caption{Automatyczna zmiana przełożeń - tryb Comfort}
     \label{fig:tests_continousChange}
 \end{figure}
+Drugi scenariusz obejmuje sprawdzenie wyłączenia możłiwości ręcznej zmiany przełożeń. Przebiegi przedstawione na rys. \textcolor{red}{RYS!} potwierdzają poprawne działanie kontrolera.
 \textcolor{red}{zlapac lepszy brak zmiany w trybie comfort}
 \subsection{Tryb active}
 \begin{figure}[h]
@@ -62,3 +65,17 @@ Kolejna funkcjonalność to możliwość zmiany kilku przełożeń w wyniku naci
     \label{fig:tests_continousChange}
 \end{figure}
 \subsection{Tryb sport}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.36]{tests_trybSportDopasowanieBiegu.jpg}
+    \caption{Dopasowanie przełożenia w wyniku zatrzymania pedałowania - tryb Sport}
+    \label{fig:tests_continousChange}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.36]{tests_trybSportZmianaBiegow.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \label{fig:tests_continousChange}
+\end{figure}
