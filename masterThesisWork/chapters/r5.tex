@@ -46,23 +46,41 @@ Kolejna funkcjonalność to możliwość zmiany kilku przełożeń w wyniku naci
     \label{fig:tests_continousChange}
 \end{figure}
 \subsection{Tryb comfort}
-W trybie comfort przeprowadzono dwa scenariusze testowe. 
+W trybie comfort zweryfikowano dwa scenariusze testowe. 
 
 Pierwsza przetestowana funkcjonalność to utrzymywanie kadencji w zadanym zakresie. W trybie comfort kadencja powinna zostać utrzymana w zakresie od $45$ do $60$ obrotów na minutę. Szare linie naniesione na wykres kadencji obejmują ten zakres. Przebiegi zamieszczone na rys. \ref{fig:tests_continousChange} potwierdzają poprawne działanie tej funkcjonalności. W wyniku przekroczenia górnej granicy wartości kadencji następuje automatyczna zmiana przełożenia. Stan przycisków do zmiany ręcznej nie zmienia się. Przełożenie zmieniane jest dwukrotnie. Kolejne zmiany przełożeń nie są konieczne w wyniku stabilizacji wartości kadencji w zadanym zakresie. 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.36]{tests_trybComfort.jpg}
-    \caption{Automatyczna zmiana przełożeń - tryb Comfort}
-    \label{fig:tests_continousChange}
+    \caption{Automatyczna zmiana przełożeń - tryb Comfort.}
+    \label{fig:tests_trybComfort}
 \end{figure}
-Drugi scenariusz obejmuje sprawdzenie wyłączenia możłiwości ręcznej zmiany przełożeń. Przebiegi przedstawione na rys. \textcolor{red}{RYS!} potwierdzają poprawne działanie kontrolera.
-\textcolor{red}{zlapac lepszy brak zmiany w trybie comfort}
+
+Drugi scenariusz obejmuje sprawdzenie wyłączenia możłiwości ręcznej zmiany przełożeń. Przebiegi przedstawione na rys. \textcolor{red}{RYS!} potwierdzają poprawne działanie kontrolera. Przełożenie jest stałe pomimo zarejestrowanych prób ręcznej zmiany biegu.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.38]{tests_trybComfortBrakZmian.jpg}
+    \caption{Brak reakcji na ręczną zmianę w trybie Comfort.}
+    \label{fig:tests_noChange}
+\end{figure}
+
 \subsection{Tryb active}
+
+Tryb active powinien zapewniać dwie funkcjonalności - utrzymanie kadencji w zadanym przedziale i ręczna zmiana biegów.
+
+Zakres kadencji w trybie active wynosi od 55 do 70 obrotów na minutę. Na rys.\ref{fig:tests_active} można zaobserwować że kontroler dobiera  przełożenie tak, aby spełnić powyższe założenie.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.35]{tests_trybActive.jpg}
     \caption{Automatyczna zmiana przełożeń - tryb Active}
-    \label{fig:tests_continousChange}
+    \label{fig:tests_active}
+\end{figure}
+Kolejna funkcja dostępna w trybie active to ręczna zmiana przełożeń. W wyniku ręcznej zmiany przełożeń automatyczna zmiana biegów zostaje wyłączona na 10 sekund. Przebiegi zaprezentowane na rys. \ref{fig:tests_activeReczna} wykazują prawidłowe działanie sterownika. Ręczna zmiana biegu powoduje redukcje przełożenia, której konsekwencją jest wzrost wartości kadencji. Pomimo przekroczenia górnej granicy zakresu kadencji, zmiana biegu następuje dopiero po 10 sekundach.    
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.35]{tests_trybActiveRecznaZmiana.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Active}
+    \label{fig:tests_activeReczna}
 \end{figure}
 \subsection{Tryb sport}
 
@@ -70,12 +88,33 @@ Drugi scenariusz obejmuje sprawdzenie wyłączenia możłiwości ręcznej zmiany
     \centering
     \includegraphics[scale=0.36]{tests_trybSportDopasowanieBiegu.jpg}
     \caption{Dopasowanie przełożenia w wyniku zatrzymania pedałowania - tryb Sport}
-    \label{fig:tests_continousChange}
+    \label{fig:tests_gearSpeedSelection}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.36]{tests_trybSportZmianaBiegow.jpg}
     \caption{Automatyczna zmiana przełożeń - tryb Sport}
-    \label{fig:tests_continousChange}
+    \label{fig:tests_sportMode}
 \end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.36]{tests_imu1.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \label{fig:tests_sportMode}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.36]{tests_imu2.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \label{fig:tests_sportMode}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.36]{tests_trybSportKat.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \label{fig:tests_sportMode}
+\end{figure}
+
