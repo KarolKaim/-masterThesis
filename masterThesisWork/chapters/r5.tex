@@ -75,6 +75,7 @@ Zakres kadencji w trybie active wynosi od 55 do 70 obrotów na minutę. Na rys.\
     \caption{Automatyczna zmiana przełożeń - tryb Active}
     \label{fig:tests_active}
 \end{figure}
+
 Kolejna funkcja dostępna w trybie active to ręczna zmiana przełożeń. W wyniku ręcznej zmiany przełożeń automatyczna zmiana biegów zostaje wyłączona na 10 sekund. Przebiegi zaprezentowane na rys. \ref{fig:tests_activeReczna} wykazują prawidłowe działanie sterownika. Ręczna zmiana biegu powoduje redukcje przełożenia, której konsekwencją jest wzrost wartości kadencji. Pomimo przekroczenia górnej granicy zakresu kadencji, zmiana biegu następuje dopiero po 10 sekundach.    
 \begin{figure}[h]
     \centering
@@ -83,14 +84,22 @@ Kolejna funkcja dostępna w trybie active to ręczna zmiana przełożeń. W wyni
     \label{fig:tests_activeReczna}
 \end{figure}
 \subsection{Tryb sport}
+W trybie sportowym dokonywany jest odczyt danych pomiarowych z akcelerometru i żyroskopu. Zastosowanie filtru komplementarnego, który dokonuje fuzji tych danych, umożliwia wyznaczenie kąta nachylenia podłoża(pkt.\ref{kompZasadaDzialania}). Działanie filtru można dopasować poprzez dobór wartości stałej czasowej. Niska wartość stałej czasowej pozwala zachować niewielkie przesunięcie fazowe pomiędzy rzeczywistą wartością kąta nachylenia a wartością estymowaną. Jednoczesnie wartość estymowana obarczona jest błędem wynikającym z dryfu żyroskopu. Wysoka wartość stałej czasowej pozwala usunąć błędy wartości estymowanej, jednak wprowadza dodatkowe opóźnienie. Dobór tego parametru jest zależny od aplikacji.
+
+Kąt nachylenia podłoża jest wielkością wolnozmienną, w porównaniu do np. kątów określających orientację wielowirnikowych platform latających. Niwelowanie błędu wynikającego z dryfu oraz przyspieszeń dynamicznych, działających na akcelerometr, ma wyższy priorytet, niż szybka odpowiedź filtru. Dlatego stała czasowa filtru powinna przyjąć wysoką wartość. Przebiegi przedstawione na rys.\ref{fig:tests_imu1} oraz \ref{fig:tests_imu2} przedstawiają estymowaną wartość kąta nachylenia podłoża dla przypadków, w których stała czasowa wynosi odpowiednio $0.5$ i $2$ sekundy. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.36]{tests_imu1.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \label{fig:tests_imu1}
+\end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.36]{tests_trybSportDopasowanieBiegu.jpg}
-    \caption{Dopasowanie przełożenia w wyniku zatrzymania pedałowania - tryb Sport}
-    \label{fig:tests_gearSpeedSelection}
+    \includegraphics[scale=0.36]{tests_imu2.jpg}
+    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \label{fig:tests_imu2}
 \end{figure}
-
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.36]{tests_trybSportZmianaBiegow.jpg}
@@ -100,17 +109,14 @@ Kolejna funkcja dostępna w trybie active to ręczna zmiana przełożeń. W wyni
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.36]{tests_imu1.jpg}
-    \caption{Automatyczna zmiana przełożeń - tryb Sport}
-    \label{fig:tests_sportMode}
+    \includegraphics[scale=0.36]{tests_trybSportDopasowanieBiegu.jpg}
+    \caption{Dopasowanie przełożenia w wyniku zatrzymania pedałowania - tryb Sport}
+    \label{fig:tests_gearSpeedSelection}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.36]{tests_imu2.jpg}
-    \caption{Automatyczna zmiana przełożeń - tryb Sport}
-    \label{fig:tests_sportMode}
-\end{figure}
+
+
+
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.36]{tests_trybSportKat.jpg}
