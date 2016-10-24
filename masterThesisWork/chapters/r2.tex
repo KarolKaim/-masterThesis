@@ -1,259 +1,66 @@
-\chapter{Zestawienie zagadnień wykorzystanych w trakcie realizacji projektu}
-\label{cha:Zestawienie zagadnien wykorzystanych w pracy}
+\chapter{Rowerowe układy napędowe}
 
-\section{Serwomechanizm - budowa i zasada działania}
-Serwomechanizm to układ automatycznej regulacji, który służy do precyzyjnego sterowania silnikiem elektrycznym. Serwomechanizm wykorzystany w pracy pozycjonuje wózek przerzutki w zadanym położeniu.
+%______________________________________________________________________________________________________________
+\section{Przekładnie mechaniczne}
+Układ napędowy to zestaw urządzeń wykorzystywany do napędzania, w skład którego wchodzi źródło energii, układy pośredniczące w przekazywaniu energii oraz odbiornik energii. Mianem napędu zazwyczaj określa się urządzenia pośredniczące. Najczęściej wykorzystywanymi źródłami energii są silniki, a odbiorniki energii, których zadaniem jest realizowanie odpowiednich ruchów roboczych, przyjmują różne formy zależne od aplikacji.
 
-Układy automatycznej regulacji w serwomechanizmach to zazwyczaj układy zamknięte z ujemną pętlą sprzężenia zwrotnego. Schemat takiego układu regulacji został przedstawiony na rys. \ref{fig:zamknietyUklad}. Zastosowanie ujemnego sprzężenia zwrotnego umożliwia osiągnięcie celu sterowania, pomimo występujących zakłóceń. Mogą to być zakłócenia związane z pomiarami wyjścia, zakłócenia działające na obiekt lub zakłócenia sterowania. Zasada działania układu ze sprzężeniem zwrotnym polega na porównaniu aktualnej wartości wielkości regulowanej $y$ z wartością zadaną $r$, wyznaczeniu wartości uchybu regulacji $e$ i pobudzenia do pracy regulatora, którego akcja redukuje błąd regulacji, pomimo ciągle działających zakłóceń $z$ \cite{zamknietyB}.
+Układ mechaniczny wykorzystany do przeniesienia ruchu obrotowego z elementu czynnego na element bierny nazywany jest przekładnią mechaniczną. Element czynny to element napędzający, natomiast element bierny to element napędzany. Oprócz transmisji energii, przekładnie umożliwiają również zmianę parametrów ruchu - momentu obrotowego oraz prędkości obrotowej. Przekładnie mechaniczne dzieli się na trzy grupy: cięgnowe, cierne i zębate. Przekładnie cięgnowe, które zostały opisane ze względu na zastosowanie w rowerowych układach napędowych, składają się z co najmniej dwóch kół, rozsuniętych względem siebie, oraz cięgna opasającego. Ze względu na rodzaj zastosowanego cięgna, wyróżnia się przekładnie pasowe oraz łańcuchowe. Przenoszenie mocy oraz momentu obrotowego jest możliwe dzięki występującym siłą tarcia pomiędzy kołem a cięgnem(połączenia cierne), lub poprzez zazębianie się koła z cięgnem(połączenia kształtowe).
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.4]{zamknietyUkladRegulacji.jpg}
-    \caption{Schemat zamkniętego układu regulacji z ujemną pętlą sprzężenia zwrotnego. Opis sygnałów : $r$ – wartość zadana,  $e$ – uchyb regulacji, $u$ – sterowanie generowane przez regulator , $y$ – wyjście z obiektu, $z$ – zakłócenia działające na obiekt.}
-    \label{fig:zamknietyUklad}
+    \includegraphics[scale=0.4]{przekladnie.png}
+    \caption{Różne rodzaje przekładni mechanicznych: a) przekładnia cierna, b) przekładnia cięgnowa pasowa, c) przekładnia cięgnowa łańcuchowa, d - e) przekładnie zębate. Grafika opracowana na podstawie \cite{maszyny1}.}
+    \label{fig:przekladnia}
 \end{figure}
 
-Serwomechanizm zbudowany jest z kilku podstawowych elementów, takich jak silnik elektryczny, układ pomiarowy pozycji/prędkości wału silnika, regulator oraz układ mocy. W serwomechanizmach stosowane są silniki prądu stałego lub przemiennego. Serwomechanizmy oferowane na rynku mogą pracować w kilku trybach:
+Wielkością charakteryzującą przekładnie jest przełożenie. Wyróżnia się przełożenie geometryczne, kinematyczne oraz dynamiczne. Przełożenie kinematyczne to stosunek prędkości kątowej koła czynnego do prędkości kątowej koła biernego \cite{przekladnie}:
+\begin{equation}
+    i = \frac{\omega_1}{\omega_2}
+    \label{eq:przelozenieKinematyczne}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\omega_1$] prędkość kątowa koła czynnego
+	\item[$\omega_2$] prędkość kątowa koła biernego
+\end{eqwhere}
+
+Przełożenie przekładni jest parametrem bezwymiarowym. Ze względu na wartość przełożenia przekładni wyróżnia się:
 \begin{itemize}
 \item
-     Tryb regulacji położenia - układ automatycznej regulacji dąży do osiągnięcia zadanej pozycji wału silnika.
+Przekładnie przyspieszające lub tzw. multiplikatory. Przekładnie tego typu zwiększają prędkość kątową koła biernego względem prędkości kątowej koła czynnego przy jednoczesnym zmniejszeniu momentu obrotowego koła biernego względem momentu obrotowego koła czynnego. Przełożenie takiej przekładni jest liczbą z zakresu od 0 do 1.
 \item
-    Tryb regulacji prędkości - układ automatycznej regulacji dąży do osiągnięcia zadanej prędkości obrotowej wału silnika.
-\item
-    Tryb regulacji momentu obrotowego - układ automatycznej regulacji dąży do osiągnięcia zadanego momentu obrotowego generowanego przez silnik.
-\end{itemize}
-
-Szczegóły dotyczące serwomechanizmu, wykorzystanego do realizacji projektu, zostały przedstawione w pkt. \ref{serwo}  
+Przekładnie redukujące lub tzw. reduktory. Przekładnie tego typu działają w sposób odwrotny do przekładni przyspieszających - zmniejszają prędkość kątową koła biernego względem prędkości kątowej koła czynnego oraz zwiększają moment obrotowy koła biernego względem momentu obrotowego koła czynnego. Przełożenie przekładni redukującej jest zawsze większe od 1.
+\end{itemize} 
 %____________________________________________________________________________________________________________  
-\section{Pasywny filtr dolnoprzepustowy RC}
+\section{Układ napędowy w rowerze}
+W przypadku konwencjonalnego układu napędowego stosowanego w rowerach elementem napędzającym jest rowerzysta. Siła przyłożona do ramienia korby generuje moment obrotowy, który przenoszony jest, przy pomocy mechanizmu korbowego i łańcucha, na koło zębate przymocowane na stałe do piasty tylnego koła. Moment obrotowy koła napędzającego powoduje powstanie sił obwodowych, składających się na siłę napędową, która wprawia rower w ruch postępowy.
 
-Filtr to układ, który przepuszcza na wyjście sygnały o określonej częstotliwości. Filtr dolnoprzepustowy przepuszcza na wyjście sygnały o niskiej częstotliwości, natomiast blokuje sygnały szybkozmienne. Ze względu na konstrukcję filtru, można je podzielić również na filtry pasywne, zbudowane tylko w oparciu o elementy RLC, i aktywne, wykorzystujące dodatkowo np. wzmacniacze operacyjne. 
+Układ napędowy roweru wykorzystanego w pracy składa się z mechanizmu korbowego z jednym kołem zębatym, łańcucha, kasety ośmiorzędowej oraz przerzutki tylnej. Koło zębate zamontowane w mechanizmie korbowym ma 34 zęby. Kaseta składa się z ośmiu kół zębatych, których liczba zębów należy do zakresu od 11 do 32. Przekładnia zastosowana w rowerze, niezależnie od aktualnego biegu, ma zawsze charakter multiplikatora.
 
-Najprostszy filtr dolnoprzepustowy to pasywny filtr RC zbudowany z opornika o rezystancji $R$ i kondensatora o pojemności $C$ - rys. \ref{fig:filtrRC1}. 
+Przerzutka tylna umożliwia zmianę przełożenia układu napędowego. Działa na zasadzie czworoboku przegubowego. Składa się z czterech członów połączonych przegubowo, tworzących zamknięty łańcuch kinematyczny. Pozycja wózka przerzutki, przymocowanego do jednego z członów, (Rys.\ref{fig:przerzutka}) utrzymywana jest dzięki zastosowaniu sprężyny napinającej oraz cięgna, połączonego z mechanizmem do zmiany przełożeń, zamontowanym w manetce. Dodatkowo przerzutka posiada mechanizm napinający łańcuch, tak aby zachować jego odpowiedni zwis, gwarantujący pełną funkcjonalność układu napędowego, niezależnie od aktualnej pozycji wózka przerzutki. 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.4]{filtrRC.jpg}
-    \caption{Pasywny filtr dolnoprzepustowy RC - $u(t)$ sygnał wejściowy filtru, $y(t)$ sygnał wyjściowy filtru.}
-    \label{fig:filtrRC1}
+    \includegraphics[scale=0.4]{przerzutka.jpg}
+    \caption{Schemat ilustrujący zasadę działania konwencjonalnej tylnej przerzutki rowerowej.}
+    \label{fig:przerzutka}
 \end{figure}
 
+\section{Układy napędowe oferowane na rynku komercyjnym}
 
-Przyjmując napięcie na kondensatorze jako zmienną stanu $x(t)$, sterowanie układu jako sygnał $u(t)$ a obserwacje jako sygnał wyjściowy filtru $y(t)$, oraz pamiętając o tym, że prąd płynący przez obwód jest równy zmianie ładunku na kondensatorze, można zapisać model matematyczny układu w postaci równań stanu:
-\begin{equation}
-\begin{gathered}
-    \dot{x}(t) = -\frac{1}{RC}x(t) + u(t) \\
-    y(t) = x(t)
-     \label{eq:stanuRC}
-\end{gathered}
-\end{equation}
+Rosnące zainteresowanie branżą rowerową skutkuje wprowadzaniem na rynek coraz bardziej zaawansowanych technologicznie produktów. Dotyczy to właściwie każdego rodzaju części składających się na wyposażenie roweru. W momencie realizacji niniejszego projektu oferowanych na rynku jest co najmniej kilkanaście różnych rodzajów układów napędowych. Różnią się m.in. przeznaczeniem, ilością oferowanych przełożeń, zastosowanymi materiałami czy sposobem zmiany przełożeń.
 
-Zgodnie z definicją $4.1$ w pkt. \textit{Zagadnienie realizacji transmitancji} w pracy\cite{graba}, transmitancja operatorowa systemu \ref{eq:stanuRC} jest opisana poniższą zależnością:
-\begin{equation}
-    G(s) = \frac{RCs}{RCs + 1}
-    \label{eq:transRc}
-\end{equation}
+Najbardziej ogólna klasyfikacja rowerowych układów napędowych to przeznaczenie. Można wyróżnić trzy główne grupy - kolarstwo szosowe, górskie oraz produkty przeznaczone do rowerów miejskich.
 
-Z równania \ref{eq:transRc} wynika, że obwód RC jest  układem inercyjnym I rzędu, którego stała czasowa wynosi:
-\begin{equation}
-   T = RC
-    \label{eq:stalaCzasowaRC}
-\end{equation}
+Kolarstwo szosowe stanowi główną siłę napędową rozwoju rowerowych układów napędowych. Coraz większe wymagania, pochodzące głównie z zawodowego peletonu, sprawiają, że producenci prześcigają się w oferowaniu coraz bardziej zaawansowanych rozwiązań. Produkty te powinny charakteryzować się jak najniższą masą, niezawodnością i precyzją działania. Układy napędowe przeznaczone do rowerów szosowych składają się dwóch przerzutek, kasety, mechanizmu korbowego oraz manetek, zazwyczaj zintegrowanych z klamkami hamulcowymi. Mechanizm korbowy wyposażony jest zazwyczaj w dwa blaty, natomiast kaseta zbudowana jest z kół zębatych, których liczba, zależna od grupy produktu, może wynosić od 8, dla napędów podstawowych, do 11 w przypadku produktów przeznaczonych dla profesjonalnych kolarzy. Podobnie, jak w branży motoryzacyjnej, nowe rozwiązania opracowywane są dla modeli z najwyższej grupy, które z czasem adaptowane są do tańszych odpowiedników. Dlatego Autor skupi się na przedstawieniu najciekawszych rozwiązań, stosowanych w najwyższych grupach napędów, oferowanych przez czołowych producentów. Są to Shimano, SRAM, Campagnolo, oraz FSA. Niska masa układów napędowych, która w przypadku grup mechanicznych nie przekracza 2000g \cite{roadGroupSetWeights}, jest możliwa do osiągnięcia poprzez zastosowanie bardzo lekkich materiałów. Klamkomanetki, ramiona mechanizmu korbowego, wózek tylnej przerzutki wykonane są z włókna węglowego. Stosowane są również kompozyty zbrojone włóknem węglowym CFRP( ang. \textit{Carbon Fiber Reinforced Plastics}), stopy aluminium i tytanu \cite{shimanoDuraAce}. W momencie realizacji projektu, bardzo dużym zainteresowaniem cieszą się tzw. elektroniczne układy napędowe, w których wózek przerzutki pozycjonowany jest przy użyciu serwomechanizmu. Każdy wymieniony wyżej producent posiada w swojej ofercie taki produkt. Są to odpowiednio DuraAce Di2, RED eTAP, Super Record EPS i K-Force WE. System oferowany przez Shimano i Capagnolo jest systemem przewodowym z pojedynczym pakietem zasilającym. Produkt firmy SRAM jest układem w pełni bezprzewodowym, wykorzystującym dedykowany protokół transmisji danych. Rozwiązanie pośrednie, oferowane przez FSA, polega na połączeniu przerzutek przez układ dystrybucji zasilania i jednostkę sterującą pracą serwomechanizmów oraz zastosowaniu bezprzewodowej transmisji danych ANT+ pomiędzy jednostką sterującą a klamkomanetkami \cite{kforce}.
 
-Charakterystyka amplitudowa obiektu inercyjnego I rzędu wykazuje zdolność obiektu do tłumienia amplitudy sygnałów o wysokich częstotliwościach, co jest zgodne z zasadą działania filtru dolnoprzepustowego.
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.23]{charakterystykaAmp.png}
-    \caption{Przykładowa charakterystyka amplitudowa układu inercyjnego I rzędu \cite{charakterystykaAmp}.}
-    \label{fig:charamp}
-\end{figure}
-
-\label{filtrRc}
-%____________________________________________________________________________________________________________  
-\section{Metody pomiarowe wielkości fizycznych}
-\subsection{Pomiar prędkości kątowych koła i mechanizmu korbowego.}
-
-Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie trybu automatycznej zmiany przełożeń. Pomiar prędkości kątowej mechanizmu korbowego umożliwi wyznaczenie aktualnej wartości kadencji.
-
-Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotyczących pracy brana pod uwagę jest jedynie chwilowa wartość prędkości kątowej. Ta zdefiniowana jest jako zmiana drogi kątowej w czasie:
-\begin{equation}
-    \omega = \frac{d\varphi}{dt}
-    \label{eq:predkoscKatowa}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$\varphi$] droga kątowa
-	\item[$t$] czas
-\end{eqwhere}
-Wyznaczenie chwilowej wartości prędkości kątowej wykonane zostało w oparciu o czujniki zbliżeniowy załączany magnetycznie, który został na stałe przymocowany do ramy roweru, w niewielkiej odległości do tylnego koła. Zasada działania takiego czujnika jest analogiczna do działania zwykłego przycisku monostabilnego. Obwód w czujniku jest domyślnie rozwarty. Zwarcie następuje w momencie zbliżenia magnesu do czujnika. Magnes przyczepiony został do szprychy roweru. Taki sam sposób pomiaru prędkości można znaleźć w komercyjnych licznikach rowerowych oferowanych na rynku. Autor zdecydował się na zastosowanie dwóch magnesów w celu zwiększenia dokładności pomiaru. Dysponując pomiarem czasu pomiędzy kolejnymi zwarciami czujnika magnetycznego, które, ze względu na zastosowanie dwóch magnesów, następują w wyniku obrotu koła o kąt $\pi$ , można wyznaczyć chwilową wartość prędkości kątowej: 
-\begin{equation}
-    \omega_{wheel} = \frac{\pi}{T_{wheel}}
-\end{equation}
-\begin{eqwhere}[2cm]
-    \item[$\omega_{wheel}$] prędkość kątowa tylnego koła $[\frac{rad}{s}]$
-	\item[$T_{wheel}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego koła $[s]$
-\end{eqwhere}
-Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogiczny. Zbliżeniowy czujnik magnetyczny, który został na stałe przymocowany do ramy roweru, w bliskiej odległości mechanizmu korbowego, jest zwierany w każdym cyklu dzięki zastosowaniu magnesu, który został przyklejony do ramienia mechanizmu korbowego. Ze względu na zastosowanie jednego magnesu, przyrost drogi kątowej jest dwa razy większy, niż w przypadku pomiaru prędkości kątowej koła roweru i jego wartość wynosi 2$\pi$:
-\begin{equation}
-    \omega_{crank} = \frac{2\pi}{T_{crank}}
-\end{equation}
-\begin{eqwhere}[2cm]
-    \item[$\omega_{wheel}$] prędkość kątowa mechanizmu korbowego $[\frac{rad}{s}]$
-	\item[$T_{crank}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego mechanizmu korbowego $[s]$
-\end{eqwhere}
-\subsection{Prędkość liniowa roweru}
-Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
-\begin{equation}
-    v = \frac{s}{t}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$s$] droga liniowa
-	\item[$v$] prędkość liniowa
-\end{eqwhere}
- Związek pomiędzy drogą liniową a drogą kątową, punktu poruszającego się po okręgu o promieniu $r$,wyraża się wzorem:
-
-\begin{equation}
-    \varphi = \frac{s}{r}
-\end{equation}
-
-W układzie pomiarowym prędkości kątowej koła roweru, który wykorzystuje dwa magnesy, wartość drogi kątowej w momencie zwarcia czujnika magnetycznego wynosi $\pi$. Dysponując pomiarem czasu $T_{wheel}$, chwilowa wartość prędkości liniowej tylnego koła, a zarazem całego roweru, może zostać wyznaczona z zależności:
- \begin{equation}
-    \label{eq:zaleznoscNaPredkosc}
-    v_{bike} = \frac{\pi R}{T_{wheel}}
-\end{equation}
-\begin{eqwhere}[2cm]
-    \item[$v_{bike}$] prędkość roweru $[\frac{m}{s}]$
-	\item[$R$] promień koła rowerowego $[m]$
-\end{eqwhere}
-%____________________________________________________________________________________________________________  
-\subsection{Inercyjna jednostka pomiarowa IMU}
-Inercyjna jednostka pomiarowa (ang. {\em Inertial Measurement Unit}) to układ składający się z kilku czujników pomiarowych, pozwalających wyznaczyć orientację obiektu w przestrzeni trójwymiarowej. Stosowane m.in. w systemach stabilizacji bezzałogowych statków powietrznych. W realizowanym projekcie wykorzystana zostanie możliwość wyznaczenia kąta nachylenia podłoża, po którym porusza się rower z zamontowaną jednostką pomiarową IMU.
-
-Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy żyroskop oraz magnetometr. Wszystkie czujniki to urządzenia wykonane w miniaturowej skali oraz technologii MEMS ( ang. {\em Micro Electro-Mechanical Systems}), które integrują elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi. 
-
-%____________________________________________________________________________________________________________  
-\subsubsection{Pomiar przyspieszeń - akcelerometr}
-Akcelerometr to urządzenie pomiarowe, które umożliwia pomiar przyspieszenia dynamicznego ciała, na które działa niezerowa siła wypadkowa, oraz przyspieszenia statycznego ciała znajdującego się w ziemskim polu grawitacyjnym. Akcelerometry zazwyczaj działają na zasadzie przetworników pojemnościowych. Pomiar dokonywany jest dzięki zastosowaniu kondensatorów różnicowych, których ruchome okładki wychylane są z położenia równowagi pod wpływem działających sił bezwładności.
-
-Akcelerometry są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Układy sterujące poduszkami powietrznymi, systemy alarmowe w samochodach czy tzw. system ruszania na wzniesieniu to tylko niektóre przykłady z branży motoryzacyjnej\cite{stAkcel}.
-
-Układy do pomiaru przyspieszenia wykonane w technologii MEMS zazwyczaj składają się z trzech akcelerometrów, które umożliwiają pomiar przyspieszenia w trzech różnych kierunkach. Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{x} był równoległy do podłoża(rys. \ref{fig:rownia}).
-%____________________________________________________________________________________________________________  
-\subsubsection{Pomiar prędkości kątowych - żyroskop}
-Żyroskop to urządzenie pomiarowe dostarczające informacji na temat chwilowej prędkości obrotowej układu pomiarowego. Żyroskopy wykonane w technologii MEMS to czujniki pojemnościowe wykorzystujące efekt Coriolisa. Układ dwóch wibrujących mas, umieszczony na obrotowej tarczy, zmienia swoje położenie względem osi obrotu w zależności od chwilowej prędkości obrotowej. W wyniku zmiany położenia układu mas odkształceniu ulega tarcza, która stanowi okładkę kondensatora. W efekcie następuje różnicowa zmiana pojemności kondensatora, która przetwarzana jest na chwilową prędkość obrotową \cite{stGyro}.
-
-Żyroskop, podobnie jak akcelerometr, to układ trzech czujników pozwalający na pomiar prędkości kątowej w trzech różnych kierunkach. Zamontowany został w taki sposób, aby kierunek osi żyroskopu \textit{x} oraz \textit{z}  był równoległy do podłoża.
-
-%____________________________________________________________________________________________________________  
-\section{Estymata kąta nachylenia podłoża}
-Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości  brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczona zostanie pośrednio, poprzez zastosowanie filtru komplementarnego wykorzystującego chwilowe wartości kąta nachylenia, wyznaczone na podstawie danych pochodzących z akcelerometru oraz żyroskopu.
-
-%____________________________________________________________________________________________________________ 
-\subsection{Analiza danych pomiarowych akcelerometru}
-\label{pomiaryAkcel}
-Przykład zamieszczony na rysunku \ref{fig:rownia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta równi pochyłej, której kąt nachylenia został oznaczony jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuż osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
-\begin{equation}
-    \alpha=\arctan{\frac{a_x}{a_y}}
-    \label{eq:rowniaRadian}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$\alpha$] kąt nachylenia podłoża
-	\item[$a_x$] przyspieszenie akcelerometru mierzone wzdłuż osi x
-	\item[$a_y$] przyspieszenie akcelerometru mierzone wzdłuż osi y
-\end{eqwhere}
-Zależność \ref{eq:rowniaRadian} pozwala wyznaczyć wartość miary łukowej kąta wyrażonej w radianach. W odniesieniu do kąta nachylenia podłoża po którym porusza się rower, zdecydowanie bardziej intuicyjną jednostką są stopnie. Przekształcenie miary kąta wyrażonej w radianach na miarę kąta wyrażoną w stopniach opisane jest poniższą zależnością:
-\begin{equation}
-    \alpha_{deg}=\frac{180\alpha}{\pi}
-    \label{eq:rowniaStopnie}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$\alpha_{deg}$] kąt nachylenia wyrażony w stopniach
-\end{eqwhere}
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{katNachylenia.jpg}
-    \caption{Równia pochyła - przykład ilustrujący sposób wyznaczenia kąta nachylenia terenu.}
-    \label{fig:rownia}
-\end{figure}
-%____________________________________________________________________________________________________________ 
-\subsection{Analiza danych pomiarowych żyroskopu}
-\label{gyro}
-Zgodnie z zależnością \ref{eq:predkoscKatowa} prędkość kątowa określana jest jako zmiana drogi kątowej w czasie. Sytuacja odwrotna, czyli wyznaczenie drogi kątowej na podstawie pomiarów prędkości jest możliwe poprzez wyznaczenie funkcji odwrotnej:
-\begin{equation}  
-    \alpha = \int{\omega_{z}(t)dt}
-    \label{eq:zyroRad}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$\omega_{z}(t)$] prędkość kątowa wzdłuż osi $z$ żyroskopu
-	
-\end{eqwhere}
-
-Podobnie, jak zależność \ref{eq:rowniaRadian}, równanie \ref{eq:zyroRad} pozwala wyznaczyć miarę łukową wyrażoną w radianach.
-
-Operacja całkowania prędkości kątowej została uwzględniona w projekcie filtru komplementarnego poprzez dodanie członu całkującego, którego transmitancja operatorowa wynosi $\frac{1}{s}$ - wzór \ref{eq:alpha} w pkt. \ref{kompZasadaDzialania}.
-
-%____________________________________________________________________________________________________________ 
-\subsection{Filtr komplementarny}
-\label{kompZasadaDzialania}
-Zasada działania filtru komplementarnego polega na odpowiedniej fuzji danych pochodzących z różnych czujników pomiarowych. Sygnał każdego z nich zawiera istotną informację o mierzonej wielkości jak również zakłócenia, które powinny zostać wyeliminowane. Fuzja danych polega na zastosowaniu odpowiednich filtrów, dolnoprzepustowych, środkowoprzepustowych i górnoprzepustowych, które eliminują zakłócenia charakterystyczne dla danego czujnika jednocześnie przepuszczając informacje użyteczne. Warunkiem koniecznym uzyskania dokładniejszych wartości estymowanych, od wartości mierzonych, jest zastosowanie czujników pomiarowych o różnej charakterystyce częstotliwości błędów pomiarowych. Schemat przedstawiający ogólną idę filtru komplementarnego przedstawiony został na rys \ref{fig:kompGeneral}.
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.3]{filtrKomp.png}
-    \caption{Zasada działania filtru komplementarnego. $x_1$ : $x_N$ - sygnały wejściowe, $G_1(s) : G_N(s)$ - transmitancje operatorowe poszczególnych filtrów, $\hat{x}$ - estymowana wartość wyjściowa.}
-    \label{fig:kompGeneral}
-\end{figure}
-
-Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancja operatorowa, określająca stosunek transformaty Laplace'a sygnału wyjściowego do transformaty Laplace'a sygnału wejściowego, powinna spełniać zależność:
-\begin{equation}
-    G(s)=\sum_{i=1}^{N}G_{i}(s)=1
-    \label{eq:zasadaKomplementarnosci}
-\end{equation}
-
-W odniesieniu do estymacji wartości kąta nachylania podłoża, schemat filtru komplementarnego, wykorzystującego wartości kątów wyznaczonych na podstawie danych pomiarowych pochodzących z akcelerometru oraz żyroskopu, przedstawiony został na rys \ref{fig:kompKat}. 
-
-Pomiar składowych przyspieszenia ziemskiego umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{pomiaryAkcel}). Ta metoda znajduje swoje zastosowanie wtedy, gdy układ pomiarowy nie porusza się lub porusza się ruchem jednostajnym. W ruchu przyspieszonym dane pomiarowe akcelerometru uwzględniają siły powodujące ten ruch, a brak możliwości odseparowania składowych przyspieszenia ziemskiego sprawia, że kąt nachylenia obarczony jest błędem. Należy zatem zastosować filtr dolnoprzepustowy, eliminujący szybkozmienne wartości kąta nachylenia pochodzące z akcelerometru.
-
-Żyroskop umożliwia pomiar prędkości obrotowej. Całkowanie prędkości obrotowej umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{gyro}). Jednak zakłócenia toru pomiarowego oraz wrażliwość na warunki pracy, a w szczególności temperaturę, powodują zjawisko tzw. dryfu żyroskopowego. Dryf spowodowany jest ciągłym narastaniem błędów w wyniku całkowania zakłóconych danych pomiarowych. Błędy powstałe w wyniku dryfu żyroskopowego są sygnałami wolnozmiennymi. Zastosowanie filtru górnoprzepustowego pozwala je wyeliminować. 
-
-Filtr dolnoprzepustowy może zostać zrealizowany poprzez obiekt inercyjny I rzędu(pkt. \ref{filtrRc}):
-\begin{equation}
-    G_{low}(s)=\frac{1}{Ts+1}
-    \label{eq:lowPass}
-\end{equation}
-
-Zgodnie z równaniem \ref{eq:zasadaKomplementarnosci}, filtr górnoprzepustowy powinien spełniać zależność:
-\begin{equation}
-    G_{high}(s)=1-G_{1}(s)=\frac{Ts}{Ts+1}
-    \label{eq:highPass}
-\end{equation}
-
-Transmitancja $G_{high}(s)$ odpowiada transmitancji filtru górnoprzepustowego RC.
+Wymagania stawiane układom napędowym przeznaczonych do kolarstwa górskiego różnią się względem odpowiedników szosowych. Konieczna jest większa wytrzymałość oraz odporność na niekorzystne warunki atmosferyczne. Niska masa oraz aerodynamiczny kształt nie są priorytetem, jak ma to miejsce w kolarstwie szosowym. Charakter pokonywanych tras sprawia, że nie są osiągane aż tak wysokie prędkości. Biorąc to wszystko pod uwagę, producenci oferują układu na miarę potrzeb kolarzy. Shimano w swojej ofercie posiada elektroniczne grupy XTR i XT. Największy konkurent, SRAM, opracowuje innowacyjne napędy 1x11 i 1x12, które zaczynają powoli dominować nad klasycznymi układami z przednią przerzutką. Inżynierowie SRAM doszli do wniosku, że takie rozwiązanie ma dużo zalet. Pierwsza z nich to oszczędność masy. Możliwość wyeliminowania przedniej przerzutki, manetki i pancerza z linką sprawia, że SRAM XX1 Eagle jest około 20\% lżejszy od mechanicznej grupy Shimano XTR \cite{sramEagle}\cite{shimanoXtr} i waży zaledwie 465g. Kolejną zaletą jest możliwość montażu urządzeń do sterowania pracą zawieszenia lub wysuwaną sztycą, w miejscu manetki przedniej przerzutki. Jednak największą zaletą tej grupy produktów jest możliwość zastosowania rozwiązań zwiększających napięcie łańcucha, dzięki czemu nawet w trudnym terenie łańcuch nie spada z mechanizmu korbowego. Te rozwiązania to specjalna konstrukcja przedniego blatu, którego kształt oraz naprzemiennie zmieniająca się budowa zębów utrzymuje łańcuch w odpowiedniej pozycji( tzw. blaty typu Narrow-Wide), oraz mocne sprężyny wózków przerzutek tylnych, które mocno napinają łańcuch. Jedyną wadą tego typu napędów jest mniejsza liczba przełożeń - w stosunku do napędów z dwoma biegami przedniej przerzutki dokładnie dwa razy mniej. Z mniejszej liczby biegów może wynikać mniejszy zakres przełożeń. SRAM wprowadził wraz z grupą 1x12 kasetę, w której największe koło zębate posiada aż 50 zębów, co skutecznie niweluje problem mniejszego zakresu dostępnych przełożeń.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.34]{filtrKompKat.png}
-    \caption{Schemat filtru komplementarnego estymującego wartość kąta nachylenia podłoża.}
-    \label{fig:kompKat}
+    \includegraphics[scale=0.12]{majaWloszczowskaBike.jpg}
+    \caption{Dopasowanie przełożenia w wyniku zatrzymania pedałowania - tryb Sport}
+    \label{fig:majkaBike}
 \end{figure}
 
-Estymowana wartość kąta nachylenia $\hat{\alpha}$ spełnia zależność:
-\begin{equation}
-    \hat{\alpha} = \frac{1}{Ts+1}\alpha_{acc}+\frac{Ts}{Ts+1}\frac{1}{s}\omega = \frac{\alpha_{acc}+T\omega}{Ts + 1}
-    \label{eq:alpha}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$\hat{\alpha}$] estymowana wartość kąta nachylenia
-	\item[$\alpha_{acc}$] kąt nachylania wyznaczony na podstawie danych z akcelerometru
-	\item[$\omega$] prędkość obrotowa
-\end{eqwhere}
+Napędy montowane w rowerach miejskich powinny charakteryzować się dużą niezawodnością, niską ceną oraz prostotą obsługi. Dodatkowo ważne jest, aby takie napędy były w miarę możliwości bezobsługowe. Sposób oraz charakter pokonywanych tras sprawia, że użytkownicy nie wymagają dużego zakresu przełożeń. Producenci sprzętu rowerowego nie rozwijają tej grupy napędów tak szybko, jak produktów przeznaczonych do zastosowania w kolarstwie górskim czy szosowym. Jedynym rozwiązaniem, na które według Autora warto zwrócić uwagę, są piasty wielobiegowe. Zmiana przełożenia jest możliwa dzięki zastosowaniu przekładni planetarnej, zamontowanej wewnątrz piasty tylego koła. Główne zalety tego rozwiązania to wysoki stopień integracji części mechanicznych ukrytych w piaście, brak konieczności przeprowadzania czynności serwisowych oraz prosta obsługa. Główni producenci rowerowych układów napędowych, a są to Shimano i SRAM, oferują kilka grup napędów tego rodzaju. Shimano posiada w swojej ofercie grupę Alfine oraz Nexus. SRAM oferuje produkty i-MOTION 3, Automatix oraz G8. 
 
-Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym, należy znaleźć równoważny model dyskretny, który aproksymuje własności dynamiczne modelu ciągłego. Można tego dokonać stosując metodę Eulera wstecz \cite{grega}:
-\begin{equation}
-    s=\frac{t_0z}{z-1}
-    \label{eq:eulerWstecz}
-\end{equation}
-\begin{eqwhere}[2cm]
-	\item[$t_{0}$] długość kroku dyskretyzacji
-\end{eqwhere}
+   
 
-Podstawiając zależność \ref{eq:eulerWstecz} do równania \ref{eq:alpha} oraz przyjmując podstawienie $p = \frac{T}{T + t_0}$, gdzie $T$ to stała czasowa filtru,  równanie różnicowe estymujące wartość kąta nachylania podłoża przyjmuje postać:
-\begin{equation}
-    \hat{\alpha_{k}} = p(\hat{\alpha}_{k-1} + \omega_{k}t_0) + (1-p)\alpha_{acc}
-\end{equation}

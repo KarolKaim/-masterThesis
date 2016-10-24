@@ -1,122 +1,259 @@
-\chapter{Opis podzespołów oraz narzędzi programistycznych wykorzystanych w trakcie realizacji projektu}
-%_______________________________________________________________________________________________________________
-\section{Wykaz podzespołów}
-\subsection{Przerzutka tylna}
-Autor zdecydował się na wykorzystanie tylnej przerzutki SRAM X5. Głównym atutem tej przerzutki jest jej konstrukcja, która ze względu na długie ramiona wózka przerzutki, umożliwia bezproblemowe zamontowanie serwomechanizmu. Przerzutka oferuje pełny zakres ruchu do obsługi ośmiu przełożeń. Dodatkowo jest solidną propozycją z niskiej półki cenowej.
-%_______________________________________________________________________________________________________________
-\subsection{Serwomechanizm}
-Serwomechanizm odpowiedzialny za pozycjonowanie wózka przerzutki to Hitec Hs-8335SH. Jest to tzw. cyfrowy serwomechanizm, przeznaczony do zastosowań modelarskich. Od analogowych odpowiedników odróżnia się większą precyzją w osiąganiu zadanej pozycji oraz wyższym momentem obrotowym. Autor zdecydował się na zastosowanie gotowego serwomechanizmu z kilku powodów. Takie rozwiązanie zdecydowanie przyspieszyło prace nad projektem. W dodatku gotowy serwomechanizm charakteryzuje się kompaktowymi rozmiarami oraz odpornością na warunki atmosferyczne.  
+\chapter{Zestawienie zagadnień wykorzystanych w trakcie realizacji projektu}
+\label{cha:Zestawienie zagadnien wykorzystanych w pracy}
 
-Parametry techniczne serwomechanizmu Hitec Hs-8335SH:
+\section{Serwomechanizm - budowa i zasada działania}
+Serwomechanizm to układ automatycznej regulacji, który służy do precyzyjnego sterowania silnikiem elektrycznym. Serwomechanizm wykorzystany w pracy pozycjonuje wózek przerzutki w zadanym położeniu.
+
+Układy automatycznej regulacji w serwomechanizmach to zazwyczaj układy zamknięte z ujemną pętlą sprzężenia zwrotnego. Schemat takiego układu regulacji został przedstawiony na rys. \ref{fig:zamknietyUklad}. Zastosowanie ujemnego sprzężenia zwrotnego umożliwia osiągnięcie celu sterowania, pomimo występujących zakłóceń. Mogą to być zakłócenia związane z pomiarami wyjścia, zakłócenia działające na obiekt lub zakłócenia sterowania. Zasada działania układu ze sprzężeniem zwrotnym polega na porównaniu aktualnej wartości wielkości regulowanej $y$ z wartością zadaną $r$, wyznaczeniu wartości uchybu regulacji $e$ i pobudzenia do pracy regulatora, którego akcja redukuje błąd regulacji, pomimo ciągle działających zakłóceń $z$ \cite{zamknietyB}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{zamknietyUkladRegulacji.jpg}
+    \caption{Schemat zamkniętego układu regulacji z ujemną pętlą sprzężenia zwrotnego. Opis sygnałów : $r$ – wartość zadana,  $e$ – uchyb regulacji, $u$ – sterowanie generowane przez regulator , $y$ – wyjście z obiektu, $z$ – zakłócenia działające na obiekt.}
+    \label{fig:zamknietyUklad}
+\end{figure}
+
+Serwomechanizm zbudowany jest z kilku podstawowych elementów, takich jak silnik elektryczny, układ pomiarowy pozycji/prędkości wału silnika, regulator oraz układ mocy. W serwomechanizmach stosowane są silniki prądu stałego lub przemiennego. Serwomechanizmy oferowane na rynku mogą pracować w kilku trybach:
 \begin{itemize}
 \item
-Napięcie robocze [V]: 6-7.4
+     Tryb regulacji położenia - układ automatycznej regulacji dąży do osiągnięcia zadanej pozycji wału silnika.
 \item
-Moment obrotowy (7.4V)[kgcm]: 24
+    Tryb regulacji prędkości - układ automatycznej regulacji dąży do osiągnięcia zadanej prędkości obrotowej wału silnika.
 \item
-Prędkość (7.4V)[sek/$60^{\circ}$]: 0.13
-\item
-Metalowe tryby przekładni
-\end{itemize} 
-\label{serwo}
-%_______________________________________________________________________________________________________________
-\subsection{Mikrokontroler}
-Sterownik nadzorujący pracę całego układu został wykonany w oparciu o zestaw uruchomieniowy Texas Instruments Tiva C-Series EK-TM4C123GXL. Zestaw zawiera 32-bitowy mikrokontroler TM4C123GH6PM wykorzystujący rdzeń ARM Cortex-M4F. Posiada wbudowany regulator 3.3V, port micro USB oraz wyprowadzenia niezbędnych portów I/O. Charakteryzuje się kompaktowymi rozmiarami oraz niską wagą. Mikrokontroler zastosowany w zestawie 	oferuje wysoką wydajność oraz niski pobór prądu. Kontroler przerwań sprzętowych NVIC (ang. {\em Nested Vectored Interrupt Controller}) umożliwia efektywne zarządzanie przerwaniami w zależności od zaprogramowanych priorytetów \cite{tiva}.
-
-Parametry techniczne mikrokontrolera:
-\begin{itemize}
-\item
-Zegar systemowy taktowany z częstotliwością do 80 MHz
-\item
-Rdzeń ARM Cortex-M4F
-\item 
-Obsługuje zestaw instrukcji Thumb2
-\item
-Pamięć flash 256kB
-\item
-Pamięć SRAM 32kB
-\item
-43 porty I/O
-\item
-Generator sygnału PWM
-\item
-Kontroler DMA
-\item
-Kontroler transmisji szeregowej(USB 2.0, UART, I2C, SPI, CAN)
-\item
-Układy czasowo-licznikowe
-\end{itemize} 
-%_______________________________________________________________________________________________________________
-\subsection{Czujniki pomiarowe}
-%_______________________________________________________________________________________________________________
-\subsubsection{Pololu AltIMU 10}
-
-Pololu AltIMU10 to inercyjna jednoskta pomiarowa, w skład której wchodzą czujniki wykonane w technologii MEMS:
-\begin{itemize}
-\item
-Trzyosiowy akcelerometr ST LSM303DLHC
-\item
-Trzyosiowy żyroskop ST L3GD20
-\item
-Trzyosiowy magnetometr ST LSM303DLHC
+    Tryb regulacji momentu obrotowego - układ automatycznej regulacji dąży do osiągnięcia zadanego momentu obrotowego generowanego przez silnik.
 \end{itemize}
 
-Wszystkie czujniki zamontowane w jednostce komunikują się z urządzeniem nadrzędnym z wykorzystaniem magistrali I2C(ang. {\em Inter-Intergrated Circuit}). Magistrala I2C jest szeregowym, dwukierunkowym interfejsem komunikacyjnym opracowanym przez firmę Philips. Układ AltImu10 posiada elementy pasywne, gwarantujące poprawne działanie magistrali, oraz wbudowany regulator napięcia \cite{Pololu}.
-%______________________________________________________________________________________________________________
-\subsubsection{Zbliżeniowe czujniki magnetyczne}
-Zbliżenie czujniki załączane magnetycznie wykorzystane są do wyznaczania prędkości obrotowych tylnego koła oraz mechanizmu korbowego. W wyniki działania pola magnetycznego, pochodzącego z magnesu trwałego, czujnik zwiera swoje styki. 
- 
-Parametry techniczne:
-\begin{itemize}
-\item
-Maksymalne napięcie pracy [V] : 50
-\item
-Maksymalny prąd [A]: 0.1
-\item
-Maksymalny zasięg [mm]: 25
-\item
-Styk normalnie otwarty
-\end{itemize}
-%_______________________________________________________________________________________________________________
-\subsection{Układ zasilania}
-Źródłem zasilania całego układu jest pakiet litowo-polimerowy BRAINERGY 1000mAh.
-Parametry techniczne pakietu zasilającego:
-\begin{itemize}
-\item
-Pojemność [mAh]: 1000
-\item
-Liczba ogniw: 2
-\item
-Napięcie robocze [V]: 7.4
-\item
-Wydajność prądowa [A]: 45
-\end{itemize}
+Szczegóły dotyczące serwomechanizmu, wykorzystanego do realizacji projektu, zostały przedstawione w pkt. \ref{serwo}  
+%____________________________________________________________________________________________________________  
+\section{Pasywny filtr dolnoprzepustowy RC}
 
-Dodatkowo zastosowany został regulator napięcia obniżający wartość napięcia pakietu do 5V, które jest źródłem zasilania zestawu uruchomieniowego EK-TM4C123GXL.
-%_______________________________________________________________________________________________________________
-\section{Narzędzia programistyczne}
-Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach typu embedded. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories \cite{prata}. Doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
-\subsection{Code Composer Studio 6.0.0}
+Filtr to układ, który przepuszcza na wyjście sygnały o określonej częstotliwości. Filtr dolnoprzepustowy przepuszcza na wyjście sygnały o niskiej częstotliwości, natomiast blokuje sygnały szybkozmienne. Ze względu na konstrukcję filtru, można je podzielić również na filtry pasywne, zbudowane tylko w oparciu o elementy RLC, i aktywne, wykorzystujące dodatkowo np. wzmacniacze operacyjne. 
 
-Oprogramowanie sterownika rozwijane było w oparciu o zintegrowane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC( ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
-%_______________________________________________________________________________________________________________
-\subsection{Biblioteka TivaWare Peripheral Driver}
-Texas Intrusments dostarcza bibliotekę dedykowaną do mikrokontrolerów z rodziny Tiva ARM Cortex-M - TivaWare  Peripheral Driver Library. Biblioteka stanowi zbiór funkcji umożliwiających wykorzystanie układów peryferyjnych mikrokontrolera. Biblioteka, napisana w języku C, wspiera dwa modele programowania mikrokontrolera - Direct Register Access oraz Software Driver Model. Pierwszy z nich operuje bezpośrednio na rejestrach mikrokontrolera, co pozwala pisać bardzo wydajne programy o niewielkim rozmiarze. Jednocześnie wymaga bardzo dobrej znajomości rejestrów mikrokontrolera, znaczenia poszczególnych bitów oraz zależności pomiędzy rejestrami. Software Driver Model działa na wyższym poziomie dając kontrolę nad całymi układami peryferyjnymi. Użytkownik nie musi znać dokładnej architektury mikrokontrolera, co znacząco przyspiesza proces rozwijania oprogramowania. 
-%_______________________________________________________________________________________________________________
-\subsection{Pozostałe oprogramowanie}
-Pozostałe oprogramowanie wykorzystane w trakcie realizacji projektu to m.in.:
-\begin{itemize}
-\item
-Saleae Logic - oprogramowanie współpracujące z analizatorem stanów logicznych.
-\item
-Gnuplot - program do graficznej reprezentacji danych.
-\item
-Putty - klient usług Telnet, SSH i rlogin, wykorzystany do logowania danych.
-\item
-Eagle - program do projektowania układów elektronicznych.
-\item
-FreeCad - program do modelowania parametrycznego 3D.
-\end{itemize}
+Najprostszy filtr dolnoprzepustowy to pasywny filtr RC zbudowany z opornika o rezystancji $R$ i kondensatora o pojemności $C$ - rys. \ref{fig:filtrRC1}. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.4]{filtrRC.jpg}
+    \caption{Pasywny filtr dolnoprzepustowy RC - $u(t)$ sygnał wejściowy filtru, $y(t)$ sygnał wyjściowy filtru.}
+    \label{fig:filtrRC1}
+\end{figure}
 
 
+Przyjmując napięcie na kondensatorze jako zmienną stanu $x(t)$, sterowanie układu jako sygnał $u(t)$ a obserwacje jako sygnał wyjściowy filtru $y(t)$, oraz pamiętając o tym, że prąd płynący przez obwód jest równy zmianie ładunku na kondensatorze, można zapisać model matematyczny układu w postaci równań stanu:
+\begin{equation}
+\begin{gathered}
+    \dot{x}(t) = -\frac{1}{RC}x(t) + u(t) \\
+    y(t) = x(t)
+     \label{eq:stanuRC}
+\end{gathered}
+\end{equation}
 
+Zgodnie z definicją $4.1$ w pkt. \textit{Zagadnienie realizacji transmitancji} w pracy\cite{graba}, transmitancja operatorowa systemu \ref{eq:stanuRC} jest opisana poniższą zależnością:
+\begin{equation}
+    G(s) = \frac{RCs}{RCs + 1}
+    \label{eq:transRc}
+\end{equation}
+
+Z równania \ref{eq:transRc} wynika, że obwód RC jest  układem inercyjnym I rzędu, którego stała czasowa wynosi:
+\begin{equation}
+   T = RC
+    \label{eq:stalaCzasowaRC}
+\end{equation}
+
+Charakterystyka amplitudowa obiektu inercyjnego I rzędu wykazuje zdolność obiektu do tłumienia amplitudy sygnałów o wysokich częstotliwościach, co jest zgodne z zasadą działania filtru dolnoprzepustowego.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.23]{charakterystykaAmp.png}
+    \caption{Przykładowa charakterystyka amplitudowa układu inercyjnego I rzędu \cite{charakterystykaAmp}.}
+    \label{fig:charamp}
+\end{figure}
+
+\label{filtrRc}
+%____________________________________________________________________________________________________________  
+\section{Metody pomiarowe wielkości fizycznych}
+\subsection{Pomiar prędkości kątowych koła i mechanizmu korbowego.}
+
+Możliwość pomiaru prędkości kątowej jest kluczowa ze względu na wykonanie trybu automatycznej zmiany przełożeń. Pomiar prędkości kątowej mechanizmu korbowego umożliwi wyznaczenie aktualnej wartości kadencji.
+
+Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotyczących pracy brana pod uwagę jest jedynie chwilowa wartość prędkości kątowej. Ta zdefiniowana jest jako zmiana drogi kątowej w czasie:
+\begin{equation}
+    \omega = \frac{d\varphi}{dt}
+    \label{eq:predkoscKatowa}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\varphi$] droga kątowa
+	\item[$t$] czas
+\end{eqwhere}
+Wyznaczenie chwilowej wartości prędkości kątowej wykonane zostało w oparciu o czujniki zbliżeniowy załączany magnetycznie, który został na stałe przymocowany do ramy roweru, w niewielkiej odległości do tylnego koła. Zasada działania takiego czujnika jest analogiczna do działania zwykłego przycisku monostabilnego. Obwód w czujniku jest domyślnie rozwarty. Zwarcie następuje w momencie zbliżenia magnesu do czujnika. Magnes przyczepiony został do szprychy roweru. Taki sam sposób pomiaru prędkości można znaleźć w komercyjnych licznikach rowerowych oferowanych na rynku. Autor zdecydował się na zastosowanie dwóch magnesów w celu zwiększenia dokładności pomiaru. Dysponując pomiarem czasu pomiędzy kolejnymi zwarciami czujnika magnetycznego, które, ze względu na zastosowanie dwóch magnesów, następują w wyniku obrotu koła o kąt $\pi$ , można wyznaczyć chwilową wartość prędkości kątowej: 
+\begin{equation}
+    \omega_{wheel} = \frac{\pi}{T_{wheel}}
+\end{equation}
+\begin{eqwhere}[2cm]
+    \item[$\omega_{wheel}$] prędkość kątowa tylnego koła $[\frac{rad}{s}]$
+	\item[$T_{wheel}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego koła $[s]$
+\end{eqwhere}
+Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogiczny. Zbliżeniowy czujnik magnetyczny, który został na stałe przymocowany do ramy roweru, w bliskiej odległości mechanizmu korbowego, jest zwierany w każdym cyklu dzięki zastosowaniu magnesu, który został przyklejony do ramienia mechanizmu korbowego. Ze względu na zastosowanie jednego magnesu, przyrost drogi kątowej jest dwa razy większy, niż w przypadku pomiaru prędkości kątowej koła roweru i jego wartość wynosi 2$\pi$:
+\begin{equation}
+    \omega_{crank} = \frac{2\pi}{T_{crank}}
+\end{equation}
+\begin{eqwhere}[2cm]
+    \item[$\omega_{wheel}$] prędkość kątowa mechanizmu korbowego $[\frac{rad}{s}]$
+	\item[$T_{crank}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego mechanizmu korbowego $[s]$
+\end{eqwhere}
+\subsection{Prędkość liniowa roweru}
+Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
+\begin{equation}
+    v = \frac{s}{t}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$s$] droga liniowa
+	\item[$v$] prędkość liniowa
+\end{eqwhere}
+ Związek pomiędzy drogą liniową a drogą kątową, punktu poruszającego się po okręgu o promieniu $r$,wyraża się wzorem:
+
+\begin{equation}
+    \varphi = \frac{s}{r}
+\end{equation}
+
+W układzie pomiarowym prędkości kątowej koła roweru, który wykorzystuje dwa magnesy, wartość drogi kątowej w momencie zwarcia czujnika magnetycznego wynosi $\pi$. Dysponując pomiarem czasu $T_{wheel}$, chwilowa wartość prędkości liniowej tylnego koła, a zarazem całego roweru, może zostać wyznaczona z zależności:
+ \begin{equation}
+    \label{eq:zaleznoscNaPredkosc}
+    v_{bike} = \frac{\pi R}{T_{wheel}}
+\end{equation}
+\begin{eqwhere}[2cm]
+    \item[$v_{bike}$] prędkość roweru $[\frac{m}{s}]$
+	\item[$R$] promień koła rowerowego $[m]$
+\end{eqwhere}
+%____________________________________________________________________________________________________________  
+\subsection{Inercyjna jednostka pomiarowa IMU}
+Inercyjna jednostka pomiarowa (ang. {\em Inertial Measurement Unit}) to układ składający się z kilku czujników pomiarowych, pozwalających wyznaczyć orientację obiektu w przestrzeni trójwymiarowej. Stosowane m.in. w systemach stabilizacji bezzałogowych statków powietrznych. W realizowanym projekcie wykorzystana zostanie możliwość wyznaczenia kąta nachylenia podłoża, po którym porusza się rower z zamontowaną jednostką pomiarową IMU.
+
+Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy żyroskop oraz magnetometr. Wszystkie czujniki to urządzenia wykonane w miniaturowej skali oraz technologii MEMS ( ang. {\em Micro Electro-Mechanical Systems}), które integrują elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi. 
+
+%____________________________________________________________________________________________________________  
+\subsubsection{Pomiar przyspieszeń - akcelerometr}
+Akcelerometr to urządzenie pomiarowe, które umożliwia pomiar przyspieszenia dynamicznego ciała, na które działa niezerowa siła wypadkowa, oraz przyspieszenia statycznego ciała znajdującego się w ziemskim polu grawitacyjnym. Akcelerometry zazwyczaj działają na zasadzie przetworników pojemnościowych. Pomiar dokonywany jest dzięki zastosowaniu kondensatorów różnicowych, których ruchome okładki wychylane są z położenia równowagi pod wpływem działających sił bezwładności.
+
+Akcelerometry są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Układy sterujące poduszkami powietrznymi, systemy alarmowe w samochodach czy tzw. system ruszania na wzniesieniu to tylko niektóre przykłady z branży motoryzacyjnej\cite{stAkcel}.
+
+Układy do pomiaru przyspieszenia wykonane w technologii MEMS zazwyczaj składają się z trzech akcelerometrów, które umożliwiają pomiar przyspieszenia w trzech różnych kierunkach. Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{x} był równoległy do podłoża(rys. \ref{fig:rownia}).
+%____________________________________________________________________________________________________________  
+\subsubsection{Pomiar prędkości kątowych - żyroskop}
+Żyroskop to urządzenie pomiarowe dostarczające informacji na temat chwilowej prędkości obrotowej układu pomiarowego. Żyroskopy wykonane w technologii MEMS to czujniki pojemnościowe wykorzystujące efekt Coriolisa. Układ dwóch wibrujących mas, umieszczony na obrotowej tarczy, zmienia swoje położenie względem osi obrotu w zależności od chwilowej prędkości obrotowej. W wyniku zmiany położenia układu mas odkształceniu ulega tarcza, która stanowi okładkę kondensatora. W efekcie następuje różnicowa zmiana pojemności kondensatora, która przetwarzana jest na chwilową prędkość obrotową \cite{stGyro}.
+
+Żyroskop, podobnie jak akcelerometr, to układ trzech czujników pozwalający na pomiar prędkości kątowej w trzech różnych kierunkach. Zamontowany został w taki sposób, aby kierunek osi żyroskopu \textit{x} oraz \textit{z}  był równoległy do podłoża.
+
+%____________________________________________________________________________________________________________  
+\section{Estymata kąta nachylenia podłoża}
+Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości  brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczona zostanie pośrednio, poprzez zastosowanie filtru komplementarnego wykorzystującego chwilowe wartości kąta nachylenia, wyznaczone na podstawie danych pochodzących z akcelerometru oraz żyroskopu.
+
+%____________________________________________________________________________________________________________ 
+\subsection{Analiza danych pomiarowych akcelerometru}
+\label{pomiaryAkcel}
+Przykład zamieszczony na rysunku \ref{fig:rownia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta równi pochyłej, której kąt nachylenia został oznaczony jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuż osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
+\begin{equation}
+    \alpha=\arctan{\frac{a_x}{a_y}}
+    \label{eq:rowniaRadian}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\alpha$] kąt nachylenia podłoża
+	\item[$a_x$] przyspieszenie akcelerometru mierzone wzdłuż osi x
+	\item[$a_y$] przyspieszenie akcelerometru mierzone wzdłuż osi y
+\end{eqwhere}
+Zależność \ref{eq:rowniaRadian} pozwala wyznaczyć wartość miary łukowej kąta wyrażonej w radianach. W odniesieniu do kąta nachylenia podłoża po którym porusza się rower, zdecydowanie bardziej intuicyjną jednostką są stopnie. Przekształcenie miary kąta wyrażonej w radianach na miarę kąta wyrażoną w stopniach opisane jest poniższą zależnością:
+\begin{equation}
+    \alpha_{deg}=\frac{180\alpha}{\pi}
+    \label{eq:rowniaStopnie}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\alpha_{deg}$] kąt nachylenia wyrażony w stopniach
+\end{eqwhere}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.5]{katNachylenia.jpg}
+    \caption{Równia pochyła - przykład ilustrujący sposób wyznaczenia kąta nachylenia terenu.}
+    \label{fig:rownia}
+\end{figure}
+%____________________________________________________________________________________________________________ 
+\subsection{Analiza danych pomiarowych żyroskopu}
+\label{gyro}
+Zgodnie z zależnością \ref{eq:predkoscKatowa} prędkość kątowa określana jest jako zmiana drogi kątowej w czasie. Sytuacja odwrotna, czyli wyznaczenie drogi kątowej na podstawie pomiarów prędkości jest możliwe poprzez wyznaczenie funkcji odwrotnej:
+\begin{equation}  
+    \alpha = \int{\omega_{z}(t)dt}
+    \label{eq:zyroRad}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\omega_{z}(t)$] prędkość kątowa wzdłuż osi $z$ żyroskopu
+	
+\end{eqwhere}
+
+Podobnie, jak zależność \ref{eq:rowniaRadian}, równanie \ref{eq:zyroRad} pozwala wyznaczyć miarę łukową wyrażoną w radianach.
+
+Operacja całkowania prędkości kątowej została uwzględniona w projekcie filtru komplementarnego poprzez dodanie członu całkującego, którego transmitancja operatorowa wynosi $\frac{1}{s}$ - wzór \ref{eq:alpha} w pkt. \ref{kompZasadaDzialania}.
+
+%____________________________________________________________________________________________________________ 
+\subsection{Filtr komplementarny}
+\label{kompZasadaDzialania}
+Zasada działania filtru komplementarnego polega na odpowiedniej fuzji danych pochodzących z różnych czujników pomiarowych. Sygnał każdego z nich zawiera istotną informację o mierzonej wielkości jak również zakłócenia, które powinny zostać wyeliminowane. Fuzja danych polega na zastosowaniu odpowiednich filtrów, dolnoprzepustowych, środkowoprzepustowych i górnoprzepustowych, które eliminują zakłócenia charakterystyczne dla danego czujnika jednocześnie przepuszczając informacje użyteczne. Warunkiem koniecznym uzyskania dokładniejszych wartości estymowanych, od wartości mierzonych, jest zastosowanie czujników pomiarowych o różnej charakterystyce częstotliwości błędów pomiarowych. Schemat przedstawiający ogólną idę filtru komplementarnego przedstawiony został na rys \ref{fig:kompGeneral}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.3]{filtrKomp.png}
+    \caption{Zasada działania filtru komplementarnego. $x_1$ : $x_N$ - sygnały wejściowe, $G_1(s) : G_N(s)$ - transmitancje operatorowe poszczególnych filtrów, $\hat{x}$ - estymowana wartość wyjściowa.}
+    \label{fig:kompGeneral}
+\end{figure}
+
+Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancja operatorowa, określająca stosunek transformaty Laplace'a sygnału wyjściowego do transformaty Laplace'a sygnału wejściowego, powinna spełniać zależność:
+\begin{equation}
+    G(s)=\sum_{i=1}^{N}G_{i}(s)=1
+    \label{eq:zasadaKomplementarnosci}
+\end{equation}
+
+W odniesieniu do estymacji wartości kąta nachylania podłoża, schemat filtru komplementarnego, wykorzystującego wartości kątów wyznaczonych na podstawie danych pomiarowych pochodzących z akcelerometru oraz żyroskopu, przedstawiony został na rys \ref{fig:kompKat}. 
+
+Pomiar składowych przyspieszenia ziemskiego umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{pomiaryAkcel}). Ta metoda znajduje swoje zastosowanie wtedy, gdy układ pomiarowy nie porusza się lub porusza się ruchem jednostajnym. W ruchu przyspieszonym dane pomiarowe akcelerometru uwzględniają siły powodujące ten ruch, a brak możliwości odseparowania składowych przyspieszenia ziemskiego sprawia, że kąt nachylenia obarczony jest błędem. Należy zatem zastosować filtr dolnoprzepustowy, eliminujący szybkozmienne wartości kąta nachylenia pochodzące z akcelerometru.
+
+Żyroskop umożliwia pomiar prędkości obrotowej. Całkowanie prędkości obrotowej umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{gyro}). Jednak zakłócenia toru pomiarowego oraz wrażliwość na warunki pracy, a w szczególności temperaturę, powodują zjawisko tzw. dryfu żyroskopowego. Dryf spowodowany jest ciągłym narastaniem błędów w wyniku całkowania zakłóconych danych pomiarowych. Błędy powstałe w wyniku dryfu żyroskopowego są sygnałami wolnozmiennymi. Zastosowanie filtru górnoprzepustowego pozwala je wyeliminować. 
+
+Filtr dolnoprzepustowy może zostać zrealizowany poprzez obiekt inercyjny I rzędu(pkt. \ref{filtrRc}):
+\begin{equation}
+    G_{low}(s)=\frac{1}{Ts+1}
+    \label{eq:lowPass}
+\end{equation}
+
+Zgodnie z równaniem \ref{eq:zasadaKomplementarnosci}, filtr górnoprzepustowy powinien spełniać zależność:
+\begin{equation}
+    G_{high}(s)=1-G_{1}(s)=\frac{Ts}{Ts+1}
+    \label{eq:highPass}
+\end{equation}
+
+Transmitancja $G_{high}(s)$ odpowiada transmitancji filtru górnoprzepustowego RC.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.34]{filtrKompKat.png}
+    \caption{Schemat filtru komplementarnego estymującego wartość kąta nachylenia podłoża.}
+    \label{fig:kompKat}
+\end{figure}
+
+Estymowana wartość kąta nachylenia $\hat{\alpha}$ spełnia zależność:
+\begin{equation}
+    \hat{\alpha} = \frac{1}{Ts+1}\alpha_{acc}+\frac{Ts}{Ts+1}\frac{1}{s}\omega = \frac{\alpha_{acc}+T\omega}{Ts + 1}
+    \label{eq:alpha}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$\hat{\alpha}$] estymowana wartość kąta nachylenia
+	\item[$\alpha_{acc}$] kąt nachylania wyznaczony na podstawie danych z akcelerometru
+	\item[$\omega$] prędkość obrotowa
+\end{eqwhere}
+
+Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym, należy znaleźć równoważny model dyskretny, który aproksymuje własności dynamiczne modelu ciągłego. Można tego dokonać stosując metodę Eulera wstecz \cite{grega}:
+\begin{equation}
+    s=\frac{t_0z}{z-1}
+    \label{eq:eulerWstecz}
+\end{equation}
+\begin{eqwhere}[2cm]
+	\item[$t_{0}$] długość kroku dyskretyzacji
+\end{eqwhere}
+
+Podstawiając zależność \ref{eq:eulerWstecz} do równania \ref{eq:alpha} oraz przyjmując podstawienie $p = \frac{T}{T + t_0}$, gdzie $T$ to stała czasowa filtru,  równanie różnicowe estymujące wartość kąta nachylania podłoża przyjmuje postać:
+\begin{equation}
+    \hat{\alpha_{k}} = p(\hat{\alpha}_{k-1} + \omega_{k}t_0) + (1-p)\alpha_{acc}
+\end{equation}

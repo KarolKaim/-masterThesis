@@ -1,47 +1,8 @@
-\chapter{Realizacja projektu}
-%______________________________________________________________________________________________________________
+\chapter{Zasada działania sterownika układu}
+
 \newcolumntype{C}[1]{>{\centering}m{#1}}
 
-\section{Część sprzętowa}
-\subsection{Przerzutka }
- Zasada działania serwomechanizmu kontrolującego pozycję wózka została przedstawiona na rys. \ref{fig:przerzutkaSerwo}. Zmiana pozycji wału serwomechanizmu implikuje zmianę pozycji wózka poprzez zastosowanie sztywnego połączenia przegubowego.
- \begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.5]{przerzutkaSerwo.jpg}
-    \caption{Zasada działania przerzutki rowerowej z wykorzystaniem serwomechanizmu.}
-    \label{fig:przerzutkaSerwo}
-\end{figure}
-
-Przymocowanie serwomechanizmu do przerzutki, zgodnie ze schematem przedstawionym na rys. \ref{fig:przerzutkaSerwo}  można podzielić na kilka etapów.
-Pierwszy etap to usunięcie sprężyny, która występuje w konwencjonalnych przerzutkach tylnych. Wiąże się to ze zniszczeniem połączeń nitowych do których przymocowana jest sprężyna. Zniszczone połączenia nitowe zastąpione zostały przez połączenia śrubowe. Wykorzystane zostały śruby z gwintem metrycznym M4 o średnicy 4 mm.
-
-Następny etap to wykonanie elementu mocującego serwomechanizm do przerzutki. Element został wykonany zgodnie z projektem przedstawionym na rysunku technicznym \ref{fig:lacznik}.
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.4]{lacznik.png}
-    \caption{Rysunek techniczny elementu mocującego serwomechanizm do przerzutki.}
-    \label{fig:lacznik}
-\end{figure}
-
-Wykonany element wraz z połączeniami śrubowymi umożliwia przymocowanie serwomechanizmu Hitec Hs-8335SH do przerzutki SRAM X5. Ostatni etap tej części projektu to wykonanie połączenia przegubowego łączącego wał serwomechanizmu z jednym z członów ruchomych przerzutki. Autor zdecydował się na zastosowanie modelarskiego drążka kierowniczego o zmiennej długości oraz dedykowanego aluminiowego orczyka serwomechanizmu. Takie rozwiązanie pozwala dokładnie dopasować długość  połączenia, bez konieczności projektowania oraz wykonania dodatkowych elementów.
-
-W wyniku powyższych czynności powstała w pełni funkcjonalna przerzutka tylna sterowana przy użyciu serwomechanizmu. 
-
-%_______________________________________________________________________________________________________________
-\subsection{Integracja elementów elektronicznych}
-Mikrokontroler, filtry RC, pakiet zasilający, regulator napięcia oraz jednostka pomiarowa IMU zamontowane zostały w hermetycznej puszcze elektrycznej, przymocowanej na stałe do dolnej rury przedniego trójkąta ramy rowerowej. 
-
-Schemat połączeń znajduje się na rys. \ref{fig:schematPolaczen}. Na schemacie przedstawione zostały jedynie elementy wykonane przez Autora pracy. Są to filtry RC, dzielnik napięcia do pomiaru stanu pakietu zasilającego, połączenia do sterowania serwomechanizmem oraz połączenia do komunikacji z jednostką pomiarową IMU. Szczegóły związane z dystrybucją zasilania zostały pominięte, ponieważ są elementem zestawu uruchomieniowego. Można je znaleźć w \cite{tivaWork}. Ze względu na rozwojowy charakter projektu oraz częste zmiany wprowadzane na etapie realizacji, autor pracy nie zdecydował się na wykonanie dedykowanego obwodu drukowanego.
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.7]{connectionSchematic.png}
-    \caption{Schemat połączeń elementów elektronicznych.}
-    \label{fig:schematPolaczen}
-\end{figure}
-%_______________________________________________________________________________________________________________
-
-\section{Część programowa}
-\subsection{Struktura programu}
+\section{Struktura programu}
 
 Cel projektu to wykonanie układu zmiany przełożeń, który oferuje dwa tryby pracy - tryb ręczny oraz automatyczny. Autor zdecydował, że w ramach trybu automatycznego wykonany zostanie podział na tryb comfort, active i sport. Inspiracją  takiego rozwiązania jest branża motoryzacyjna, w której coraz częściej można spotkać układy automatycznej zmiany przełożeń, oferujące możliwość profilowania charakterystyki działania zmiany biegów, poprzez wybór jednego z trybów jazdy. 
 
@@ -55,7 +16,8 @@ Cztery stany odpowiadają zaprojektowanym trybom jady - tryb ręczny, comfort, a
     \label{fig:schematAlgorytmu}
 \end{figure}
 %_____________________________________________________________________________________________________________
-\subsubsection{Inicjalizacja peryferiów}
+\section{Opis stanów programu}
+\subsection{Inicjalizacja peryferiów}
 Stan inicjalizacji jest stanem początkowym programu, osiąganym jednokrotnie, po włączeniu zasilania. W tym stanie następuje inicjalizacja wszystkich układów peryferyjnych. 
 
 Inicjalizowane są:
@@ -72,15 +34,15 @@ Układy czasowo licznikowe, które inicjują zadania okresowe oraz wykorzystywan
 
 W przypadku, gdy inicjalizacja wszystkich układów przebiegnie bez błędów, następuje przejście do następnego stanu - tryb ręczny. Jeśli inicjalizacja jednostki pomiarowej IMU nie powiedzie się, zgłaszany jest błąd komunikacji I2C. 
 %_____________________________________________________________________________________________________________
-\subsubsection{Tryb ręczny}
+\subsection{Tryb ręczny}
 Tryb ręczny jest pierwszym stanem, w którym użytkownik może korzystać z funkcjonalności układu zmiany przełożeń. Zasada działania odpowiada w pełni mechanicznemu układowi. W tym trybie obsługiwane są jedynie przyciski do zmiany przełożeń. Oprogramowanie umożliwia jednokrotną zmianę przełożenia, aktywowaną poprzez naciśnięcie odpowiedniego przycisku. Dodatkowo zaimplementowana została ciągła zmiana przełożeń, która uruchamiana jest poprzez naciśnięcie i przytrzymanie odpowiedniego przycisku. Przełożenia zmieniane są co 0.7 sekundy, więc użytkownik ma odpowiednio dużo czasu do zatrzymania zmiany na odpowiednim przełożeniu.
 
 Naciśnięcie przycisku zmiany trybu pracy układu powoduje przejście do kolejnego stanu - trybu comfort.
 %_____________________________________________________________________________________________________________
-\subsubsection{Tryb comfort}
+\subsection{Tryb comfort}
 Stan comfort odpowiada pierwszemu z zaimplementowanych trybów automatycznej zmiany przełożeń. Ten tryb jest przeznaczony do spokojnego przemieszczania się na rowerze po płaskim terenie. Jest to najprostszy z trybów automatycznych, w którym użytkownik nie powinien angażować się w podejmowanie wyboru przełożenia. Możliwość zmiany ręcznej jest wyłączona. Mierzona jest jedynie chwilowa wartość kadencji. Płaski charakter trasy sprawia, że cykliczne zadanie, w trakcie którego dobierane jest przełożenie, zależne od wartości kadencji, uruchamiane jest z niską częstotliwością. Zakres kadencji jest stały dla każdego przełożenia i dobrany w taki sposób, aby umożliwić spokojną i komfortową jazdę na rowerze. W trakcie przejazdów testowych Autor uznał, iż jazda komfortowa odpowiada utrzymaniu kadencji w zakresie od $45$ do $60$ obrotów na minutę.
 %_____________________________________________________________________________________________________________
-\subsubsection{Tryb active}
+\subsection{Tryb active}
 Stan active odpowiada drugiem z zaimplementowanych trybów automatycznej zmiany przełożeń. Autor założył, iż ten tryb powinien być używany na trasach o zróżnicowanej topografii terenu. Dlatego zadanie cykliczne dla tego trybu uruchamiane jest z większą częstotliwością, niż w przypadku trybu comfort - raz na dwie sekundy. Zakres kadencji jest stały dla każdego przełożenia. Ze względu na zmienną topografię terenu, został rozszerzony względem trybu comfort i wynosi od $55$ do $70$ obrotów na minutę. Możliwa jest również ręczna zmiana przełożeń, która wskazuje na chęć przejęcia kontroli nad przełożeniami przez użytkownika. W takiej sytuacji zadanie cykliczne wyłączane jest na $10$ sekund. W tym czasie kontroler nie ma wpływu na dobór przełożeń. W tym trybie brana pod uwagę jest również chwilowa wartość prędkość roweru. Jeśli zostanie wykryty brak obrotów mechanizmu korbowego, następuje automatyczny dobór przełożenia, zgodny z tabelą \ref{tab:zakresOdPredkosci}, które zostanie ustawione w momencie wznowienia pedałowania. Ma to na celu umożliwienie zmiany o kilka przełożeń w przypadku, gdy rozpoczął się zjazd, a użytkownik przerwał pedałowanie. Ponowne wznowienie pedałowania skutkuje natychmiastowym doborem przełożenia dostosowanym do aktualnej prędkości, bez potrzeby przechodzenia przez poszczególne biegi. 
 \begin{table}[h]
     \caption{Związek pomiędzy zakresem prędkości a przełożeniem dobieranym po wznowieniu pedałowania.}
@@ -97,7 +59,7 @@ Stan active odpowiada drugiem z zaimplementowanych trybów automatycznej zmiany 
 \end{table}
 %_____________________________________________________________________________________________________________
 
-\subsubsection{Tryb sport}  
+\subsection{Tryb sport}  
 Stan sport odpowiada ostatniemu z zaimplementowanych trybów automatycznej zmiany przełożeń. Tryb ten powinien być używany w trakcie bardzo dynamicznej jazdy na rowerze, której celem jest przejechanie danej trasy w bardzo szybkim tempie. Zadanie cykliczne tego trybu jazdy uruchamiane jest z taką samą częstotliwością, jak w przypadku trybu active. Autor podjął taką decyzję, ponieważ uważa, iż częstsze zmiany przełożeń w rowerze są nieefektywne. Zamiast skupić się na generowaniu mocy, użytkownik skupia się na szybkiej pracy układu zmiany przełożeń. Tak jak w trybie active, możliwa jest ręczna zmiana przełożeń, która implikuje wyłączenie kontrolera na $10$ sekund. Przełożenia dobierane są w zależności od wartości kadencji. W przeciwieństwie do pozostałych trybów, zakresy kadencji nie są stałe. Powstało wiele prac poruszających zagadnienie doboru optymalnej kadencji w kolarstwie (\cite{cuttingEdge}, \cite{optCadence}). Ze względu na mnogość wskaźników jakości przyjętych w trakcie przeprowadzonych badań, zróżnicowaną charakterystykę poszczególnych wyścigów czy personalne predyspozycje zawodników, nie można wyznaczyć jednej wartości optymalnej dla wszystkich przypadków. Jednak wskazuje się na to (\cite{cuttingEdge}), że zakres kadencji na odcinkach płaskich, wynoszący od 80 do 100 obrotów na minutę, pozwala zachować odpowiedni kompromis pomiędzy osiągami a wydajnością zawodnika. W przypadku podjazdów zaleca się obniżenie kadencji do około 70 obrotów na minutę. Są to zalecenia dotyczące kolarzy zawodowych, których osiągi znacznie przewyższają możliwości normalnych użytkowników. Zdecydowano, że zakresy kadencji w trybie sport będą uzależnione od kąta nachylenia terenu trasy rowerowej i zostaną obniżone względem wartości wymienianych w literaturze. Rozróżniane zatem są 3 możliwości:
 \begin{itemize}
 \item
@@ -109,23 +71,19 @@ Nachylenie terenu jest większe niż $3^{\circ}$. Oznacza to podjazd pod zbocze 
 
 \end{itemize}
 %______________________________________________________________________________________________________________
-\subsubsection{Błąd komunikacji I2C}
+\subsection{Błąd komunikacji I2C}
 Przejście do tego stanu może nastąpić w dwóch przypadkach. Pierwszy z nich to problemy z komunikacją w trakcie inicjalizacji jednostki pomiarowej wynikające z braku fizycznego połączenia pomiędzy jednostką pomiarową a portami mikrokontrolera. Drugi to problemy związane z odczytem danych w trybie sport. W tym przypadku może również dojść do problemów z komunikacją. Druga przyczyną mogą być niepoprawne wartości zwracane przez czujniki, świadczące o ich uszkodzeniu.
 
 Problemy z komunikacją objawiają się brakiem odpowiedzi jednostki pomiarowej na rozkazy wysyłane przez mikrokontroler. Przed każdą próbą komunikacji odpalany jest układ czasowo-licznikowy. Jeśli odpowiedź od jednostki przyjdzie w krótszym czasie, niż jedna sekunda po wysłaniu zapytania, układ mierzący czas jest wyłączany. W przeciwnym przypadku wykryty zostaje błąd komunikacji.  
 %_____________________________________________________________________________________________________________
-\subsubsection{Niski poziom oraz rozładowanie pakietu}
-
+\subsection{Niski poziom oraz rozładowanie pakietu}
+\label{niskiPoziom}
 Obydwa stany odnoszą się do problemu z pakietem zasilającym. Niski poziom naładowania odnotowywany jest wtedy, gdy napięcie pakietu zasilającego spadnie poniżej 6.8V. Następuje wtedy ograniczenie funkcjonalności systemu w celu oszczędności energii. Program przechodzi do stanu ręcznej zmiany przełożeń. Tryby automatycznej zmiany zostają wyłączone. W efekcie nie są obsługiwane żadne czujniki pomiarowe.
 
 Jeśli napięcie pakietu zasilającego spadnie poniżej 6V, kontroler przechodzi w tryb pracy z rozładowanym pakietem zasilającym. Jest to tryb maksymalnej oszczędności energii. Wyłączona zostaje możliwość zmiany przełożeń. Działa jedynie dioda RGB sygnalizująca rozładowanie pakietu.
 
 Autor zakłada, że następstwem osiągnięcia tych stanów jest naładowanie pakietu zasilającego. Nie ma zatem możliwości powrotu z tych stanów do normalnej pracy układu. Tak samo dzieje się w przypadku problemów z jednostką pomiarową.
-\label{niskiPoziom}
-%______________________________________________________________________________________________________________
-\subsection{Wskaźnik aktualnego trybu}
-Wskaźnik aktualnego stanu, w którym znajduje się kontroler, jest istotnym elementem układu. Umożliwia  użytkownikowi sprawdzenie aktualnego trybu jazdy oraz informuje o stanach alarmowych. Autor uznał, iż dobrym wskaźnikiem aktualnego stanu będzie dioda RGB, która pozwala na zakodowanie wszystkich stanów w postaci odpowiednich kolorów. Taka reprezentacja stanów, w porównaniu np. do wyświetlacza, wydaje się być bardziej efektywna w trudnym terenie, gdzie rower narażony jest na duże wstrząsy i odczyt z ekrany mógłby zabrać więcej czasu. Do tego montaż prostej diody w okolicy kierownicy jest zdecydowanie prostszy i mniej narażony na uszkodzenia.
-Kodowanie stanów w postaci kolorów diody RGB przedstawione zostało w tabeli \ref{tab:rgb}
+
 \begin{table}[h]
     \caption{Kodowanie stanu programu w postaci kolorów RGB}
     \begin{center}
@@ -153,182 +111,27 @@ Kodowanie stanów w postaci kolorów diody RGB przedstawione zostało w tabeli \
 		\end{tabular}
 	\end{center}
 \end{table}
+%______________________________________________________________________________________________________________
+\subsection{Wskaźnik aktualnego trybu}
+
+Wskaźnik aktualnego stanu, w którym znajduje się kontroler, jest istotnym elementem układu. Umożliwia  użytkownikowi sprawdzenie aktualnego trybu jazdy oraz informuje o stanach alarmowych. Autor uznał, iż dobrym wskaźnikiem aktualnego stanu będzie dioda RGB, która pozwala na zakodowanie wszystkich stanów w postaci odpowiednich kolorów. Taka reprezentacja stanów, w porównaniu np. do wyświetlacza, wydaje się być bardziej efektywna w trudnym terenie, gdzie rower narażony jest na duże wstrząsy i odczyt z ekrany mógłby zabrać więcej czasu. Do tego montaż prostej diody w okolicy kierownicy jest zdecydowanie prostszy i mniej narażony na uszkodzenia.
+Kodowanie stanów w postaci kolorów diody RGB przedstawione zostało w tabeli \ref{tab:rgb}.
+
 
 %______________________________________________________________________________________________________________
 
-\section{Szczegóły implementacji}
-%_______________________________________________________________________________________________________________
-\subsection{Kontrola serwomechanizmu}
-Pozycja serwomechanizmu modelarskiego sterowana jest przez sygnał PWM (ang. {\em Pulse-Width Modulation}). Jest to metoda regulacji sygnałem napięciowym, o stałej częstotliwości i amplitudzie, polegająca na zmianie wypełnienia sygnału. Częstotliwość sygnału wynosi 50Hz. Wartości napięcia, które zmieniają się w sposób skokowy, wynoszą 0 i 3.3V. Pełny zakres ruchu serwomechanizmu osiągalny jest przez zmianę wypełnienia sygnału sterującego z zakresu od 2.5 do 12.5 \%. Innymi słowy - podanie prostokątnego sygnału sterującego o okresie 20ms, w którym stan wysoki utrzymany jest przez czas z zakresu od 0.5ms do 2.5 ms, umożliwia obrót wału serwomechanizmu z zakresu od 0 do 180$^{\circ}$.
-
-Przerzutka, do której został przymocowany serwomechanizm, ogranicza pełny zakres ruchu serwomechanizmu. Minimalne oraz maksymalne wychylenie wózka przerzutki wiąże się z obrotem wału serwomechanizmu odpowiednio o kąt 31 i 95$^{\circ}$. W tym zakresie obsługiwane są wszystkie dostępne przełożenia. Każdemu z ośmiu przełożeń odpowiada inna pozycja serwomechanizmu (tabela \ref{tab:przelozenia}). Pozycje serwomechanizmu zostały dobrane eksperymentalnie. Można zaobserwować liniowy przyrost czasu wypełnienia sygnału. 
-\begin{table}[h]
-    \caption{Pozycja serwomechanizmu oraz czas wypełnienia sygnału PWM w zależności od aktualnego przełożenia.}
-    \begin{center}
-		\label{tab:przelozenia}
-		\begin{tabular}{|m{2.3cm}|m{3cm}|m{3cm}|}
-			\hline
- 			\textbf{Nr przełożenia} & \textbf{Pozycja serwomechanizmu [$^{\circ}$]} & \textbf{Czas wypełnienia sygnału [$us$]} \\
- 			\hline
- 			1 & 31.5 & 850 \\ 
- 			\hline 
-			2 & 40.5 & 950 \\
-			\hline
-			3 & 49.5 & 1050 \\  
-			\hline
-			4 & 58.5 & 1150 \\  
-			\hline
-			5 & 67.5 & 1250 \\  
-			\hline
-			6 & 76.5 & 1350 \\  
-			\hline
-			7 & 85.5 & 1450 \\  
-			\hline
-			8 & 94.5 & 1550 \\  
-			\hline
-		\end{tabular}
-	\end{center}
-\end{table}
-
-Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalnych układach napędowych działa znacznie lepiej, jeśli w trakcie zmiany biegu następuje chwilowe przeciągnięcie pozycji wózka przerzutki. Jest to szczególnie dobrze widoczne w trakcie redukowania przełożenia, kiedy łańcuch powinien trafić na koło zębate o większej średnicy. Można wtedy zaobserwować opóźnienie w zmianie przełożenia, niekorzystne przeskoki łańcucha pomiędzy kołami zębatymi, a w źle wyregulowanych układach napędowych może nawet dochodzić do braku reakcji układu napędowego. Takie zjawisko zostało zaobserwowane w trakcie pracy nad projektem. Zmiana biegów polegająca na pozycjonowaniu serwomechanizmu w nowej pozycji, zależnej od dobranego przełożenia, działała z wyraźnym opóźnieniem. Problem, podobnie jak w układach mechanicznych, został rozwiązany przez chwilowe przeciągnięcie pozycji wózka przerzutki. Zdefiniowanie zostały dwa pomocnicze zestawy pozycji serwomechanizmu, specyficzne dla redukowania oraz zwiększania przełożenia(tabela \ref{tab:przelozeniaPomocniczne}). Wszystkie trzy zestawy pozycji przechowywane są w postaci tablic, które zawierają czasy wypełnienia sygnału sterującego. W momencie rozpoczęcia zmiany przełożenia, na skutek naciśnięcia przycisku lub w wyniku decyzji kontrolera automatycznej zmiany przełożeń, zmienna, która do tej pory wskazywała na główny zestaw pozycji, zaczyna wskazywać na jeden z zestawów pomocniczych zależny od rodzaju zmiany. Jednocześnie uruchomiony zostaje układ czasowo-licznikowy. Po upływie 500ms, w trakcie obsługi przerwania tego układu, następuje przypisanie adresu, pod którym znajduje się w pamięci główny zestaw parametrów. Następuje również wyłączenie układu czasowo-licznikowego. 
 
 
-\begin{table}[h]
-    \caption{Pomocnicze zestawy pozycji serwomechanizmu}
-    \begin{center}
-		\label{tab:przelozeniaPomocniczne}
-		\begin{tabular}{|>{\centering}m{2cm}| >{\centering}m{3cm}| >{\centering}m{5cm} |}
-			\hline
- 			\textbf{Nr przełożenia} & \textbf{Wypełnienie sygnału w trakcie redukcji przełożenia} [$us$] & 
-\textbf{Wypełnienie sygnału w trakcie zwiększenia przełożenia [$us$]} \tabularnewline
- 			\hline
- 			1 & 800 & 900 \tabularnewline
- 			\hline
-			2 & 900 & 1000 \tabularnewline
-			\hline
-			3 & 1000 & 1100 \tabularnewline  
-			\hline
-			4 & 1100 & 1200 \tabularnewline  
-			\hline
-			5 & 1200 & 1300 \tabularnewline  
-			\hline
-			6 & 1300 & 1400 \tabularnewline  
-			\hline
-			7 & 1400 & 1500 \tabularnewline  
-			\hline
-			8 & 1500 & 1600 \tabularnewline 
-			\hline
-		\end{tabular}
-	\end{center}
-\end{table}
-%______________________________________________________________________________________________________________
-\subsection{Obsługa przycisków}
-W projekcie wykorzystane zostały trzy przyciski przewlekane monostabilne. Ich naciśnięcie powoduje redukcję lub zwiększenie przełożenia oraz zmianę trybu pracy kontrolera. Przyciski do zmiany przełożenia zamontowane zostały w miejscu konwencjonalnej manetki. Przycisk do zmiany trybu pracy został przymocowany do mostka kierownicy.
 
-Wszystkie przyciski wykorzystują rezystor pull-up, podciągający do portu wejściowego napięcie 3.3V(rys. \ref{fig:schematPolaczen}). Zwarcie przycisku powoduje ustalenie sygnału na poziomie 0V. Pojawienie się na magistrali zbocza opadającego powoduje zgłoszenie przerwania od odpowiedniego pinu portu wejściowego. 
 
-Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwierania przycisku. Są to drgania mechaniczne, które mogą trwać od kilku mikrosekund do nawet kilkunastu milisekund. Powoduje to niezdefiniowane zachowanie całego systemu, np. zmianę kilku przełożeń na raz. Szybkozmienne zmiany stanu logicznego sygnału, wynikające z drgań styków przycisku, przedstawione zostały na rys \ref{fig:drganiaPrzyciskow}.
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.35]{drganiaPrzyciskow.png}
-    \caption{Porównanie przebiegów sygnałów interpretowanych przez analizator stanów logicznych dla przycisku z filtrem RC - kanał 0, oraz bez filtra- kanał 1.}
-    \label{fig:drganiaPrzyciskow}
-\end{figure}
-Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykonane zostały proste filtry dolnoprzepustowe RC. Zasada działania filtru RC została opisana w pkt. \ref{filtrRc}. W dokumentacji mikrokontrolera(\cite{tiva}) można znaleźć informację na temat minimalnego poziomu napięcia, interpretowanego jako stan wysoki - $0.6V_{in}$. Podobny poziom napięcia osiągany jest na wyjściu filtru RC, po skokowej zmianie napięcia wejściowego, po czasie równym stałej czasowej filtra. Autor założył, że zmiany biegów, oraz zmiana tryb jazdy, nie mogą być dokonywane częściej, niż 10 razy na sekundę. Z tego wynika, że stała czasowa filtru powinna wynosić około $100ms$. Wszystkie 3 filtry zostały wykonane w oparciu o opornik o rezystancji $200k\Omega$ i kondensator o pojemności 470$nF$. Tak dobór elementów pasywnych pozwala zbudować filtr, którego stała czasowa wynosi około $94ms$ 
-%______________________________________________________________________________________________________________
-\subsection{Obsługa zbliżeniowych czujników magnetycznych}
-Zbliżeniowe czujniki magnetyczne działają w sposób analogiczny do przycisków monostablilnych. Różnica polega na tym, że styki zwierane są w wyniku działania zewnętrznego pola magnetycznego, pochodzącego od magnesu trwałego. W trakcie zwierania/rozwierania czujnika magnetycznego również pojawia się problem mechanicznych grań styków. Problem został wyeliminowany w taki sam sposób, jak w przypadku przycisków, czyli przez zastosowanie filtrów dolnoprzepustowych RC. Elementy pasywne filtrów RC Stałe dla czujników magnetycznych zostały dobrane zgodnie z poniższymi założeniami.
 
-Czujnik magnetyczny, wykorzystany do wyznaczania chwilowej wartości prędkości roweru, korzysta z dwóch magnesów trwałych. Doświadczenia przeprowadzone z wykorzystaniem analizatora stanów logicznych przy dużych prędkościach obrotowych tylego koła wykazały, że drgania czujników magnetycznych trwają nie dłużej niż 1ms.  Autor założył, że maksymalna prędkość roweru możliwa do osiągnięcia to 100$\frac{km}{h}$, czyli około 28$\frac{m}{s}$. Promień koła roweru wynosi około 0.33m. Z zależności \ref{eq:zaleznoscNaPredkosc} wynika, że dla prędkości maksymalnej, magnes trwały znajduje się w pobliżu czujnika magnetycznego co 37ms. Należy uwzględnić również to, że w tym czasie dochodzi do zwarcia i rozwarcia czujnika magnetycznego. Stała czasowa filtru RC, powinna być zatem co najmniej dwa razy krótsza. Ostatecznie filtr RC został wykonany z opornika o rezystancji 100k$\Omega$ i kondensatora o pojemności 100nF, co zapewnia wartość stałej czasowej filtra na poziomie 10ms. Wartość ta jest o rząd wielkości większa od zarejestrowanych okresów drgań, a jednocześnie zwarcie i rozwarcie czujnika z filtrem trwa prawie dwa razy krócej, niż okres obrotu magnesu trwałego dla przyjętej prędkości maksymalnej.
 
-Czujnik magnetyczny wykorzystywany do wyznaczenia chwilowej wartości kadencji jest zwierany przez jeden magnes trwały, przymocowany do ramienia mechanizmu korbowego. Autor przyjął, że maksymalna kadencja możliwa do osiągnięcia przez rowerzystę, to 250$\frac{obr}{min}$. Pełny obrót przy takie kadencji zajmuje 240ms. Zastosowanie filtru o takiej samej stałej czasowej, jak filtr czujnika magnetycznego prędkości roweru, spełnia wymagania wynikające z przyjętego założenia o maksymalnej kadencji. 
-%______________________________________________________________________________________________________________
-\subsection{Obsługa jednostki pomiarowej Pololu AltIMU10}
-Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w trybie active i sport. Kąt nachylenia podłoża wyznaczany jest co 10ms przy użyciu filtru komplementarnego (pkt. \ref{kompZasadaDzialania}). 
- 
-Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi 100$kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
-\begin{itemize}
-    \item
-    SCL(ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych.
-    \item
-    SDA(ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych.
-    \item
-    Vin - zasilanie jednostki pomiarowej, które przyjmuje napięcie z zakresu od 2.5V do 5.5V.
-    \item
-    Gnd - wspólna masa.
-\end{itemize} 
 
-Komunikacja w standardzie I2C jest komunikacją typu master/slave. Urządzeniem nadrzędnym, odpowiedzialnym za inicjowanie, prowadzenie oraz kontrolę transmisji, jest mikrokontroler. Urządzenia pomiarowe to urządzenia typu slave. Każdy z układów pomiarowych posiada swój unikalny, 7-bitowy adres. Każde z urządzeń typu slave udziela odpowiedzi na rozkazy wysyłane przez mikrokontroler. Adresy urządzeń jednostki pomiarowej:
 
-\begin{table}[h]
-    \caption{Adresy urządzeń pomiarowych}
-    \begin{center}
-		\label{tab:adresyImu}
-		\begin{tabular}{|c|c|}
-			\hline
- 			\textbf{Urządzenie} & \textbf{Adres} \\
- 			\hline
- 			Akcelerometr & 0x19 \\  
- 			\hline
-			Żyroskop & 0x6B \\
-			\hline
-			Magnetometr & 0x1E \\  
-			\hline
-		\end{tabular}
-	\end{center}
-\end{table}
 
-Biblioteka TivaWare udostępnia metody do obsługi komunikacji I2C. Akcelerometr został skonfigurowany w taki sposób, aby obsługiwał zakres przyspieszeń $\pm2g$. Żyroskop obsługuje zakres pomiarowy $\pm245dps$.
-%______________________________________________________________________________________________________________
-\subsection{Pomiar poziomu naładowania pakietu zasilającego}
 
-Układ do pomiaru poziomu naładowania baterii został zbudowany w oparciu o przetwornik analogowo-cyfrowy oraz dzielnik napięcia. 
 
-Napięcie robocze pojedynczego ogniwa li-po wynosi 3.4V. W trakcie pracy ogniwa napięcie może się wahać - od 3.0V w przypadku rozładowania, do nawet 4.2V zaraz po naładowaniu ogniwa. Pakiet zasilający układu składa się z dwóch ogniw li-po, zatem napięcie może przyjmować wartości od 6V do 8.8V. Pomiar tej wielkości przez przetwornik analogowo-cyfrowy nie jest możliwy, gdyż przekracza maksymalne dopuszczalne napięcie na porcie wejściowym mikrokontrolera, które wynosi 5.5V(\cite{tiva}). W celu obniżenia napięcia zastosowany został dzielnik napięcia. Dzielnik napięcia to czwórnik, który pozwala zapewnić odpowiedni stosunek pomiędzy napięciem wejściowym a napięciem wyjściowym układu. Napięciem wejściowym układu jest napięcie pakietu zasilającego, a napięciem wyjściowym jest napięcie podane na przetwornik analogowo-cyfrowy, tak jak zostało to przedstawione na rys. \ref{fig:schematPolaczen}.
-\begin{figure}
-    \centering
-    \includegraphics[scale=0.5]{dzielnikNapiecia.jpg}
-    \caption{Dzielnik napięcia układu pomiarowego poziomu napięcia pakietu zasilającego.}
-    \label{fig:równia}
-\end{figure}
 
-Napięcie na wyjściu dzielnika napięcia określone jest zależnością:
-\begin{equation}
-    U_{Adc}=U_{Zas}\frac{R_2}{R_1 + R_2}
-    \label{eq:rownanieDzielnik}
-\end{equation}
-
-Zakładając maksymalną wartość napięcia pakietu, napięcie wejściowe na przetworniku analogowo-cyfrowym powinno wynosić 3.3V a rezystancja $R_2$ jest równa 10k$\Omega$, to zgodnie z zależnością \ref{eq:rownanieDzielnik} rezystancja $R_1$ powinna przyjąć około 15k$\Omega$.
-
-Przetwornik analogowo-cyfrowy przetwarza sygnał analogowy na równoważną postać cyfrową. Mikrokontroler wyposażony jest w przetwornik 12-bitowy. Oznacza to, że do reprezentacji całego zakresu pomiarowego używa dwunastu bitów. Zakres pomiarowy określony jest przez sygnały referencyjne - 0V i 3.3V(\cite{tiva}). Wartość zwracana przez przetwornik dla napięcia 0V wynosi 0, natomiast dla napięcia 3.3V przetwornik zwraca liczbę 4096. Rozdzielczość przetwornika wynosi około 0.8mV
-
-Zgodnie z pkt. \ref{niskiPoziom}, zgłaszane są dwa stany alarmowe związane z zasilaniem:
-\begin{itemize}
-\item
-    stan niskiego poziomu naładowania pakietu zasilającego wynoszący 6.8V.
-\item
-    stan rozładowania pakietu zasilającego wynoszący 6V.
-\end{itemize}
-
-Biorąc pod uwagę powyższe zależności i założenia, można wyznaczyć wartości zwracane przez przetwornik dla stanów alarmowych - tabela \ref{tab:napieciaDwojnik}
-
-\begin{table}[h]
-    \caption{Poziomy napięć alarmowych oraz wartości zwracane przez przetwornik}
-    \begin{center}
-		\label{tab:napieciaDwojnik}
-		\begin{tabular}{|c|c|c|}
-			\hline
- 			\textbf{Napięcie $U_{Zas}$ [V]}& \textbf{Napięcie $U_{Adc}$ [V]}& \textbf{Wartość zwracana przez przetwornik} \\
- 			\hline
- 			6.8 & 2.72 & 3376 \\  
- 			\hline
-			6.0 & 2.4 & 2979 \\
-			\hline
-		\end{tabular}
-	\end{center}
-\end{table}
-
-Pomiar poziomu napięcia wyzwalany jest przy użycia zadania cyklicznego, wyzwalanego przez układ czasowo-licznikowy z częstotliwością 1Hz.
 
 
 
