@@ -80,6 +80,7 @@ Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotycz�
     \omega = \frac{d\varphi}{dt}
     \label{eq:predkoscKatowa}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
 	\item[$\varphi$] droga kątowa,
 	\item[$t$] czas.
@@ -88,6 +89,7 @@ Wyznaczenie chwilowej wartości prędkości kątowej jest możliwe dzięki zasto
 \begin{equation}
     \omega_{wheel} = \frac{\pi}{T_{wheel}}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
     \item[$\omega_{wheel}$] prędkość kątowa tylnego koła $[\frac{rad}{s}]$,
 	\item[$T_{wheel}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego koła $[s]$.
@@ -96,6 +98,7 @@ Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogicz
 \begin{equation}
     \omega_{crank} = \frac{2\pi}{T_{crank}}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
     \item[$\omega_{wheel}$] prędkość kątowa mechanizmu korbowego $[\frac{rad}{s}]$,
 	\item[$T_{crank}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego mechanizmu korbowego $[s]$.
@@ -105,6 +108,7 @@ Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
 \begin{equation}
     v = \frac{s}{t}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
 	\item[$s$] droga liniowa,
 	\item[$v$] prędkość liniowa.
@@ -120,6 +124,7 @@ W układzie pomiarowym prędkości kątowej koła roweru, który wykorzystuje dw
     \label{eq:zaleznoscNaPredkosc}
     v_{bike} = \frac{\pi R}{T_{wheel}}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
     \item[$v_{bike}$] prędkość roweru $[\frac{m}{s}]$,
 	\item[$R$] promień koła rowerowego $[m]$.
@@ -155,6 +160,7 @@ Przykład zamieszczony na rysunku \ref{fig:rownia} przedstawia ciało znajdując
     \alpha=\arctan{\frac{a_x}{a_y}}
     \label{eq:rowniaRadian}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
 	\item[$\alpha$] kąt nachylenia podłoża
 	\item[$a_x$] przyspieszenie akcelerometru mierzone wzdłuż osi $X$,
@@ -165,6 +171,7 @@ Z zależności (\ref{eq:rowniaRadian}) można wyznaczyć wartość miary łukowe
     \alpha_{deg}=\frac{180\alpha}{\pi}
     \label{eq:rowniaStopnie}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
 	\item[$\alpha_{deg}$] kąt nachylenia wyrażony w stopniach.
 \end{eqwhere}
@@ -182,6 +189,7 @@ Zgodnie z zależnością (\ref{eq:predkoscKatowa}) prędkość kątowa określan
     \alpha = \int{\omega_{z}(t)dt}
     \label{eq:zyroRad}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
 	\item[$\omega_{z}(t)$] prędkość kątowa wzdłuż osi $Z$ żyroskopu.
 	
@@ -252,6 +260,7 @@ Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym,
     s=\frac{t_0z}{z-1}
     \label{eq:eulerWstecz}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
 	\item[$t_{0}$] długość kroku dyskretyzacji
 \end{eqwhere}

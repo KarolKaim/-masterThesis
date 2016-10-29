@@ -5,7 +5,9 @@
 Niniejszy rozdział zawiera opis przebiegu realizacji projektu. Pokrótce zaprezentowano narzędzia programistyczne wykorzystane w trakcie prac na projektem. Przedstawiono wykaz podzespołów wraz z krótką charakterystyką, szczegóły dotyczące modyfikacji przerzutki, integracji elementów elektronicznych oraz implementacji głównych funkcjonalności sterownika.
    
 \section{Narzędzia programistyczne}
-Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach typu embedded. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories \cite{prata}. Doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
+Komputer klasy PC stanowi podstawę środowiska do rozwoju aplikacji na wybraną platformę sprzętową oraz do przeprowadzania testów wykonanego układu.
+ 
+Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach wbudowanych. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories \cite{prata}. Doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
 \subsection{Code Composer Studio 6.0.0}
 
 Oprogramowanie sterownika rozwijane było w oparciu o zintegrowane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC( ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
@@ -17,13 +19,13 @@ Texas Intrusments dostarcza bibliotekę dedykowaną do mikrokontrolerów z rodzi
 Pozostałe oprogramowanie wykorzystane w trakcie realizacji projektu to m.in.:
 \begin{itemize}
 \item
-Saleae Logic - oprogramowanie współpracujące z analizatorem stanów logicznych.
+Saleae Logic - oprogramowanie współpracujące z analizatorem stanów logicznych,
 \item
-Gnuplot - program do graficznej reprezentacji danych.
+Gnuplot - program do graficznej reprezentacji danych,
 \item
-Putty - klient usług Telnet, SSH i rlogin, wykorzystany do logowania danych.
+Putty - klient usług Telnet, SSH i rlogin, wykorzystany do logowania danych,
 \item
-Eagle - program do projektowania układów elektronicznych.
+Eagle - program do projektowania układów elektronicznych,
 \item
 FreeCad - program do modelowania parametrycznego 3D,
 \item
@@ -32,7 +34,7 @@ QT Creator - środowisko do projektowania interfejsu graficznego z wykorzystanie
 %______________________________________________________________________________________________________________
 \section{Wykaz podzespołów}
 \subsection{Przerzutka tylna}
-Autor zdecydował się na wykorzystanie tylnej przerzutki SRAM X5. Głównym atutem tej przerzutki jest jej konstrukcja, która ze względu na długie ramiona wózka przerzutki, umożliwia bezproblemowe zamontowanie serwomechanizmu. Przerzutka oferuje pełny zakres ruchu do obsługi ośmiu przełożeń. Dodatkowo jest solidną propozycją z niskiej półki cenowej.
+Autor zdecydował się na wykorzystanie tylnej przerzutki SRAM X5 \cite{sramX5}. Głównym atutem tej przerzutki jest jej konstrukcja, która ze względu na długie ramiona wózka przerzutki, umożliwia bezproblemowe zamontowanie serwomechanizmu. Przerzutka oferuje pełny zakres ruchu do obsługi ośmiu przełożeń. Dodatkowo jest solidną propozycją z niskiej półki cenowej.
 %_______________________________________________________________________________________________________________
 \subsection{Serwomechanizm}
 Serwomechanizm odpowiedzialny za pozycjonowanie wózka przerzutki to Hitec Hs-8335SH. Jest to tzw. cyfrowy serwomechanizm, przeznaczony do zastosowań modelarskich. Od analogowych odpowiedników odróżnia się większą precyzją w osiąganiu zadanej pozycji oraz wyższym momentem obrotowym. Autor zdecydował się na zastosowanie gotowego serwomechanizmu z kilku powodów. Takie rozwiązanie zdecydowanie przyspieszyło prace nad projektem. W dodatku gotowy serwomechanizm charakteryzuje się kompaktowymi rozmiarami oraz odpornością na warunki atmosferyczne.  
@@ -40,41 +42,41 @@ Serwomechanizm odpowiedzialny za pozycjonowanie wózka przerzutki to Hitec Hs-83
 Parametry techniczne serwomechanizmu Hitec Hs-8335SH:
 \begin{itemize}
 \item
-Napięcie robocze [V]: 6-7.4
+Napięcie robocze [V]: 6-7.4,
 \item
-Moment obrotowy (7.4V)[kgcm]: 24
+Moment obrotowy (7.4V)[kgcm]: 24,
 \item
-Prędkość (7.4V)[sek/$60^{\circ}$]: 0.13
+Prędkość (7.4V)[sek/$60^{\circ}$]: 0.13,
 \item
-Metalowe tryby przekładni
+Metalowe tryby przekładni.
 \end{itemize} 
 \label{serwo}
 %_______________________________________________________________________________________________________________
 \subsection{Mikrokontroler}
-Sterownik nadzorujący pracę całego układu został wykonany w oparciu o zestaw uruchomieniowy Texas Instruments Tiva C-Series EK-TM4C123GXL. Zestaw zawiera 32-bitowy mikrokontroler TM4C123GH6PM wykorzystujący rdzeń ARM Cortex-M4F. Posiada wbudowany regulator 3.3V, port micro USB oraz wyprowadzenia niezbędnych portów I/O. Charakteryzuje się kompaktowymi rozmiarami oraz niską wagą. Mikrokontroler zastosowany w zestawie 	oferuje wysoką wydajność oraz niski pobór prądu. Kontroler przerwań sprzętowych NVIC (ang. {\em Nested Vectored Interrupt Controller}) umożliwia efektywne zarządzanie przerwaniami w zależności od zaprogramowanych priorytetów \cite{tiva}.
+Sterownik nadzorujący pracę całego układu został wykonany w oparciu o zestaw uruchomieniowy Texas Instruments Tiva C-Series EK-TM4C123GXL. Zestaw zawiera 32-bitowy mikrokontroler TM4C123GH6PM wykorzystujący rdzeń ARM Cortex-M4F \cite{tiva}. Posiada wbudowany regulator 3.3V, port micro USB oraz wyprowadzenia niezbędnych portów I/O. Charakteryzuje się kompaktowymi rozmiarami. Mikrokontroler zastosowany w zestawie 	oferuje wysoką wydajność oraz niski pobór prądu. Kontroler przerwań sprzętowych NVIC (ang. {\em Nested Vectored Interrupt Controller}) umożliwia efektywne zarządzanie przerwaniami w zależności od zaprogramowanych priorytetów \cite{tiva}.
 
 Parametry techniczne mikrokontrolera:
 \begin{itemize}
 \item
-Zegar systemowy taktowany z częstotliwością do 80 MHz
+Zegar systemowy taktowany z częstotliwością do 80 MHz,
 \item
-Rdzeń ARM Cortex-M4F
+Rdzeń ARM Cortex-M4F,
 \item 
-Obsługuje zestaw instrukcji Thumb2
+Obsługuje zestaw instrukcji Thumb2,
 \item
-Pamięć flash 256kB
+Pamięć flash 256kB,
 \item
-Pamięć SRAM 32kB
+Pamięć SRAM 32kB,
 \item
-43 porty I/O
+43 porty I/O,
 \item
-Generator sygnału PWM
+Generator sygnału PWM,
 \item
-Kontroler DMA
+Kontroler DMA,
 \item
-Kontroler transmisji szeregowej(USB 2.0, UART, I2C, SPI, CAN)
+Kontroler transmisji szeregowej(USB 2.0, UART, I2C, SPI, CAN),
 \item
-Układy czasowo-licznikowe
+Układy czasowo-licznikowe.
 \end{itemize} 
 %_______________________________________________________________________________________________________________
 \subsection{Czujniki pomiarowe}
@@ -84,28 +86,28 @@ Układy czasowo-licznikowe
 Pololu AltIMU10 to inercyjna jednoskta pomiarowa, w skład której wchodzą czujniki wykonane w technologii MEMS:
 \begin{itemize}
 \item
-Trzyosiowy akcelerometr ST LSM303DLHC
+trzyosiowy akcelerometr ST LSM303DLHC,
 \item
-Trzyosiowy żyroskop ST L3GD20
+trzyosiowy żyroskop ST L3GD20,
 \item
-Trzyosiowy magnetometr ST LSM303DLHC
+trzyosiowy magnetometr ST LSM303DLHC.
 \end{itemize}
 
 Wszystkie czujniki zamontowane w jednostce komunikują się z urządzeniem nadrzędnym z wykorzystaniem magistrali I2C(ang. {\em Inter-Intergrated Circuit}). Magistrala I2C jest szeregowym, dwukierunkowym interfejsem komunikacyjnym opracowanym przez firmę Philips. Układ AltImu10 posiada elementy pasywne, gwarantujące poprawne działanie magistrali, oraz wbudowany regulator napięcia \cite{Pololu}.
 %______________________________________________________________________________________________________________
 \subsubsection{Zbliżeniowe czujniki magnetyczne}
-Zbliżenie czujniki załączane magnetycznie wykorzystane są do wyznaczania prędkości obrotowych tylnego koła oraz mechanizmu korbowego. W wyniki działania pola magnetycznego, pochodzącego z magnesu trwałego, czujnik zwiera swoje styki. 
+Zbliżenie czujniki załączane magnetycznie, o oznaczeniu CMD14, wykorzystane są do wyznaczania prędkości obrotowych tylnego koła oraz mechanizmu korbowego. W wyniki działania pola magnetycznego, pochodzącego z magnesu trwałego, czujnik zwiera swoje styki. 
  
 Parametry techniczne:
 \begin{itemize}
 \item
-Maksymalne napięcie pracy [V] : 50
+Maksymalne napięcie pracy [V] : 50,
 \item
-Maksymalny prąd [A]: 0.1
+Maksymalny prąd [A]: 0.1,
 \item
-Maksymalny zasięg [mm]: 25
+Maksymalny zasięg [mm]: 25,
 \item
-Styk normalnie otwarty
+Styk normalnie otwarty.
 \end{itemize}
 %_______________________________________________________________________________________________________________
 \subsection{Układ zasilania}
@@ -113,13 +115,13 @@ Styk normalnie otwarty
 Parametry techniczne pakietu zasilającego:
 \begin{itemize}
 \item
-Pojemność [mAh]: 1000
+Pojemność [mAh]: 1000,
 \item
-Liczba ogniw: 2
+Liczba ogniw: 2,
 \item
-Napięcie robocze [V]: 7.4
+Napięcie robocze [V]: 7.4,
 \item
-Wydajność prądowa [A]: 45
+Wydajność prądowa [A]: 45.
 \end{itemize}
 
 Dodatkowo zastosowany został regulator napięcia obniżający wartość napięcia pakietu do 5V, które jest źródłem zasilania zestawu uruchomieniowego EK-TM4C123GXL.
@@ -261,11 +263,11 @@ Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w 
 Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi 100$kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
 \begin{itemize}
     \item
-    SCL(ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych.
+    SCL(ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych,
     \item
-    SDA(ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych.
+    SDA(ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych,
     \item
-    Vin - zasilanie jednostki pomiarowej, które przyjmuje napięcie z zakresu od 2.5V do 5.5V.
+    Vin - zasilanie jednostki pomiarowej, które przyjmuje napięcie z zakresu od 2.5V do 5.5V,
     \item
     Gnd - wspólna masa.
 \end{itemize} 
