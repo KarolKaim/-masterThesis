@@ -28,7 +28,7 @@ Szczegóły dotyczące serwomechanizmu, wykorzystanego do realizacji projektu, z
 %____________________________________________________________________________________________________________  
 \section{Pasywny filtr dolnoprzepustowy RC}
 
-Filtr to układ, który przepuszcza na wyjście sygnały o określonej częstotliwości. Filtr dolnoprzepustowy przepuszcza na wyjście sygnały o niskiej częstotliwości, natomiast blokuje sygnały szybkozmienne. Ze względu na konstrukcję filtru, można je podzielić również na filtry pasywne, zbudowane tylko w oparciu o elementy RLC, i aktywne, wykorzystujące dodatkowo np. wzmacniacze operacyjne. 
+Filtr to układ, który przenosi na wyjście sygnały o określonej częstotliwości. Filtr dolnoprzepustowy przenosi na wyjście sygnały o niskiej częstotliwości, natomiast blokuje sygnały szybkozmienne. Ze względu na konstrukcję filtru, można je podzielić również na filtry pasywne, zbudowane tylko w oparciu o elementy RLC, i aktywne, wykorzystujące dodatkowo np. wzmacniacze operacyjne. 
 
 Najprostszy filtr dolnoprzepustowy to pasywny filtr RC zbudowany z opornika o rezystancji $R$ i kondensatora o pojemności $C$ - rys. \ref{fig:filtrRC1}. 
 \begin{figure}[h]
@@ -39,7 +39,7 @@ Najprostszy filtr dolnoprzepustowy to pasywny filtr RC zbudowany z opornika o re
 \end{figure}
 
 
-Przyjmując napięcie na kondensatorze jako zmienną stanu $x(t)$, sterowanie układu jako sygnał $u(t)$ a obserwacje jako sygnał wyjściowy filtru $y(t)$, oraz pamiętając o tym, że prąd płynący przez obwód jest równy zmianie ładunku na kondensatorze, można zapisać model matematyczny układu w postaci równań stanu:
+Przyjmując napięcie na kondensatorze jako zmienną stanu $x(t)$, sterowanie układu jako sygnał $u(t)$ a obserwację jako sygnał wyjściowy filtru $y(t)$, oraz pamiętając o tym, że prąd płynący przez obwód jest równy zmianie ładunku na kondensatorze, można zapisać model matematyczny układu w postaci równań stanu:
 \begin{equation}
 \begin{gathered}
     \dot{x}(t) = -\frac{1}{RC}x(t) + u(t) \\
@@ -48,13 +48,13 @@ Przyjmując napięcie na kondensatorze jako zmienną stanu $x(t)$, sterowanie uk
 \end{gathered}
 \end{equation}
 
-Zgodnie z definicją $4.1$ w pkt. \textit{Zagadnienie realizacji transmitancji} w pracy\cite{graba}, transmitancja operatorowa systemu \ref{eq:stanuRC} jest opisana poniższą zależnością:
+Zgodnie z definicją $4.1$ w pkt. \textit{Zagadnienie realizacji transmitancji} w pracy \cite{graba}, transmitancja operatorowa filtru RC jest opisana zależnością:
 \begin{equation}
     G(s) = \frac{RCs}{RCs + 1}
     \label{eq:transRc}
 \end{equation}
 
-Z równania \ref{eq:transRc} wynika, że obwód RC jest  układem inercyjnym I rzędu, którego stała czasowa wynosi:
+Z powyższego równania wynika, że obwód RC jest  układem inercyjnym I rzędu, którego stała czasowa wynosi:
 \begin{equation}
    T = RC
     \label{eq:stalaCzasowaRC}
@@ -81,24 +81,24 @@ Prędkość kątowa jest wielkością wektorową, jednak w rozważaniach dotycz�
     \label{eq:predkoscKatowa}
 \end{equation}
 \begin{eqwhere}[2cm]
-	\item[$\varphi$] droga kątowa
-	\item[$t$] czas
+	\item[$\varphi$] droga kątowa,
+	\item[$t$] czas.
 \end{eqwhere}
-Wyznaczenie chwilowej wartości prędkości kątowej wykonane zostało w oparciu o czujniki zbliżeniowy załączany magnetycznie, który został na stałe przymocowany do ramy roweru, w niewielkiej odległości do tylnego koła. Zasada działania takiego czujnika jest analogiczna do działania zwykłego przycisku monostabilnego. Obwód w czujniku jest domyślnie rozwarty. Zwarcie następuje w momencie zbliżenia magnesu do czujnika. Magnes przyczepiony został do szprychy roweru. Taki sam sposób pomiaru prędkości można znaleźć w komercyjnych licznikach rowerowych oferowanych na rynku. Autor zdecydował się na zastosowanie dwóch magnesów w celu zwiększenia dokładności pomiaru. Dysponując pomiarem czasu pomiędzy kolejnymi zwarciami czujnika magnetycznego, które, ze względu na zastosowanie dwóch magnesów, następują w wyniku obrotu koła o kąt $\pi$ , można wyznaczyć chwilową wartość prędkości kątowej: 
+Wyznaczenie chwilowej wartości prędkości kątowej jest możliwe dzięki zastosowaniu czujnika zbliżeniowego załączanego magnetycznie, który jest przymocowany do ramy roweru, w niewielkiej odległości do tylnego koła. Zasada działania takiego czujnika jest analogiczna do działania zwykłego przycisku monostabilnego. Obwód w czujniku jest domyślnie rozwarty. Zwarcie następuje w momencie zbliżenia magnesu do czujnika. Magnes przyczepiony jest do szprychy roweru. Taki sam sposób pomiaru prędkości można znaleźć w komercyjnych licznikach rowerowych oferowanych na rynku. Autor zdecydował się na zastosowanie dwóch magnesów w celu zwiększenia dokładności pomiaru. Dysponując pomiarem czasu pomiędzy kolejnymi zwarciami czujnika magnetycznego, które, ze względu na zastosowanie dwóch magnesów, następują w wyniku obrotu koła o kąt $\pi$ , można wyznaczyć chwilową wartość prędkości kątowej: 
 \begin{equation}
     \omega_{wheel} = \frac{\pi}{T_{wheel}}
 \end{equation}
 \begin{eqwhere}[2cm]
-    \item[$\omega_{wheel}$] prędkość kątowa tylnego koła $[\frac{rad}{s}]$
-	\item[$T_{wheel}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego koła $[s]$
+    \item[$\omega_{wheel}$] prędkość kątowa tylnego koła $[\frac{rad}{s}]$,
+	\item[$T_{wheel}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego koła $[s]$.
 \end{eqwhere}
-Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogiczny. Zbliżeniowy czujnik magnetyczny, który został na stałe przymocowany do ramy roweru, w bliskiej odległości mechanizmu korbowego, jest zwierany w każdym cyklu dzięki zastosowaniu magnesu, który został przyklejony do ramienia mechanizmu korbowego. Ze względu na zastosowanie jednego magnesu, przyrost drogi kątowej jest dwa razy większy, niż w przypadku pomiaru prędkości kątowej koła roweru i jego wartość wynosi 2$\pi$:
+Prędkość kątowa mechanizmu korbowego została wyznaczona w sposób analogiczny. Zbliżeniowy czujnik magnetyczny, na stałe przymocowany do ramy roweru w bliskiej odległości mechanizmu korbowego, jest zwierany w każdym cyklu dzięki zastosowaniu magnesu, który jest przyklejony do ramienia mechanizmu korbowego. Ze względu na zastosowanie jednego magnesu, przyrost drogi kątowej jest dwa razy większy, niż w przypadku pomiaru prędkości kątowej koła roweru i jego wartość wynosi 2$\pi$:
 \begin{equation}
     \omega_{crank} = \frac{2\pi}{T_{crank}}
 \end{equation}
 \begin{eqwhere}[2cm]
-    \item[$\omega_{wheel}$] prędkość kątowa mechanizmu korbowego $[\frac{rad}{s}]$
-	\item[$T_{crank}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego mechanizmu korbowego $[s]$
+    \item[$\omega_{wheel}$] prędkość kątowa mechanizmu korbowego $[\frac{rad}{s}]$,
+	\item[$T_{crank}$] czas pomiędzy kolejnymi zwarciami czujnika magnetycznego mechanizmu korbowego $[s]$.
 \end{eqwhere}
 \subsection{Prędkość liniowa roweru}
 Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
@@ -106,8 +106,8 @@ Wartość prędkości liniowej to stosunek przebytej drogi do czasu:
     v = \frac{s}{t}
 \end{equation}
 \begin{eqwhere}[2cm]
-	\item[$s$] droga liniowa
-	\item[$v$] prędkość liniowa
+	\item[$s$] droga liniowa,
+	\item[$v$] prędkość liniowa.
 \end{eqwhere}
  Związek pomiędzy drogą liniową a drogą kątową, punktu poruszającego się po okręgu o promieniu $r$,wyraża się wzorem:
 
@@ -121,8 +121,8 @@ W układzie pomiarowym prędkości kątowej koła roweru, który wykorzystuje dw
     v_{bike} = \frac{\pi R}{T_{wheel}}
 \end{equation}
 \begin{eqwhere}[2cm]
-    \item[$v_{bike}$] prędkość roweru $[\frac{m}{s}]$
-	\item[$R$] promień koła rowerowego $[m]$
+    \item[$v_{bike}$] prędkość roweru $[\frac{m}{s}]$,
+	\item[$R$] promień koła rowerowego $[m]$.
 \end{eqwhere}
 %____________________________________________________________________________________________________________  
 \subsection{Inercyjna jednostka pomiarowa IMU}
@@ -134,9 +134,9 @@ Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy ż
 \subsubsection{Pomiar przyspieszeń - akcelerometr}
 Akcelerometr to urządzenie pomiarowe, które umożliwia pomiar przyspieszenia dynamicznego ciała, na które działa niezerowa siła wypadkowa, oraz przyspieszenia statycznego ciała znajdującego się w ziemskim polu grawitacyjnym. Akcelerometry zazwyczaj działają na zasadzie przetworników pojemnościowych. Pomiar dokonywany jest dzięki zastosowaniu kondensatorów różnicowych, których ruchome okładki wychylane są z położenia równowagi pod wpływem działających sił bezwładności.
 
-Akcelerometry są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Układy sterujące poduszkami powietrznymi, systemy alarmowe w samochodach czy tzw. system ruszania na wzniesieniu to tylko niektóre przykłady z branży motoryzacyjnej\cite{stAkcel}.
+Akcelerometry są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Układy sterujące poduszkami powietrznymi, systemy alarmowe w samochodach czy tzw. system ruszania na wzniesieniu to tylko niektóre przykłady z branży motoryzacyjnej \cite{stAkcel}.
 
-Układy do pomiaru przyspieszenia wykonane w technologii MEMS zazwyczaj składają się z trzech akcelerometrów, które umożliwiają pomiar przyspieszenia w trzech różnych kierunkach. Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{x} był równoległy do podłoża(rys. \ref{fig:rownia}).
+Układy do pomiaru przyspieszenia wykonane w technologii MEMS zazwyczaj składają się z trzech akcelerometrów, które umożliwiają pomiar przyspieszenia w trzech różnych kierunkach. Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{x} był równoległy do podłoża (rys. \ref{fig:rownia}).
 %____________________________________________________________________________________________________________  
 \subsubsection{Pomiar prędkości kątowych - żyroskop}
 Żyroskop to urządzenie pomiarowe dostarczające informacji na temat chwilowej prędkości obrotowej układu pomiarowego. Żyroskopy wykonane w technologii MEMS to czujniki pojemnościowe wykorzystujące efekt Coriolisa. Układ dwóch wibrujących mas, umieszczony na obrotowej tarczy, zmienia swoje położenie względem osi obrotu w zależności od chwilowej prędkości obrotowej. W wyniku zmiany położenia układu mas odkształceniu ulega tarcza, która stanowi okładkę kondensatora. W efekcie następuje różnicowa zmiana pojemności kondensatora, która przetwarzana jest na chwilową prędkość obrotową \cite{stGyro}.
@@ -145,28 +145,28 @@ Układy do pomiaru przyspieszenia wykonane w technologii MEMS zazwyczaj składaj
 
 %____________________________________________________________________________________________________________  
 \section{Estymata kąta nachylenia podłoża}
-Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości  brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczona zostanie pośrednio, poprzez zastosowanie filtru komplementarnego wykorzystującego chwilowe wartości kąta nachylenia, wyznaczone na podstawie danych pochodzących z akcelerometru oraz żyroskopu.
+Kąt nachylenia podłoża, po którym porusza się rower, to ostatnia z wielkości  brana pod uwagę przez algorytm automatycznej zmiany przełożeń. Wielkość ta wyznaczana jest pośrednio, poprzez zastosowanie filtru komplementarnego, wykorzystującego dane pomiarowe pochodzące z akcelerometru oraz żyroskopu.
 
 %____________________________________________________________________________________________________________ 
 \subsection{Analiza danych pomiarowych akcelerometru}
 \label{pomiaryAkcel}
-Przykład zamieszczony na rysunku \ref{fig:rownia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta równi pochyłej, której kąt nachylenia został oznaczony jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuż osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
+Przykład zamieszczony na rysunku \ref{fig:rownia} przedstawia ciało znajdujące się na równi pochyłej. Przyspieszenie ziemskie \textit{$g$} zostało rozłożone na kierunki składowe wzdłuż osi pomiarowych akcelerometru - \textit{$a_x$} oraz \textit{$a_y$}. Wektory składowe wraz z przyspieszeniem ziemskim stanowią trójkąt podobny do trójkąta, będącego przekrojem równi pochyłej, o kącie nachylenia oznaczonym jako $\alpha$. Stosunek długości przyprostokątnej leżącej naprzeciw kąta $\alpha$ do wartości drugiej przyprostokątnej, które odpowiadają wartością przyspieszeń mierzonym przez akcelerometr odpowiednio wzdłuż osi $x$ i $y$, wynosi $\tan{\alpha}$. Zastosowanie funkcji odwrotnej pozwala wyznaczyć kąt nachylenia równi:
 \begin{equation}
     \alpha=\arctan{\frac{a_x}{a_y}}
     \label{eq:rowniaRadian}
 \end{equation}
 \begin{eqwhere}[2cm]
 	\item[$\alpha$] kąt nachylenia podłoża
-	\item[$a_x$] przyspieszenie akcelerometru mierzone wzdłuż osi x
-	\item[$a_y$] przyspieszenie akcelerometru mierzone wzdłuż osi y
+	\item[$a_x$] przyspieszenie akcelerometru mierzone wzdłuż osi $X$,
+	\item[$a_y$] przyspieszenie akcelerometru mierzone wzdłuż osi $Y$.
 \end{eqwhere}
-Zależność \ref{eq:rowniaRadian} pozwala wyznaczyć wartość miary łukowej kąta wyrażonej w radianach. W odniesieniu do kąta nachylenia podłoża po którym porusza się rower, zdecydowanie bardziej intuicyjną jednostką są stopnie. Przekształcenie miary kąta wyrażonej w radianach na miarę kąta wyrażoną w stopniach opisane jest poniższą zależnością:
+Z zależności (\ref{eq:rowniaRadian}) można wyznaczyć wartość miary łukowej kąta wyrażonej w radianach. W odniesieniu do kąta nachylenia podłoża, po którym porusza się rower, zdecydowanie bardziej intuicyjną jednostką są stopnie. Przekształcenie miary kąta wyrażonej w radianach na miarę kąta wyrażoną w stopniach opisane jest poniższą zależnością:
 \begin{equation}
     \alpha_{deg}=\frac{180\alpha}{\pi}
     \label{eq:rowniaStopnie}
 \end{equation}
 \begin{eqwhere}[2cm]
-	\item[$\alpha_{deg}$] kąt nachylenia wyrażony w stopniach
+	\item[$\alpha_{deg}$] kąt nachylenia wyrażony w stopniach.
 \end{eqwhere}
 \begin{figure}[h]
     \centering
@@ -177,24 +177,24 @@ Zależność \ref{eq:rowniaRadian} pozwala wyznaczyć wartość miary łukowej k
 %____________________________________________________________________________________________________________ 
 \subsection{Analiza danych pomiarowych żyroskopu}
 \label{gyro}
-Zgodnie z zależnością \ref{eq:predkoscKatowa} prędkość kątowa określana jest jako zmiana drogi kątowej w czasie. Sytuacja odwrotna, czyli wyznaczenie drogi kątowej na podstawie pomiarów prędkości jest możliwe poprzez wyznaczenie funkcji odwrotnej:
+Zgodnie z zależnością (\ref{eq:predkoscKatowa}) prędkość kątowa określana jest jako zmiana drogi kątowej w czasie. Sytuacja odwrotna, czyli wyznaczenie drogi kątowej na podstawie pomiarów prędkości kątowej polega na znalezieniu funkcji odwrotnej:
 \begin{equation}  
     \alpha = \int{\omega_{z}(t)dt}
     \label{eq:zyroRad}
 \end{equation}
 \begin{eqwhere}[2cm]
-	\item[$\omega_{z}(t)$] prędkość kątowa wzdłuż osi $z$ żyroskopu
+	\item[$\omega_{z}(t)$] prędkość kątowa wzdłuż osi $Z$ żyroskopu.
 	
 \end{eqwhere}
 
 Podobnie, jak zależność \ref{eq:rowniaRadian}, równanie \ref{eq:zyroRad} pozwala wyznaczyć miarę łukową wyrażoną w radianach.
 
-Operacja całkowania prędkości kątowej została uwzględniona w projekcie filtru komplementarnego poprzez dodanie członu całkującego, którego transmitancja operatorowa wynosi $\frac{1}{s}$ - wzór \ref{eq:alpha} w pkt. \ref{kompZasadaDzialania}.
+Operacja całkowania prędkości kątowej została uwzględniona w projekcie filtru komplementarnego w postaci dodatkowego członu całkującego, którego transmitancja operatorowa wynosi $\frac{1}{s}$ - wzór (\ref{eq:alpha}) w pkt. \ref{kompZasadaDzialania}.
 
 %____________________________________________________________________________________________________________ 
 \subsection{Filtr komplementarny}
 \label{kompZasadaDzialania}
-Zasada działania filtru komplementarnego polega na odpowiedniej fuzji danych pochodzących z różnych czujników pomiarowych. Sygnał każdego z nich zawiera istotną informację o mierzonej wielkości jak również zakłócenia, które powinny zostać wyeliminowane. Fuzja danych polega na zastosowaniu odpowiednich filtrów, dolnoprzepustowych, środkowoprzepustowych i górnoprzepustowych, które eliminują zakłócenia charakterystyczne dla danego czujnika jednocześnie przepuszczając informacje użyteczne. Warunkiem koniecznym uzyskania dokładniejszych wartości estymowanych, od wartości mierzonych, jest zastosowanie czujników pomiarowych o różnej charakterystyce częstotliwości błędów pomiarowych. Schemat przedstawiający ogólną idę filtru komplementarnego przedstawiony został na rys \ref{fig:kompGeneral}.
+Zasada działania filtru komplementarnego polega na odpowiedniej fuzji danych pochodzących z różnych czujników pomiarowych. Sygnał każdego z nich zawiera istotną informację o mierzonej wielkości jak również zakłócenia, które powinny zostać wyeliminowane. Fuzja danych polega na zastosowaniu odpowiednich filtrów, dolnoprzepustowych, środkowoprzepustowych i górnoprzepustowych, które eliminują zakłócenia charakterystyczne dla danego czujnika, jednocześnie przenosząc informacje użyteczne. Warunkiem koniecznym uzyskania dokładniejszych wartości estymowanych, od wartości mierzonych, jest zastosowanie czujników pomiarowych o różnej charakterystyce częstotliwości błędów pomiarowych. Schemat przedstawiający ogólną idę filtru komplementarnego zamieszczono na rys \ref{fig:kompGeneral}.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.3]{filtrKomp.png}
@@ -208,7 +208,7 @@ Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancj
     \label{eq:zasadaKomplementarnosci}
 \end{equation}
 
-W odniesieniu do estymacji wartości kąta nachylania podłoża, schemat filtru komplementarnego, wykorzystującego wartości kątów wyznaczonych na podstawie danych pomiarowych pochodzących z akcelerometru oraz żyroskopu, przedstawiony został na rys \ref{fig:kompKat}. 
+W odniesieniu do estymacji wartości kąta nachylenia podłoża, schemat filtru komplementarnego, wykorzystującego wartości kątów wyznaczonych na podstawie danych pomiarowych pochodzących z akcelerometru oraz żyroskopu, przedstawiony został na rys \ref{fig:kompKat}. 
 
 Pomiar składowych przyspieszenia ziemskiego umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{pomiaryAkcel}). Ta metoda znajduje swoje zastosowanie wtedy, gdy układ pomiarowy nie porusza się lub porusza się ruchem jednostajnym. W ruchu przyspieszonym dane pomiarowe akcelerometru uwzględniają siły powodujące ten ruch, a brak możliwości odseparowania składowych przyspieszenia ziemskiego sprawia, że kąt nachylenia obarczony jest błędem. Należy zatem zastosować filtr dolnoprzepustowy, eliminujący szybkozmienne wartości kąta nachylenia pochodzące z akcelerometru.
 
@@ -240,10 +240,11 @@ Estymowana wartość kąta nachylenia $\hat{\alpha}$ spełnia zależność:
     \hat{\alpha} = \frac{1}{Ts+1}\alpha_{acc}+\frac{Ts}{Ts+1}\frac{1}{s}\omega = \frac{\alpha_{acc}+T\omega}{Ts + 1}
     \label{eq:alpha}
 \end{equation}
+gdzie:
 \begin{eqwhere}[2cm]
-	\item[$\hat{\alpha}$] estymowana wartość kąta nachylenia
-	\item[$\alpha_{acc}$] kąt nachylania wyznaczony na podstawie danych z akcelerometru
-	\item[$\omega$] prędkość obrotowa
+	\item[$\hat{\alpha}$] estymowana wartość kąta nachylenia,
+	\item[$\alpha_{acc}$] kąt nachylania wyznaczony na podstawie danych z akcelerometru,
+	\item[$\omega$] prędkość obrotowa.
 \end{eqwhere}
 
 Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym, należy znaleźć równoważny model dyskretny, który aproksymuje własności dynamiczne modelu ciągłego. Można tego dokonać stosując metodę Eulera wstecz \cite{grega}:
