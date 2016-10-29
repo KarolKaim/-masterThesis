@@ -2,6 +2,8 @@
 %______________________________________________________________________________________________________________
 \newcolumntype{C}[1]{>{\centering}m{#1}}
 
+Niniejszy rozdział zawiera opis przebiegu realizacji projektu. Pokrótce zaprezentowano narzędzia programistyczne wykorzystane w trakcie prac na projektem. Przedstawiono wykaz podzespołów wraz z krótką charakterystyką, szczegóły dotyczące modyfikacji przerzutki, integracji elementów elektronicznych oraz implementacji głównych funkcjonalności sterownika.
+   
 \section{Narzędzia programistyczne}
 Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach typu embedded. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories \cite{prata}. Doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
 \subsection{Code Composer Studio 6.0.0}
@@ -129,14 +131,14 @@ Dodatkowo zastosowany został regulator napięcia obniżający wartość napięc
  Zasada działania serwomechanizmu kontrolującego pozycję wózka została przedstawiona na rys. \ref{fig:przerzutkaSerwo}. Zmiana pozycji wału serwomechanizmu implikuje zmianę pozycji wózka poprzez zastosowanie sztywnego połączenia przegubowego.
  \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.45]{przerzutkaSerwo.jpg}
+    \includegraphics[scale=0.5]{przerzutkaSerwo.jpg}
     \caption{Zasada działania przerzutki rowerowej z wykorzystaniem serwomechanizmu.}
     \label{fig:przerzutkaSerwo}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.35]{lacznik.png}
+    \includegraphics[scale=0.4]{lacznik.png}
     \caption{Rysunek techniczny elementu mocującego serwomechanizm do przerzutki.}
     \label{fig:lacznik}
 \end{figure}
