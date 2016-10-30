@@ -133,14 +133,14 @@ Dodatkowo zastosowany został regulator napięcia obniżający wartość napięc
  Zasada działania serwomechanizmu kontrolującego pozycję wózka została przedstawiona na rys. \ref{fig:przerzutkaSerwo}. Zmiana pozycji wału serwomechanizmu implikuje zmianę pozycji wózka poprzez zastosowanie sztywnego połączenia przegubowego.
  \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.5]{przerzutkaSerwo.jpg}
+    \includegraphics[scale=0.4]{przerzutkaSerwo.jpg}
     \caption{Zasada działania przerzutki rowerowej z wykorzystaniem serwomechanizmu.}
     \label{fig:przerzutkaSerwo}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.4]{lacznik.png}
+    \includegraphics[scale=0.3]{lacznik.png}
     \caption{Rysunek techniczny elementu mocującego serwomechanizm do przerzutki.}
     \label{fig:lacznik}
 \end{figure}
@@ -166,7 +166,37 @@ Mikrokontroler, filtry RC, pakiet zasilający, regulator napięcia oraz jednostk
     \label{fig:schematPolaczen}
 \end{figure}
 
-Schemat połączeń znajduje się na rys. \ref{fig:schematPolaczen}. Na schemacie przedstawione zostały jedynie elementy wykonane przez Autora pracy. Są to filtry RC, dzielnik napięcia do pomiaru stanu pakietu zasilającego, połączenia do sterowania serwomechanizmem oraz połączenia do komunikacji z jednostką pomiarową IMU. Szczegóły związane z dystrybucją zasilania zostały pominięte, ponieważ są elementem zestawu uruchomieniowego. Można je znaleźć w \cite{tivaWork}. Ze względu na rozwojowy charakter projektu oraz częste zmiany wprowadzane na etapie realizacji, autor pracy nie zdecydował się na wykonanie dedykowanego obwodu drukowanego.
+\begin{table}[h]
+    \caption{Funkcje portów I/O przedstawionych na schemacie połączeń elementów elektronicznych.}
+    \begin{center}
+		\label{tab:portyGPIO}
+		\begin{tabular}{|c|>{\centering}m{8cm}|}
+ 			\hline
+ 			\textbf{Nazwa syngału} & \textbf{Funkcja} \tabularnewline
+ 			\hline
+ 			GEAR\_UP & Obsługa przycisku zwiększającego przełożenie \tabularnewline
+ 			\hline
+ 			GEAR\_DOWN &  Obsługa przycisku zmniejszającego przełożenie \tabularnewline
+ 			\hline
+ 			SERVO\_PWM & Generowanie sygnału sterującego pozycją serwomechanizmu \tabularnewline
+ 			\hline
+ 			MODE\_CHANGE &  Obsługa przycisku zmiany trybu pracy sterownika\tabularnewline
+ 			\hline
+ 			WHEEL\_MAG & Obsługa czujnika magnetycznego do pomiaru prędkości kątowej koła roweru \tabularnewline
+ 			\hline
+ 			CRANK\_MAG & Obsługa czujnika magnetycznego do pomiaru kadencji \tabularnewline
+ 			\hline
+ 			BATTERY\_LEVEL & Odczyt pomiaru poziomu napięcia \tabularnewline
+ 			\hline
+ 			SCL &  Obsługa linii zegarowej magistrali I2C \tabularnewline
+ 			\hline
+ 			SDA & Obsługa linii danych magistrali I2C \tabularnewline
+ 			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+Schemat połączeń znajduje się na rys. \ref{fig:schematPolaczen}. Na schemacie przedstawione zostały jedynie elementy wykonane przez Autora pracy. Są to filtry RC, dzielnik napięcia do pomiaru stanu pakietu zasilającego, połączenia do sterowania serwomechanizmem oraz połączenia do komunikacji z jednostką pomiarową IMU. Szczegóły związane z dystrybucją zasilania zostały pominięte, ponieważ są elementem zestawu uruchomieniowego. Można je znaleźć w dokumentacji urządzenia \cite{tivaWork}. Ze względu na rozwojowy charakter projektu oraz częste zmiany wprowadzane na etapie realizacji, autor pracy nie zdecydował się na wykonanie dedykowanego obwodu drukowanego.
 %______________________________________________________________________________________________________________
 
 \section{Implementacja głównych funkcjonalności}
@@ -204,7 +234,7 @@ Przerzutka, do której został przymocowany serwomechanizm, ogranicza pełny zak
 	\end{center}
 \end{table}
 
-Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalnych układach napędowych działa znacznie lepiej, jeśli w trakcie zmiany biegu następuje chwilowe przeciągnięcie pozycji wózka przerzutki. Jest to szczególnie dobrze widoczne w trakcie redukowania przełożenia, kiedy łańcuch powinien trafić na koło zębate o większej średnicy. Można wtedy zaobserwować opóźnienie w zmianie przełożenia, niekorzystne przeskoki łańcucha pomiędzy kołami zębatymi, a w źle wyregulowanych układach napędowych może nawet dochodzić do braku reakcji układu napędowego. Takie zjawisko zostało zaobserwowane w trakcie pracy nad projektem. Zmiana biegów polegająca na pozycjonowaniu serwomechanizmu w nowej pozycji, zależnej od dobranego przełożenia, działała z wyraźnym opóźnieniem. Problem, podobnie jak w układach mechanicznych, został rozwiązany przez chwilowe przeciągnięcie pozycji wózka przerzutki. Zdefiniowanie zostały dwa pomocnicze zestawy pozycji serwomechanizmu, specyficzne dla redukowania oraz zwiększania przełożenia(tabela \ref{tab:przelozeniaPomocniczne}). Wszystkie trzy zestawy pozycji przechowywane są w postaci tablic, które zawierają czasy wypełnienia sygnału sterującego. W momencie rozpoczęcia zmiany przełożenia, na skutek naciśnięcia przycisku lub w wyniku decyzji kontrolera automatycznej zmiany przełożeń, zmienna, która do tej pory wskazywała na główny zestaw pozycji, zaczyna wskazywać na jeden z zestawów pomocniczych zależny od rodzaju zmiany. Jednocześnie uruchomiony zostaje układ czasowo-licznikowy. Po upływie 500ms, w trakcie obsługi przerwania tego układu, następuje przypisanie adresu, pod którym znajduje się w pamięci główny zestaw parametrów. Następuje również wyłączenie układu czasowo-licznikowego. 
+Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalnych układach napędowych działa znacznie lepiej, jeśli w trakcie zmiany biegu następuje chwilowe przeciągnięcie pozycji wózka przerzutki. Jest to szczególnie dobrze widoczne w trakcie redukowania przełożenia, kiedy łańcuch powinien trafić na koło zębate o większej średnicy. Można wtedy zaobserwować opóźnienie w zmianie przełożenia, niekorzystne przeskoki łańcucha pomiędzy kołami zębatymi, a w źle wyregulowanych układach napędowych może nawet dochodzić do braku reakcji układu napędowego. Takie zjawisko zostało zaobserwowane w trakcie pracy nad projektem. Zmiana biegów polegająca na pozycjonowaniu serwomechanizmu w nowej pozycji, zależnej od dobranego przełożenia, działała z wyraźnym opóźnieniem. Problem, podobnie jak w układach mechanicznych, został rozwiązany przez chwilowe przeciągnięcie pozycji wózka przerzutki. Zdefiniowanie zostały dwa pomocnicze zestawy pozycji serwomechanizmu, specyficzne dla redukowania oraz zwiększania przełożenia (tabela \ref{tab:przelozeniaPomocniczne}). Wszystkie trzy zestawy pozycji przechowywane są w postaci tablic, które zawierają czasy wypełnienia sygnału sterującego. W momencie rozpoczęcia zmiany przełożenia, na skutek naciśnięcia przycisku lub w wyniku decyzji kontrolera automatycznej zmiany przełożeń, zmienna, która do tej pory wskazywała na główny zestaw pozycji, zaczyna wskazywać na jeden z zestawów pomocniczych zależny od rodzaju zmiany. Jednocześnie uruchomiony zostaje układ czasowo-licznikowy. Po upływie 500ms, w trakcie obsługi przerwania tego układu, następuje przypisanie adresu, pod którym znajduje się w pamięci główny zestaw parametrów. Następuje również wyłączenie układu czasowo-licznikowego. 
 
 
 \begin{table}[h]
@@ -239,7 +269,7 @@ Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalnych
 \subsection{Obsługa przycisków}
 W projekcie wykorzystane zostały trzy przyciski przewlekane monostabilne. Ich naciśnięcie powoduje redukcję lub zwiększenie przełożenia oraz zmianę trybu pracy kontrolera. Przyciski do zmiany przełożenia zamontowane zostały w miejscu konwencjonalnej manetki. Przycisk do zmiany trybu pracy został przymocowany do mostka kierownicy.
 
-Wszystkie przyciski wykorzystują rezystor pull-up, podciągający do portu wejściowego napięcie 3.3V(rys. \ref{fig:schematPolaczen}). Zwarcie przycisku powoduje ustalenie sygnału na poziomie 0V. Pojawienie się na magistrali zbocza opadającego powoduje zgłoszenie przerwania od odpowiedniego pinu portu wejściowego. 
+Wszystkie przyciski wykorzystują rezystor pull-up, podciągający do portu wejściowego napięcie 3.3V (rys. \ref{fig:schematPolaczen}). Zwarcie przycisku powoduje ustalenie sygnału na poziomie 0V. Pojawienie się na magistrali zbocza opadającego powoduje zgłoszenie przerwania od odpowiedniego pinu portu wejściowego. 
 
 Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwierania przycisku. Są to drgania mechaniczne, które mogą trwać od kilku mikrosekund do nawet kilkunastu milisekund. Powoduje to niezdefiniowane zachowanie całego systemu, np. zmianę kilku przełożeń na raz. Szybkozmienne zmiany stanu logicznego sygnału, wynikające z drgań styków przycisku, przedstawione zostały na rys \ref{fig:drganiaPrzyciskow}.
 \begin{figure}[h]
@@ -248,28 +278,28 @@ Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwiera
     \caption{Porównanie przebiegów sygnałów interpretowanych przez analizator stanów logicznych dla przycisku z filtrem RC - kanał 0, oraz bez filtra- kanał 1.}
     \label{fig:drganiaPrzyciskow}
 \end{figure}
-Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykonane zostały proste filtry dolnoprzepustowe RC. Zasada działania filtru RC została opisana w pkt. \ref{filtrRc}. W dokumentacji mikrokontrolera(\cite{tiva}) można znaleźć informację na temat minimalnego poziomu napięcia, interpretowanego jako stan wysoki - $0.6V_{in}$. Podobny poziom napięcia osiągany jest na wyjściu filtru RC, po skokowej zmianie napięcia wejściowego, po czasie równym stałej czasowej filtra. Autor założył, że zmiany biegów, oraz zmiana tryb jazdy, nie mogą być dokonywane częściej, niż 10 razy na sekundę. Z tego wynika, że stała czasowa filtru powinna wynosić około $100ms$. Wszystkie 3 filtry zostały wykonane w oparciu o opornik o rezystancji $200k\Omega$ i kondensator o pojemności 470$nF$. Tak dobór elementów pasywnych pozwala zbudować filtr, którego stała czasowa wynosi około $94ms$ 
+Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykonane zostały proste filtry dolnoprzepustowe RC. Zasada działania filtru RC została opisana w pkt. \ref{filtrRc}. W dokumentacji mikrokontrolera można znaleźć informację na temat minimalnego poziomu napięcia, interpretowanego jako stan wysoki - $0.6V_{in}$ \cite{tiva}. Podobny poziom napięcia osiągany jest na wyjściu filtru RC, po skokowej zmianie napięcia wejściowego, po czasie równym stałej czasowej filtra. Autor założył, że zmiany biegów, oraz zmiana tryb jazdy, nie mogą być dokonywane częściej, niż 10 razy na sekundę. Z tego wynika, że stała czasowa filtru powinna wynosić około $100ms$. Wszystkie 3 filtry zostały wykonane w oparciu o opornik o rezystancji $200k\Omega$ i kondensator o pojemności 470$nF$. Tak dobór elementów pasywnych pozwala zbudować filtr, którego stała czasowa wynosi około $94ms$.
 %______________________________________________________________________________________________________________
 \subsection{Obsługa zbliżeniowych czujników magnetycznych}
-Zbliżeniowe czujniki magnetyczne działają w sposób analogiczny do przycisków monostablilnych. Różnica polega na tym, że styki zwierane są w wyniku działania zewnętrznego pola magnetycznego, pochodzącego od magnesu trwałego. W trakcie zwierania/rozwierania czujnika magnetycznego również pojawia się problem mechanicznych grań styków. Problem został wyeliminowany w taki sam sposób, jak w przypadku przycisków, czyli przez zastosowanie filtrów dolnoprzepustowych RC. Elementy pasywne filtrów RC Stałe dla czujników magnetycznych zostały dobrane zgodnie z poniższymi założeniami.
+Zbliżeniowe czujniki magnetyczne działają w sposób analogiczny do przycisków monostablilnych. Różnica polega na tym, że styki zwierane są w wyniku działania zewnętrznego pola magnetycznego, pochodzącego od magnesu trwałego. W trakcie zwierania/rozwierania czujnika magnetycznego również pojawia się problem mechanicznych drgań styków. Problem został wyeliminowany w taki sam sposób, jak w przypadku przycisków - przez zastosowanie filtrów dolnoprzepustowych RC. Elementy pasywne filtrów RC Stałe dla czujników magnetycznych zostały dobrane zgodnie z poniższymi założeniami.
 
-Czujnik magnetyczny, wykorzystany do wyznaczania chwilowej wartości prędkości roweru, korzysta z dwóch magnesów trwałych. Doświadczenia przeprowadzone z wykorzystaniem analizatora stanów logicznych przy dużych prędkościach obrotowych tylego koła wykazały, że drgania czujników magnetycznych trwają nie dłużej niż 1ms.  Autor założył, że maksymalna prędkość roweru możliwa do osiągnięcia to 100$\frac{km}{h}$, czyli około 28$\frac{m}{s}$. Promień koła roweru wynosi około 0.33m. Z zależności \ref{eq:zaleznoscNaPredkosc} wynika, że dla prędkości maksymalnej, magnes trwały znajduje się w pobliżu czujnika magnetycznego co 37ms. Należy uwzględnić również to, że w tym czasie dochodzi do zwarcia i rozwarcia czujnika magnetycznego. Stała czasowa filtru RC, powinna być zatem co najmniej dwa razy krótsza. Ostatecznie filtr RC został wykonany z opornika o rezystancji 100k$\Omega$ i kondensatora o pojemności 100nF, co zapewnia wartość stałej czasowej filtra na poziomie 10ms. Wartość ta jest o rząd wielkości większa od zarejestrowanych okresów drgań, a jednocześnie zwarcie i rozwarcie czujnika z filtrem trwa prawie dwa razy krócej, niż okres obrotu magnesu trwałego dla przyjętej prędkości maksymalnej.
+Czujnik magnetyczny, wykorzystany do wyznaczania chwilowej wartości prędkości roweru, korzysta z dwóch magnesów trwałych. Doświadczenia przeprowadzone z wykorzystaniem analizatora stanów logicznych przy dużych prędkościach obrotowych tylego koła wykazały, że drgania czujników magnetycznych trwają nie dłużej niż 1ms.  Autor założył, że maksymalna prędkość roweru możliwa do osiągnięcia to 100$\frac{km}{h}$, czyli około 28$\frac{m}{s}$. Promień koła roweru wynosi około 0.33m. Z zależności (\ref{eq:zaleznoscNaPredkosc}) wynika, że dla prędkości maksymalnej, magnes trwały znajduje się w pobliżu czujnika magnetycznego co 37ms. Należy uwzględnić również to, że w tym czasie dochodzi do zwarcia i rozwarcia czujnika magnetycznego. Stała czasowa filtru RC, powinna być zatem co najmniej dwa razy krótsza. Ostatecznie filtr RC został wykonany z opornika o rezystancji 100k$\Omega$ i kondensatora o pojemności 100nF, co zapewnia wartość stałej czasowej filtra na poziomie 10ms. Wartość ta jest o rząd wielkości większa od zarejestrowanych okresów drgań, a jednocześnie zwarcie i rozwarcie czujnika z filtrem trwa prawie dwa razy krócej, niż okres obrotu magnesu trwałego dla przyjętej prędkości maksymalnej.
 
 Czujnik magnetyczny wykorzystywany do wyznaczenia chwilowej wartości kadencji jest zwierany przez jeden magnes trwały, przymocowany do ramienia mechanizmu korbowego. Autor przyjął, że maksymalna kadencja możliwa do osiągnięcia przez rowerzystę, to 250$\frac{obr}{min}$. Pełny obrót przy takie kadencji zajmuje 240ms. Zastosowanie filtru o takiej samej stałej czasowej, jak filtr czujnika magnetycznego prędkości roweru, spełnia wymagania wynikające z przyjętego założenia o maksymalnej kadencji. 
 %______________________________________________________________________________________________________________
 \subsection{Obsługa jednostki pomiarowej Pololu AltIMU10}
-Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w trybie active i sport. Kąt nachylenia podłoża wyznaczany jest co 10ms przy użyciu filtru komplementarnego (pkt. \ref{kompZasadaDzialania}). 
+Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w trybie active i sport. Kąt nachylenia podłoża wyznaczany jest co 10ms przy użyciu filtru komplementarnego, którego zasadę działania opisano w pkt. \ref{kompZasadaDzialania}. 
  
 Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi 100$kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
 \begin{itemize}
     \item
-    SCL(ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych,
+    SCL (ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych,
     \item
-    SDA(ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych,
+    SDA (ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych,
     \item
     Vin - zasilanie jednostki pomiarowej, które przyjmuje napięcie z zakresu od 2.5V do 5.5V,
     \item
-    Gnd - wspólna masa.
+    GND - wspólna masa.
 \end{itemize} 
 
 Komunikacja w standardzie I2C jest komunikacją typu master/slave. Urządzeniem nadrzędnym, odpowiedzialnym za inicjowanie, prowadzenie oraz kontrolę transmisji, jest mikrokontroler. Urządzenia pomiarowe to urządzenia typu slave. Każdy z układów pomiarowych posiada swój unikalny, 7-bitowy adres. Każde z urządzeń typu slave udziela odpowiedzi na rozkazy wysyłane przez mikrokontroler. Adresy urządzeń jednostki pomiarowej:
@@ -298,10 +328,10 @@ Biblioteka TivaWare udostępnia metody do obsługi komunikacji I2C. Akcelerometr
 
 Układ do pomiaru poziomu naładowania baterii został zbudowany w oparciu o przetwornik analogowo-cyfrowy oraz dzielnik napięcia. 
 
-Napięcie robocze pojedynczego ogniwa li-po wynosi 3.4V. W trakcie pracy ogniwa napięcie może się wahać - od 3.0V w przypadku rozładowania, do nawet 4.2V zaraz po naładowaniu ogniwa. Pakiet zasilający układu składa się z dwóch ogniw li-po, zatem napięcie może przyjmować wartości od 6V do 8.8V. Pomiar tej wielkości przez przetwornik analogowo-cyfrowy nie jest możliwy, gdyż przekracza maksymalne dopuszczalne napięcie na porcie wejściowym mikrokontrolera, które wynosi 5.5V(\cite{tiva}). W celu obniżenia napięcia zastosowany został dzielnik napięcia. Dzielnik napięcia to czwórnik, który pozwala zapewnić odpowiedni stosunek pomiędzy napięciem wejściowym a napięciem wyjściowym układu. Napięciem wejściowym układu jest napięcie pakietu zasilającego, a napięciem wyjściowym jest napięcie podane na przetwornik analogowo-cyfrowy, tak jak zostało to przedstawione na rys. \ref{fig:schematPolaczen}.
-\begin{figure}
+Napięcie robocze pojedynczego ogniwa li-po wynosi 3.4V. W trakcie pracy ogniwa napięcie może się zmieniać - od nawet 4.2V zaraz po naładowaniu ogniwa do 3.0V w przypadku rozładowania. Pakiet zasilający układu składa się z dwóch ogniw li-po, zatem napięcie może przyjmować wartości od 6V do 8.8V. Pomiar tej wielkości przez przetwornik analogowo-cyfrowy nie jest możliwy, gdyż przekracza maksymalne dopuszczalne napięcie na porcie wejściowym mikrokontrolera, które wynosi 5.5V \cite{tiva}. W celu obniżenia napięcia zastosowany został dzielnik napięcia. Dzielnik napięcia to czwórnik, który pozwala zapewnić odpowiedni stosunek pomiędzy napięciem wejściowym a napięciem wyjściowym układu. Napięciem wejściowym układu jest napięcie pakietu zasilającego, a napięciem wyjściowym jest napięcie podane na przetwornik analogowo-cyfrowy, tak jak zostało to przedstawione na rys. \ref{fig:schematPolaczen}.
+\begin{figure}[h]
     \centering
-    \includegraphics[scale=0.5]{dzielnikNapiecia.jpg}
+    \includegraphics[scale=0.4]{dzielnikNapiecia.jpg}
     \caption{Dzielnik napięcia układu pomiarowego poziomu napięcia pakietu zasilającego.}
     \label{fig:równia}
 \end{figure}
@@ -312,19 +342,19 @@ Napięcie na wyjściu dzielnika napięcia określone jest zależnością:
     \label{eq:rownanieDzielnik}
 \end{equation}
 
-Zakładając maksymalną wartość napięcia pakietu, napięcie wejściowe na przetworniku analogowo-cyfrowym powinno wynosić 3.3V a rezystancja $R_2$ jest równa 10k$\Omega$, to zgodnie z zależnością \ref{eq:rownanieDzielnik} rezystancja $R_1$ powinna przyjąć około 15k$\Omega$.
+Zakładając maksymalną wartość napięcia pakietu, napięcie wejściowe na przetworniku analogowo-cyfrowym powinno wynosić 3.3V a rezystancja $R_2$ jest równa 10k$\Omega$, to zgodnie z zależnością (\ref{eq:rownanieDzielnik}) rezystancja $R_1$ powinna przyjąć około 15k$\Omega$.
 
-Przetwornik analogowo-cyfrowy przetwarza sygnał analogowy na równoważną postać cyfrową. Mikrokontroler wyposażony jest w przetwornik 12-bitowy. Oznacza to, że do reprezentacji całego zakresu pomiarowego używa dwunastu bitów. Zakres pomiarowy określony jest przez sygnały referencyjne - 0V i 3.3V(\cite{tiva}). Wartość zwracana przez przetwornik dla napięcia 0V wynosi 0, natomiast dla napięcia 3.3V przetwornik zwraca liczbę 4096. Rozdzielczość przetwornika wynosi około 0.8mV
+Przetwornik analogowo-cyfrowy przetwarza sygnał analogowy na równoważną postać cyfrową. Mikrokontroler wyposażony jest w przetwornik 12-bitowy. Oznacza to, że do reprezentacji całego zakresu pomiarowego używa dwunastu bitów. Zakres pomiarowy określony jest przez sygnały referencyjne - 0V i 3.3V \cite{tiva}. Wartość zwracana przez przetwornik dla napięcia 0V wynosi 0, natomiast dla napięcia 3.3V wynosi 4096. Rozdzielczość przetwornika wynosi około 0.8mV
 
 Zgodnie z pkt. \ref{niskiPoziom}, zgłaszane są dwa stany alarmowe związane z zasilaniem:
 \begin{itemize}
 \item
-    stan niskiego poziomu naładowania pakietu zasilającego wynoszący 6.8V.
+    stan niskiego poziomu naładowania pakietu zasilającego wynoszący 6.8V,
 \item
     stan rozładowania pakietu zasilającego wynoszący 6V.
 \end{itemize}
 
-Biorąc pod uwagę powyższe zależności i założenia, można wyznaczyć wartości zwracane przez przetwornik dla stanów alarmowych - tabela \ref{tab:napieciaDwojnik}
+Biorąc pod uwagę powyższe zależności i założenia, można wyznaczyć wartości zwracane przez przetwornik dla stanów alarmowych, które przedsatwiono w tabeli \ref{tab:napieciaDwojnik}
 
 \begin{table}[h]
     \caption{Poziomy napięć alarmowych oraz wartości zwracane przez przetwornik}
@@ -342,7 +372,7 @@ Biorąc pod uwagę powyższe zależności i założenia, można wyznaczyć warto
 	\end{center}
 \end{table}
 
-Pomiar poziomu napięcia wyzwalany jest przy użycia zadania cyklicznego, wyzwalanego przez układ czasowo-licznikowy z częstotliwością 1Hz.
+Pomiar poziomu napięcia dokonywany jest w trakcie zadania cyklicznego, wyzwalanego przez układ czasowo-licznikowy z częstotliwością 1Hz.
 
 
 

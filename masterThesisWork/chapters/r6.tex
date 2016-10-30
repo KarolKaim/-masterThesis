@@ -26,7 +26,7 @@ We wszystkich trybach automatycznych przedstawione są również przyjęte zakre
  
 \section{Wyniki tesów}
 
-Poniżej zaprezentowano wyniki testów wybranych scenariuszy, potwierdzające zgodność działania sterownika układu z założeniami, przedstawionymi w pkt. \textcolor{red}{pktFinalny}
+Poniżej zaprezentowano wyniki testów wybranych scenariuszy, potwierdzające zgodność działania sterownika układu z założeniami, przedstawionymi w rozdziale czwartym.
 \subsection{Tryb ręczny}
 Podstawowa funkcjonalność układu to zmiana przełożeń w trybie ręcznym. Naciśnięcie odpowiedniego przycisku powoduje zmianę przełożenia.
  
@@ -55,7 +55,7 @@ Pierwsza przetestowana funkcjonalność trybu comfort to utrzymywanie kadencji w
     \label{fig:tests_trybComfort}
 \end{figure}
 
-Drugi scenariusz obejmuje sprawdzenie wyłączenia możliwości ręcznej zmiany przełożeń. Przebiegi przedstawione na rys. \textcolor{red}{RYS!} potwierdzają poprawne działanie kontrolera. Przełożenie jest stałe pomimo zarejestrowanych prób ręcznej zmiany biegu.
+Drugi scenariusz obejmuje sprawdzenie wyłączenia możliwości ręcznej zmiany przełożeń. Przebiegi przedstawione na rys. \ref{fig:tests_noChange} potwierdzają poprawne działanie kontrolera. Przełożenie jest stałe pomimo zarejestrowanych prób ręcznej zmiany biegu.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.38]{tests_trybComfortBrakZmian.jpg}
@@ -77,7 +77,7 @@ Kolejna funkcja dostępna w trybie active to ręczna zmiana przełożeń. W wyni
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.34]{tests_trybActiveRecznaZmiana.jpg}
-    \caption{Automatyczna zmiana przełożeń - tryb Active}
+    \caption{Ręczna zmiana przełożeń - tryb Active}
     \label{fig:tests_activeReczna}
 \end{figure}
 
@@ -90,14 +90,14 @@ Kąt nachylenia podłoża, po którym porusza się rower, jest wielkością woln
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.34]{tests_imu1.jpg}
-    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \caption{Przebieg estymowanej wartości niezmieniającego się kąta nachylenia dla stałej czasowej równej 0.5 sekundy.}
     \label{fig:tests_imu1}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.34]{tests_imu2.jpg}
-    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \caption{Przebieg estymowanej wartości niezmieniającego się kąta nachylenia dla stałej czasowej równej 2 sekundy.}
     \label{fig:tests_imu2}
 \end{figure}
 Pierwsza z wartości jest zdecydowanie za mała. Zaobserwowano znaczące błędy estymacji, spowodowane  przyspieszeniami działającymi na jednostkę pomiarową, które są efektem niewielkich ruchów roweru w trakcie przeprowadzania eksperymentu. Błąd estymowanej wartości kąta nachylenia dwukrotnie przekroczył granicę trzech stopni. Taki sposób działania filtru komplementarnego w skuteczny sposób zakłóca pracę sterownika, ponieważ zakres oczekiwanej kadencji zmienia się pomimo braku zmian wartości kąta nachylenia. Zwiększenie stałej czasowej do 2 sekund powoduje znaczącą poprawę działania filtru. Obserwowane są minimalne odchylenia estymowanej wartości kąta nachylenia. Można przeprowadzić bardziej wyczerpującą analizę problemu doboru stałej czasowej, która prowadzi do wyznaczenia wartości optymalnej, z punktu widzenia przyjętych wskaźników jakości. Jednak wymaga ona precyzyjnego mechanizmu umożliwiającego pomiar rzeczywistych wartości kątów określających orientację układu pomiarowego. Autor uznał, że osiągnięta precyzja jest w pełni wystarczająca do poprawnego działania kontrolera.
@@ -115,7 +115,7 @@ Pierwszy przebieg zarejestrowano dla stałej wartości kąta nachylenia. Można 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.34]{tests_trybSportKat.jpg}
-    \caption{Automatyczna zmiana przełożeń - tryb Sport}
+    \caption{Zmiana zakresu zadanej kadencji wraz ze zmieniającą się wartością kąta nachylenia podłoża.}
     \label{fig:tests_sportModeZmiana2}
 \end{figure}
 

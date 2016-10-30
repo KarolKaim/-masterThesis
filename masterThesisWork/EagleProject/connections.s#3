@@ -5637,14 +5637,14 @@ naming: grid - package width</description>
 <part name="R6" library="rcl" deviceset="R-EU_" device="0204/5" value="330"/>
 <part name="C3" library="capacitor-wima" deviceset="C" device="2,5-3" value="470nF"/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
-<part name="SW4" library="switch-coto" deviceset="CT10-XXXX-" device="A2" value=""/>
+<part name="MAG1" library="switch-coto" deviceset="CT10-XXXX-" device="A2" value=""/>
 <part name="R7" library="rcl" deviceset="R-EU_" device="0204/5" value="100k"/>
 <part name="R8" library="rcl" deviceset="R-EU_" device="0204/5" value="330"/>
 <part name="C4" library="capacitor-wima" deviceset="C" device="2,5-3" value="100nF"/>
 <part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
-<part name="SW5" library="switch-coto" deviceset="CT10-XXXX-" device="A2" value=""/>
+<part name="MAG2" library="switch-coto" deviceset="CT10-XXXX-" device="A2" value=""/>
 <part name="R9" library="rcl" deviceset="R-EU_" device="0204/5" value="100k"/>
 <part name="R10" library="rcl" deviceset="R-EU_" device="0204/5" value="330"/>
 <part name="C5" library="capacitor-wima" deviceset="C" device="2,5-3" value="100nF"/>
@@ -5681,14 +5681,14 @@ naming: grid - package width</description>
 <instance part="R6" gate="G$1" x="93.98" y="40.64" rot="R90"/>
 <instance part="C3" gate="G$1" x="106.68" y="33.02"/>
 <instance part="GND6" gate="1" x="106.68" y="17.78"/>
-<instance part="SW4" gate="G$1" x="-7.62" y="27.94" rot="R90"/>
+<instance part="MAG1" gate="G$1" x="-7.62" y="27.94" rot="R90"/>
 <instance part="R7" gate="G$1" x="2.54" y="53.34" rot="R90"/>
 <instance part="R8" gate="G$1" x="-7.62" y="40.64" rot="R90"/>
 <instance part="C4" gate="G$1" x="2.54" y="33.02"/>
 <instance part="+3V4" gate="G$1" x="2.54" y="66.04"/>
 <instance part="GND7" gate="1" x="-7.62" y="17.78"/>
 <instance part="GND8" gate="1" x="2.54" y="17.78"/>
-<instance part="SW5" gate="G$1" x="43.18" y="27.94" rot="R90"/>
+<instance part="MAG2" gate="G$1" x="43.18" y="27.94" rot="R90"/>
 <instance part="R9" gate="G$1" x="53.34" y="53.34" rot="R90"/>
 <instance part="R10" gate="G$1" x="43.18" y="40.64" rot="R90"/>
 <instance part="C5" gate="G$1" x="53.34" y="33.02"/>
@@ -5793,7 +5793,7 @@ naming: grid - package width</description>
 <segment>
 <pinref part="GND7" gate="1" pin="GND"/>
 <wire x1="-7.62" y1="25.4" x2="-7.62" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="SW4" gate="G$1" pin="1"/>
+<pinref part="MAG1" gate="G$1" pin="1"/>
 <wire x1="-7.62" y1="22.86" x2="-7.62" y2="20.32" width="0.1524" layer="91"/>
 <junction x="-7.62" y="22.86"/>
 </segment>
@@ -5879,14 +5879,14 @@ naming: grid - package width</description>
 <net name="N$4" class="0">
 <segment>
 <pinref part="R8" gate="G$1" pin="1"/>
-<pinref part="SW4" gate="G$1" pin="2"/>
+<pinref part="MAG1" gate="G$1" pin="2"/>
 <wire x1="-7.62" y1="35.56" x2="-7.62" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
 <pinref part="R10" gate="G$1" pin="1"/>
-<pinref part="SW5" gate="G$1" pin="2"/>
+<pinref part="MAG2" gate="G$1" pin="2"/>
 <wire x1="43.18" y1="35.56" x2="43.18" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>

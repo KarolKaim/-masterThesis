@@ -5674,8 +5674,8 @@ naming: grid - package width</description>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="IMU" library="pinhead" deviceset="PINHD-1X5" device=""/>
 <part name="SERVO" library="pinhead" deviceset="PINHD-1X3" device=""/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="0204/5" value="100k"/>
-<part name="R12" library="rcl" deviceset="R-EU_" device="0204/5" value="330"/>
+<part name="R11" library="rcl" deviceset="R-EU_" device="0204/5" value="15k"/>
+<part name="R12" library="rcl" deviceset="R-EU_" device="0204/5" value="10k"/>
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
 <part name="P+1" library="supply1" deviceset="+7V4" device=""/>
 </parts>

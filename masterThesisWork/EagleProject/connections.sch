@@ -6032,6 +6032,30 @@ naming: grid - package width</description>
 <label x="45.72" y="-2.54" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
+<net name="LED_BLUE" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PF3"/>
+<wire x1="60.96" y1="-66.04" x2="60.96" y2="-68.58" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="-68.58" x2="66.04" y2="-68.58" width="0.1524" layer="91"/>
+<label x="66.04" y="-68.58" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="LED_GREEN" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PF2"/>
+<wire x1="58.42" y1="-66.04" x2="58.42" y2="-73.66" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="-73.66" x2="66.04" y2="-73.66" width="0.1524" layer="91"/>
+<label x="66.04" y="-73.66" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="LED_RED" class="0">
+<segment>
+<pinref part="IC1" gate="G$1" pin="PF1"/>
+<wire x1="55.88" y1="-66.04" x2="55.88" y2="-78.74" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="-78.74" x2="66.04" y2="-78.74" width="0.1524" layer="91"/>
+<label x="66.04" y="-78.74" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>
