@@ -133,7 +133,7 @@ gdzie:
 \subsection{Inercyjna jednostka pomiarowa IMU}
 Inercyjna jednostka pomiarowa (ang. {\em Inertial Measurement Unit}) to układ składający się z kilku czujników pomiarowych, pozwalających wyznaczyć orientację obiektu w przestrzeni trójwymiarowej. Stosowane m.in. w systemach stabilizacji bezzałogowych statków powietrznych. W realizowanym projekcie wykorzystana zostanie możliwość wyznaczenia kąta nachylenia podłoża, po którym porusza się rower z zamontowaną jednostką pomiarową IMU.
 
-Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy żyroskop oraz magnetometr. Wszystkie czujniki to urządzenia wykonane w miniaturowej skali oraz technologii MEMS ( ang. {\em Micro Electro-Mechanical Systems}), które integrują elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi. 
+Jednostki IMU zazwyczaj wyposażone są w trzyosiowy akcelerometr, trzyosiowy żyroskop oraz magnetometr. Wszystkie czujniki to urządzenia wykonane w miniaturowej skali oraz technologii MEMS (ang. {\em Micro Electro-Mechanical Systems}), które integrują elementy mechaniczne oraz elektroniczne. Wykorzystywane głównie jako czujniki przetwarzające wielkości mechaniczne na wielkości elektryczne. Czujniki wykonane w technologii MEMS posiadają kilka znaczących zalet, które sprawiają, że spektrum zastosowań staje się coraz szersze. Są to m.in. niska cena, niewielkie rozmiary, niskie zużycie energii oraz prosta integracja z układami mikroprocesorowymi. 
 
 %____________________________________________________________________________________________________________  
 \subsubsection{Pomiar przyspieszeń - akcelerometr}
@@ -195,7 +195,7 @@ gdzie:
 	
 \end{eqwhere}
 
-Podobnie, jak zależność \ref{eq:rowniaRadian}, równanie \ref{eq:zyroRad} pozwala wyznaczyć miarę łukową wyrażoną w radianach.
+Podobnie, jak zależność (\ref{eq:rowniaRadian}), równanie (\ref{eq:zyroRad}) pozwala wyznaczyć miarę łukową wyrażoną w radianach.
 
 Operacja całkowania prędkości kątowej została uwzględniona w projekcie filtru komplementarnego w postaci dodatkowego członu całkującego, którego transmitancja operatorowa wynosi $\frac{1}{s}$ - wzór (\ref{eq:alpha}) w pkt. \ref{kompZasadaDzialania}.
 
@@ -210,7 +210,7 @@ Zasada działania filtru komplementarnego polega na odpowiedniej fuzji danych po
     \label{fig:kompGeneral}
 \end{figure}
 
-Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancja operatorowa, określająca stosunek transformaty Laplace'a sygnału wyjściowego do transformaty Laplace'a sygnału wejściowego, powinna spełniać zależność:
+Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancja operatorowa, określająca stosunek transformaty Laplace'a sygnału wyjściowego do transformaty Laplace'a sygnału wejściowego, powinna spełniać zależność \cite{komplementarny}:
 \begin{equation}
     G(s)=\sum_{i=1}^{N}G_{i}(s)=1
     \label{eq:zasadaKomplementarnosci}
@@ -218,9 +218,31 @@ Zaprojektowany filtr nie powinien wprowadzać dodatkowej dynamiki - transmitancj
 
 W odniesieniu do estymacji wartości kąta nachylenia podłoża, schemat filtru komplementarnego, wykorzystującego wartości kątów wyznaczonych na podstawie danych pomiarowych pochodzących z akcelerometru oraz żyroskopu, przedstawiony został na rys \ref{fig:kompKat}. 
 
-Pomiar składowych przyspieszenia ziemskiego umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{pomiaryAkcel}). Ta metoda znajduje swoje zastosowanie wtedy, gdy układ pomiarowy nie porusza się lub porusza się ruchem jednostajnym. W ruchu przyspieszonym dane pomiarowe akcelerometru uwzględniają siły powodujące ten ruch, a brak możliwości odseparowania składowych przyspieszenia ziemskiego sprawia, że kąt nachylenia obarczony jest błędem. Należy zatem zastosować filtr dolnoprzepustowy, eliminujący szybkozmienne wartości kąta nachylenia pochodzące z akcelerometru.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.34]{tests_akcelerometrBezRuchu.jpg}
+    \caption{Kąt nachylenia podłoża wyznaczony na podstawie pomiaru składowych przyspieszenia ziemskiego, akcelerometr pozostaje w spoczynku.}
+    \label{fig:tests_akcelerometrBezRuchu}
+\end{figure}
 
-Żyroskop umożliwia pomiar prędkości obrotowej. Całkowanie prędkości obrotowej umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{gyro}). Jednak zakłócenia toru pomiarowego oraz wrażliwość na warunki pracy, a w szczególności temperaturę, powodują zjawisko tzw. dryfu żyroskopowego. Dryf spowodowany jest ciągłym narastaniem błędów w wyniku całkowania zakłóconych danych pomiarowych. Błędy powstałe w wyniku dryfu żyroskopowego są sygnałami wolnozmiennymi. Zastosowanie filtru górnoprzepustowego pozwala je wyeliminować. 
+Pomiar składowych przyspieszenia ziemskiego umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{pomiaryAkcel}). Ta metoda znajduje swoje zastosowanie wtedy, gdy układ pomiarowy nie porusza się lub porusza się ruchem jednostajnym. Na rysunku \ref{fig:tests_akcelerometrBezRuchu} przedstawiono przebieg wartości kąta nachylenia, gdy akcelerometr pozostaje w spoczynku a kąt nachylenia wynosi 0$^{\circ}$. Zaobserwowano minimalne chwilowe odchyłki wartości kąta nachylenia.
+
+W ruchu przyspieszonym dane pomiarowe akcelerometru uwzględniają siły powodujące ten ruch, a brak możliwości odseparowania składowych przyspieszenia ziemskiego sprawia, że kąt nachylenia obarczony jest błędem. Należy zatem zastosować filtr dolnoprzepustowy, eliminujący szybkozmienne wartości kąta nachylenia pochodzące z akcelerometru. Na rysunku \ref{fig:akcelerometrRuch} przedstawiono przebieg wartości kąta nachylenia, gdy akcelerometr poruszał się ruchem posuwisto-zwrotnym po płaskiej powierzchni. Kąt nachylenia nie ulega zmianie, jednak ze względu na siły, zakłócające pomiar przyspieszenia ziemskiego, można zaobserwować bardzo duże błędy wartości kąta nachylenia podłoża, osiągające nawet 20$^{\circ}$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.34]{tests_akcelerometrRuch.jpg}
+    \caption{Kąt nachylenia podłoża wyznaczony na podstawie pomiaru składowych przyspieszenia ziemskiego, akcelerometr porusza się ruchem posuwisto-zwrotnym.}
+    \label{fig:akcelerometrRuch}
+\end{figure}
+
+Żyroskop służy do pomiaru prędkości obrotowej. Całkowanie prędkości obrotowej umożliwia wyznaczenie kąta nachylenia podłoża (pkt. \ref{gyro}). Jednak zakłócenia toru pomiarowego oraz wrażliwość na warunki pracy, a w szczególności temperaturę, powodują zjawisko tzw. dryfu żyroskopowego, przedstawionego na rys. \ref{fig:tests_dryft}. Dryf spowodowany jest ciągłym narastaniem błędów, w wyniku całkowania zakłóconych danych pomiarowych. Można zaobserwować, że na rys. \ref{fig:tests_dryft} wartość kąta nachylenia podłoża rośnie, pomimo iż żyroskop pozostaje w spoczynku a kąt nachylenia nie ulega zmianie. Błędy powstałe w wyniku dryfu żyroskopowego są sygnałami wolnozmiennymi. Zastosowanie filtru górnoprzepustowego pozwala je wyeliminować.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.34]{tests_dryft.jpg}
+    \caption{Zjawisko dryfu żyroskopu.}
+    \label{fig:tests_dryft}
+\end{figure}
 
 Filtr dolnoprzepustowy może zostać zrealizowany poprzez obiekt inercyjny I rzędu(pkt. \ref{filtrRc}):
 \begin{equation}
@@ -228,7 +250,7 @@ Filtr dolnoprzepustowy może zostać zrealizowany poprzez obiekt inercyjny I rz�
     \label{eq:lowPass}
 \end{equation}
 
-Zgodnie z równaniem \ref{eq:zasadaKomplementarnosci}, filtr górnoprzepustowy powinien spełniać zależność:
+Zgodnie z równaniem (\ref{eq:zasadaKomplementarnosci}), filtr górnoprzepustowy powinien spełniać zależność:
 \begin{equation}
     G_{high}(s)=1-G_{1}(s)=\frac{Ts}{Ts+1}
     \label{eq:highPass}
@@ -262,10 +284,10 @@ Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym,
 \end{equation}
 gdzie:
 \begin{eqwhere}[2cm]
-	\item[$t_{0}$] długość kroku dyskretyzacji
+	\item[$t_{0}$] długość kroku dyskretyzacji.
 \end{eqwhere}
 
-Podstawiając zależność \ref{eq:eulerWstecz} do równania \ref{eq:alpha} oraz przyjmując podstawienie $p = \frac{T}{T + t_0}$, gdzie $T$ to stała czasowa filtru,  równanie różnicowe estymujące wartość kąta nachylania podłoża przyjmuje postać:
+Podstawiając zależność (\ref{eq:eulerWstecz}) do równania (\ref{eq:alpha}) oraz przyjmując podstawienie $p = \frac{T}{T + t_0}$, gdzie $T$ to stała czasowa filtru,  równanie różnicowe estymujące wartość kąta nachylania podłoża przyjmuje postać:
 \begin{equation}
     \hat{\alpha_{k}} = p(\hat{\alpha}_{k-1} + \omega_{k}t_0) + (1-p)\alpha_{acc}
 \end{equation}

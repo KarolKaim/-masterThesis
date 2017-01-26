@@ -10,7 +10,7 @@ Komputer klasy PC stanowi podstawę środowiska do rozwoju aplikacji na wybraną
 Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach wbudowanych. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories \cite{prata}. Doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
 \subsection{Code Composer Studio 6.0.0}
 
-Oprogramowanie sterownika rozwijane było w oparciu o zintegrowane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC( ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
+Oprogramowanie sterownika rozwijane było w oparciu o zintegrowane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC(ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
 %______________________________________________________________________________________________________________
 \subsection{Biblioteka TivaWare Peripheral Driver}
 Texas Intrusments dostarcza bibliotekę dedykowaną do mikrokontrolerów z rodziny Tiva ARM Cortex-M - TivaWare  Peripheral Driver Library. Biblioteka stanowi zbiór funkcji umożliwiających wykorzystanie układów peryferyjnych mikrokontrolera. Biblioteka, napisana w języku C, wspiera dwa modele programowania mikrokontrolera - Direct Register Access oraz Software Driver Model. Pierwszy z nich operuje bezpośrednio na rejestrach mikrokontrolera, co pozwala pisać bardzo wydajne programy o niewielkim rozmiarze. Jednocześnie wymaga bardzo dobrej znajomości rejestrów mikrokontrolera, znaczenia poszczególnych bitów oraz zależności pomiędzy rejestrami. Software Driver Model działa na wyższym poziomie dając kontrolę nad całymi układami peryferyjnymi. Użytkownik nie musi znać dokładnej architektury mikrokontrolera, co znacząco przyspiesza proces rozwijania oprogramowania. 
@@ -167,7 +167,7 @@ Mikrokontroler, filtry RC, pakiet zasilający, regulator napięcia oraz jednostk
 \end{figure}
 
 \begin{table}[h]
-    \caption{Funkcje portów I/O przedstawionych na schemacie połączeń elementów elektronicznych.}
+    \caption{Funkcje portów I/O przedstawionych na schemacie połączeń elementów elektronicznych:}
     \begin{center}
 		\label{tab:portyGPIO}
 		\begin{tabular}{|c|>{\centering}m{8cm}|}
@@ -207,7 +207,7 @@ Pozycja serwomechanizmu modelarskiego sterowana jest przez sygnał PWM (ang. {\e
 Przerzutka, do której został przymocowany serwomechanizm, ogranicza pełny zakres ruchu serwomechanizmu. Minimalne oraz maksymalne wychylenie wózka przerzutki wiąże się z obrotem wału serwomechanizmu odpowiednio o kąt 31 i 95$^{\circ}$. W tym zakresie obsługiwane są wszystkie dostępne przełożenia. Każdemu z ośmiu przełożeń odpowiada inna pozycja serwomechanizmu (tabela \ref{tab:przelozenia}). Pozycje serwomechanizmu zostały dobrane eksperymentalnie. Można zaobserwować liniowy przyrost czasu wypełnienia sygnału. 
 
 \begin{table}[h]
-    \caption{Pozycja serwomechanizmu oraz czas wypełnienia sygnału PWM w zależności od aktualnego przełożenia.}
+    \caption{Pozycja serwomechanizmu oraz czas wypełnienia sygnału PWM w zależności od aktualnego przełożenia:}
     \begin{center}
 		\label{tab:przelozenia}
 		\begin{tabular}{|>{\centering}m{2cm}|>{\centering}m{3cm}|>{\centering}m{4cm}|}
@@ -238,7 +238,7 @@ Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalnych
 
 
 \begin{table}[h]
-    \caption{Pomocnicze zestawy pozycji serwomechanizmu}
+    \caption{Pomocnicze zestawy pozycji serwomechanizmu:}
     \begin{center}
 		\label{tab:przelozeniaPomocniczne}
 		\begin{tabular}{|>{\centering}m{2cm}|>{\centering}m{4cm}|>{\centering}m{4cm}|}
@@ -305,7 +305,7 @@ Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy uż
 Komunikacja w standardzie I2C jest komunikacją typu master/slave. Urządzeniem nadrzędnym, odpowiedzialnym za inicjowanie, prowadzenie oraz kontrolę transmisji, jest mikrokontroler. Urządzenia pomiarowe to urządzenia typu slave. Każdy z układów pomiarowych posiada swój unikalny, 7-bitowy adres. Każde z urządzeń typu slave udziela odpowiedzi na rozkazy wysyłane przez mikrokontroler. Adresy urządzeń jednostki pomiarowej:
 
 \begin{table}[h]
-    \caption{Adresy urządzeń pomiarowych}
+    \caption{Adresy urządzeń pomiarowych:}
     \begin{center}
 		\label{tab:adresyImu}
 		\begin{tabular}{|c|c|}
@@ -344,7 +344,7 @@ Napięcie na wyjściu dzielnika napięcia określone jest zależnością:
 
 Zakładając maksymalną wartość napięcia pakietu, napięcie wejściowe na przetworniku analogowo-cyfrowym powinno wynosić 3.3V a rezystancja $R_2$ jest równa 10k$\Omega$, to zgodnie z zależnością (\ref{eq:rownanieDzielnik}) rezystancja $R_1$ powinna przyjąć około 15k$\Omega$.
 
-Przetwornik analogowo-cyfrowy przetwarza sygnał analogowy na równoważną postać cyfrową. Mikrokontroler wyposażony jest w przetwornik 12-bitowy. Oznacza to, że do reprezentacji całego zakresu pomiarowego używa dwunastu bitów. Zakres pomiarowy określony jest przez sygnały referencyjne - 0V i 3.3V \cite{tiva}. Wartość zwracana przez przetwornik dla napięcia 0V wynosi 0, natomiast dla napięcia 3.3V wynosi 4096. Rozdzielczość przetwornika wynosi około 0.8mV
+Przetwornik analogowo-cyfrowy przetwarza sygnał analogowy na równoważną postać cyfrową. Mikrokontroler wyposażony jest w przetwornik 12-bitowy. Oznacza to, że do reprezentacji całego zakresu pomiarowego używa dwunastu bitów. Zakres pomiarowy określony jest przez sygnały referencyjne - 0V i 3.3V \cite{tiva}. Wartość zwracana przez przetwornik dla napięcia 0V wynosi 0, natomiast dla napięcia 3.3V jest równa 4096. Rozdzielczość przetwornika wynosi około 0.8mV
 
 Zgodnie z pkt. \ref{niskiPoziom}, zgłaszane są dwa stany alarmowe związane z zasilaniem:
 \begin{itemize}
@@ -357,7 +357,7 @@ Zgodnie z pkt. \ref{niskiPoziom}, zgłaszane są dwa stany alarmowe związane z 
 Biorąc pod uwagę powyższe zależności i założenia, można wyznaczyć wartości zwracane przez przetwornik dla stanów alarmowych, które przedsatwiono w tabeli \ref{tab:napieciaDwojnik}
 
 \begin{table}[h]
-    \caption{Poziomy napięć alarmowych oraz wartości zwracane przez przetwornik}
+    \caption{Poziomy napięć alarmowych oraz wartości zwracane przez przetwornik:}
     \begin{center}
 		\label{tab:napieciaDwojnik}
 		\begin{tabular}{|c|c|c|}

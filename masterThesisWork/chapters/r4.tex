@@ -22,11 +22,11 @@ Cztery stany odpowiadają zaprojektowanym trybom jazdy - tryb ręczny, comfort, 
 Stan inicjalizacji jest stanem początkowym programu, osiąganym jednokrotnie, po włączeniu zasilania. W tym stanie przeprowadzana jest inicjalizacja następujących układów peryferyjnych:
 \begin{itemize}
 \item
-Porty wejściowe odpowiedzialne za obsługę przycisków do zmiany przełożeń oraz czujników magnetycznych.
+Porty wejściowe odpowiedzialne za obsługę przycisków do zmiany przełożeń oraz czujników magnetycznych,
 \item
-Porty wyjściowe odpowiedzialne za generowanie sygnału sterującego serwomechanizmem oraz sterowanie wskaźnikiem RGB aktualnego stanu programu. 
+Porty wyjściowe odpowiedzialne za generowanie sygnału sterującego serwomechanizmem oraz sterowanie wskaźnikiem RGB aktualnego stanu programu,
 \item
-Inercyjna jednostka pomiarowa.
+Inercyjna jednostka pomiarowa,
 \item
 Układy czasowo licznikowe, które inicjują zadania okresowe oraz wykorzystywane są do pomiaru prędkości obrotowej i kadencji.
 \end{itemize}
@@ -44,7 +44,7 @@ Stan comfort odpowiada pierwszemu z zaimplementowanych trybów automatycznej zmi
 \subsection{Tryb active}
 Stan active odpowiada drugiem z zaimplementowanych trybów automatycznej zmiany przełożeń. Autor założył, iż ten tryb powinien być używany na trasach o zróżnicowanej topografii terenu. Dlatego zadanie cykliczne dla tego trybu uruchamiane jest z większą częstotliwością, niż w przypadku trybu comfort - raz na dwie sekundy. Zakres kadencji jest stały dla każdego przełożenia. Ze względu na zmienną topografię terenu, został rozszerzony względem trybu comfort i wynosi od $55$ do $70$ obrotów na minutę. Możliwa jest również ręczna zmiana przełożeń, która wskazuje na chęć przejęcia kontroli nad przełożeniami przez użytkownika. W takiej sytuacji zadanie cykliczne wyłączane jest na $10$ sekund. W tym czasie kontroler nie ma wpływu na dobór przełożeń. W tym trybie brana pod uwagę jest również chwilowa wartość prędkość roweru. Jeśli zostanie wykryty brak obrotów mechanizmu korbowego, następuje automatyczny dobór przełożenia, zgodny z tabelą \ref{tab:zakresOdPredkosci}, które zostanie ustawione w momencie wznowienia pedałowania. Ma to na celu umożliwienie zmiany o kilka przełożeń w przypadku, gdy rozpoczął się zjazd, a użytkownik przerwał pedałowanie. Ponowne wznowienie pedałowania skutkuje natychmiastowym doborem przełożenia dostosowanym do aktualnej prędkości, bez potrzeby przechodzenia przez poszczególne biegi. 
 \begin{table}[h]
-    \caption{Związek pomiędzy zakresem prędkości a przełożeniem dobieranym po wznowieniu pedałowania.}
+    \caption{Związek pomiędzy zakresem prędkości a przełożeniem dobieranym po wznowieniu pedałowania:}
     \begin{center}
 		\label{tab:zakresOdPredkosci}
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -64,7 +64,7 @@ Stan sport odpowiada ostatniemu z zaimplementowanych trybów automatycznej zmian
 \item
 Nachylenie terenu jest mniejsze niż $-3^{\circ}$. Oznacza to zjazd ze zbocza o nachyleniu większym, bądź równym 5\%. Zakres kadencji jest obniżony względem jazdy po płaskim terenie i wynosi od 55 do 70 obrotów na minutę.
 \item
-    Nachylenie terenu należy do zakresu od $-3^{\circ}$ do $3^{\circ}$. Oznacza to jazdę po względnie płaskim terenie. Zakres kadencji wynosi od 70 do 85 obrotów na minutę.
+Nachylenie terenu należy do zakresu od $-3^{\circ}$ do $3^{\circ}$. Oznacza to jazdę po względnie płaskim terenie. Zakres kadencji wynosi od 70 do 85 obrotów na minutę.
 \item
 Nachylenie terenu jest większe niż $3^{\circ}$. Oznacza to podjazd pod zbocze o nachyleniu większym bądź równym 5\%. Zakres kadencji jest podwyższony względem jazdy po płaskim terenie i wynosi od 55 do 70 obrotów na minutę.
 
@@ -84,7 +84,7 @@ Jeśli napięcie pakietu zasilającego spadnie poniżej 6V, kontroler przechodzi
 Autor zakłada, że następstwem osiągnięcia tych stanów jest naładowanie pakietu zasilającego. Nie ma zatem możliwości powrotu z tych stanów do normalnej pracy układu. Tak samo dzieje się w przypadku problemów z jednostką pomiarową.
 
 \begin{table}[h]
-    \caption{Kodowanie stanu programu w postaci kolorów RGB}
+    \caption{Kodowanie stanu programu w postaci kolorów RGB:}
     \begin{center}
 		\label{tab:rgb}
 		\begin{tabular}{|c|c|}
