@@ -6,7 +6,7 @@ W niniejszym rozdziale przedstawiono zagadnienia wykorzystane do realizacji ukł
 \section{Serwomechanizm - budowa i zasada działania}
 Serwomechanizm to układ automatycznej regulacji, który służy do precyzyjnego sterowania silnikiem elektrycznym. Serwomechanizm wykorzystany w pracy pozycjonuje wózek przerzutki w zadanym położeniu.
 
-Układy automatycznej regulacji w serwomechanizmach to zazwyczaj układy zamknięte z ujemną pętlą sprzężenia zwrotnego. Schemat takiego układu regulacji został przedstawiony na rys. \ref{fig:zamknietyUklad}. Zastosowanie ujemnego sprzężenia zwrotnego umożliwia osiągnięcie celu sterowania, pomimo występujących zakłóceń. Mogą to być zakłócenia związane z pomiarami wyjścia, zakłócenia działające na obiekt lub zakłócenia sterowania. Zasada działania układu ze sprzężeniem zwrotnym polega na porównaniu aktualnej wartości wielkości regulowanej $y$ z wartością zadaną $r$, wyznaczeniu wartości uchybu regulacji $e$ i pobudzenia do pracy regulatora, którego akcja redukuje błąd regulacji, pomimo ciągle działających zakłóceń $z$ \cite{zamknietyB}.
+Układy automatycznej regulacji w serwomechanizmach to zazwyczaj układy zamknięte z ujemną pętlą sprzężenia zwrotnego. Schemat takiego układu regulacji został przedstawiony na rys. \ref{fig:zamknietyUklad}. Zastosowanie ujemnego sprzężenia zwrotnego umożliwia osiągnięcie celu sterowania, pomimo występujących zakłóceń. Mogą to być zakłócenia związane z pomiarami wielkości wyjściowej, zakłócenia działające na obiekt lub zakłócenia sterowania. Zasada działania układu ze sprzężeniem zwrotnym polega na porównaniu aktualnej wartości wielkości regulowanej $y$ z wartością zadaną $r$, wyznaczeniu wartości uchybu regulacji $e$m na podstawie którego regulator wyznacza wartość sterowania. W efekcie następuje redukcja błędu regulacji, pomimo ciągle działających zakłóceń $z$ \cite{zamknietyB}.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.4]{zamknietyUkladRegulacji.jpg}
@@ -14,7 +14,7 @@ Układy automatycznej regulacji w serwomechanizmach to zazwyczaj układy zamkni�
     \label{fig:zamknietyUklad}
 \end{figure}
 
-Serwomechanizm zbudowany jest z kilku podstawowych elementów, takich jak silnik elektryczny, układ pomiarowy pozycji/prędkości wału silnika, regulator oraz układ mocy. W serwomechanizmach stosowane są silniki prądu stałego lub przemiennego. Serwomechanizmy oferowane na rynku mogą pracować w kilku trybach:
+Serwomechanizm zbudowany jest z kilku podstawowych elementów, takich jak: silnik elektryczny, układ pomiarowy pozycji/prędkości wału silnika, regulator oraz układ mocy. W serwomechanizmach stosowane są silniki prądu stałego lub przemiennego. Serwomechanizmy oferowane na rynku mogą pracować w kilku trybach:
 \begin{itemize}
 \item
      Tryb regulacji położenia - układ automatycznej regulacji dąży do osiągnięcia zadanej pozycji wału silnika.
@@ -42,7 +42,7 @@ Najprostszy filtr dolnoprzepustowy to pasywny filtr RC zbudowany z opornika o re
 Przyjmując napięcie na kondensatorze jako zmienną stanu $x(t)$, sterowanie układu jako sygnał $u(t)$ a obserwację jako sygnał wyjściowy filtru $y(t)$, oraz pamiętając o tym, że prąd płynący przez obwód jest równy zmianie ładunku na kondensatorze, można zapisać model matematyczny układu w postaci równań stanu:
 \begin{equation}
 \begin{gathered}
-    \dot{x}(t) = -\frac{1}{RC}x(t) + u(t) \\
+    \dot{x}(t) = -\frac{1}{RC}x(t) + \frac{1}{RC}u(t) \\
     y(t) = x(t)
      \label{eq:stanuRC}
 \end{gathered}
@@ -50,7 +50,7 @@ Przyjmując napięcie na kondensatorze jako zmienną stanu $x(t)$, sterowanie uk
 
 Zgodnie z definicją $4.1$ w pkt. \textit{Zagadnienie realizacji transmitancji} w pracy \cite{graba}, transmitancja operatorowa filtru RC jest opisana zależnością:
 \begin{equation}
-    G(s) = \frac{RCs}{RCs + 1}
+    G(s) = \frac{1}{RCs + 1}
     \label{eq:transRc}
 \end{equation}
 
@@ -60,7 +60,7 @@ Z powyższego równania wynika, że obwód RC jest  układem inercyjnym I rzędu
     \label{eq:stalaCzasowaRC}
 \end{equation}
 
-Charakterystyka amplitudowa obiektu inercyjnego I rzędu wykazuje zdolność obiektu do tłumienia amplitudy sygnałów o wysokich częstotliwościach, co jest zgodne z zasadą działania filtru dolnoprzepustowego.
+Charakterystyka amplitudowa obiektu inercyjnego I rzędu (rys.\ref{fig:charamp}) wykazuje zdolność obiektu do tłumienia amplitudy sygnałów o wysokich częstotliwościach, co jest zgodne z zasadą działania filtru dolnoprzepustowego.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.23]{charakterystykaAmp.png}
@@ -144,7 +144,7 @@ Akcelerometry są powszechnie wykorzystywane w różnego rodzaju aplikacjach. Uk
 Układy do pomiaru przyspieszenia wykonane w technologii MEMS zazwyczaj składają się z trzech akcelerometrów, które umożliwiają pomiar przyspieszenia w trzech różnych kierunkach. Akcelerometr został zamontowany w rowerze w taki sposób, aby kierunek osi \textit{x} był równoległy do podłoża (rys. \ref{fig:rownia}).
 %____________________________________________________________________________________________________________  
 \subsubsection{Pomiar prędkości kątowych - żyroskop}
-Żyroskop to urządzenie pomiarowe dostarczające informacji na temat chwilowej prędkości obrotowej układu pomiarowego. Żyroskopy wykonane w technologii MEMS to czujniki pojemnościowe wykorzystujące efekt Coriolisa. Układ dwóch wibrujących mas, umieszczony na obrotowej tarczy, zmienia swoje położenie względem osi obrotu w zależności od chwilowej prędkości obrotowej. W wyniku zmiany położenia układu mas odkształceniu ulega tarcza, która stanowi okładkę kondensatora. W efekcie następuje różnicowa zmiana pojemności kondensatora, która przetwarzana jest na chwilową prędkość obrotową \cite{stGyro}.
+Żyroskop to urządzenie pomiarowe dostarczające informacji na temat chwilowej prędkości obrotowej układu pomiarowego. Żyroskopy wykonane w technologii MEMS to czujniki pojemnościowe wykorzystujące efekt Coriolisa. W wyniki obrotu czujnika, na układ wibrującej masy działa siła, o kierunku prostopadłym do kierunku oscylacji układu masy. Siła Coriolisa powoduje przesunięcie układu, który jednocześnie stanowi jedną z okładek kondensatora pojemnościowego. Efektem zmiany położenia okładki kondensatora jest zmiana jego pojemności, która przetwarzana jest na wartość chwilowej prędkości obrotowej \cite{stGyro}.
 
 Żyroskop, podobnie jak akcelerometr, to układ trzech czujników pozwalający na pomiar prędkości kątowej w trzech różnych kierunkach. Zamontowany został w taki sposób, aby kierunek osi żyroskopu \textit{x} oraz \textit{z}  był równoległy do podłoża.
 
@@ -162,7 +162,7 @@ Przykład zamieszczony na rysunku \ref{fig:rownia} przedstawia ciało znajdując
 \end{equation}
 gdzie:
 \begin{eqwhere}[2cm]
-	\item[$\alpha$] kąt nachylenia podłoża
+	\item[$\alpha$] kąt nachylenia podłoża,
 	\item[$a_x$] przyspieszenie akcelerometru mierzone wzdłuż osi $X$,
 	\item[$a_y$] przyspieszenie akcelerometru mierzone wzdłuż osi $Y$.
 \end{eqwhere}
@@ -279,7 +279,7 @@ gdzie:
 
 Ze względu na potrzebę zaimplementowania filtru w układzie mikroprocesorowym, należy znaleźć równoważny model dyskretny, który aproksymuje własności dynamiczne modelu ciągłego. Można tego dokonać stosując metodę Eulera wstecz \cite{grega}:
 \begin{equation}
-    s=\frac{t_0z}{z-1}
+    s=\frac{z-1}{t_0z}
     \label{eq:eulerWstecz}
 \end{equation}
 gdzie:

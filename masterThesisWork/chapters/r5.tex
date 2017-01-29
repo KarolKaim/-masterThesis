@@ -10,10 +10,10 @@ Komputer klasy PC stanowi podstawę środowiska do rozwoju aplikacji na wybraną
 Program sterownika został napisany w języku C, który jest powszechnie wykorzystywany w aplikacjach wbudowanych. Język opracowany przez Dennisa Ritchego, w latach siedemdziesiątych ubiegłego wieku w Bell Laboratories \cite{prata}. Doskonale nadaje się do aplikacji niskopoziomowych ze względu na łatwą przenośność kodu, elastyczność oraz wysoką wydajność aplikacji napisanych w tym języku. 
 \subsection{Code Composer Studio 6.0.0}
 
-Oprogramowanie sterownika rozwijane było w oparciu o zintegrowane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC(ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
+Oprogramowanie sterownika rozwijane było w oparciu o zintegrowane środowisko programistyczne Code Composer Studio v6.0.0 oferowane przez Texas Instruments. Środowisko umożliwia wykonanie aplikacji na różne platformy sprzętowe TI. Są to m.in. mikrokontrolery z serii Tiva/Stellaris, procesory sygnałowe z rodziny TMS320 czy układy SOC (ang. {\em System On Chip}) serii DaVinci. CCS v6.0.0 łączy zalety środowiska Eclipse Kepler 4.3, które stanowi bazę CCS, z narzędziami do rozwijania aplikacji embedded, takimi jak kompilator ARM GNU Linaro, czy wbudowany debugger.
 %______________________________________________________________________________________________________________
-\subsection{Biblioteka TivaWare Peripheral Driver}
-Texas Intrusments dostarcza bibliotekę dedykowaną do mikrokontrolerów z rodziny Tiva ARM Cortex-M - TivaWare  Peripheral Driver Library. Biblioteka stanowi zbiór funkcji umożliwiających wykorzystanie układów peryferyjnych mikrokontrolera. Biblioteka, napisana w języku C, wspiera dwa modele programowania mikrokontrolera - Direct Register Access oraz Software Driver Model. Pierwszy z nich operuje bezpośrednio na rejestrach mikrokontrolera, co pozwala pisać bardzo wydajne programy o niewielkim rozmiarze. Jednocześnie wymaga bardzo dobrej znajomości rejestrów mikrokontrolera, znaczenia poszczególnych bitów oraz zależności pomiędzy rejestrami. Software Driver Model działa na wyższym poziomie dając kontrolę nad całymi układami peryferyjnymi. Użytkownik nie musi znać dokładnej architektury mikrokontrolera, co znacząco przyspiesza proces rozwijania oprogramowania. 
+\subsection{Biblioteka \textit{TivaWare Peripheral Driver}}
+Texas Intrusments dostarcza bibliotekę dedykowaną do mikrokontrolerów z rodziny Tiva ARM Cortex-M - \textit{TivaWare  Peripheral Driver Library}. Biblioteka stanowi zbiór funkcji umożliwiających wykorzystanie układów peryferyjnych mikrokontrolera. Biblioteka, napisana w języku C, wspiera dwa modele programowania mikrokontrolera - Direct Register Access oraz Software Driver Model. Pierwszy z nich operuje bezpośrednio na rejestrach mikrokontrolera, co pozwala pisać bardzo wydajne programy o niewielkim rozmiarze. Jednocześnie wymaga bardzo dobrej znajomości rejestrów mikrokontrolera, znaczenia poszczególnych bitów oraz zależności pomiędzy rejestrami. Software Driver Model działa na wyższym poziomie dając kontrolę nad całymi układami peryferyjnymi. Użytkownik nie musi znać dokładnej architektury mikrokontrolera, co znacząco przyspiesza proces rozwijania oprogramowania. 
 %______________________________________________________________________________________________________________
 \subsection{Pozostałe oprogramowanie}
 Pozostałe oprogramowanie wykorzystane w trakcie realizacji projektu to m.in.:
@@ -93,7 +93,7 @@ trzyosiowy żyroskop ST L3GD20,
 trzyosiowy magnetometr ST LSM303DLHC.
 \end{itemize}
 
-Wszystkie czujniki zamontowane w jednostce komunikują się z urządzeniem nadrzędnym z wykorzystaniem magistrali I2C(ang. {\em Inter-Intergrated Circuit}). Magistrala I2C jest szeregowym, dwukierunkowym interfejsem komunikacyjnym opracowanym przez firmę Philips. Układ AltImu10 posiada elementy pasywne, gwarantujące poprawne działanie magistrali, oraz wbudowany regulator napięcia \cite{Pololu}.
+Wszystkie czujniki zamontowane w jednostce komunikują się z urządzeniem nadrzędnym z wykorzystaniem magistrali I2C (ang. {\em Inter-Intergrated Circuit}). Magistrala I2C jest szeregowym, dwukierunkowym interfejsem komunikacyjnym opracowanym przez firmę Philips. Układ AltImu10 posiada elementy pasywne, gwarantujące poprawne działanie magistrali, oraz wbudowany regulator napięcia \cite{Pololu}.
 %______________________________________________________________________________________________________________
 \subsubsection{Zbliżeniowe czujniki magnetyczne}
 Zbliżenie czujniki załączane magnetycznie, o oznaczeniu CMD14, wykorzystane są do wyznaczania prędkości obrotowych tylnego koła oraz mechanizmu korbowego. W wyniki działania pola magnetycznego, pochodzącego z magnesu trwałego, czujnik zwiera swoje styki. 
@@ -267,7 +267,7 @@ Z doświadczenia autora pracy wynika, że zmiana przełożeń w konwencjonalnych
 \end{table}
 %______________________________________________________________________________________________________________
 \subsection{Obsługa przycisków}
-W projekcie wykorzystane zostały trzy przyciski przewlekane monostabilne. Ich naciśnięcie powoduje redukcję lub zwiększenie przełożenia oraz zmianę trybu pracy kontrolera. Przyciski do zmiany przełożenia zamontowane zostały w miejscu konwencjonalnej manetki. Przycisk do zmiany trybu pracy został przymocowany do mostka kierownicy.
+W projekcie wykorzystane zostały trzy przyciski przewlekane, monostabilne. Ich naciśnięcie powoduje redukcję lub zwiększenie przełożenia oraz zmianę trybu pracy kontrolera. Przyciski do zmiany przełożenia zamontowane zostały w miejscu konwencjonalnej manetki. Przycisk do zmiany trybu pracy został przymocowany do mostka kierownicy.
 
 Wszystkie przyciski wykorzystują rezystor pull-up, podciągający do portu wejściowego napięcie 3.3V (rys. \ref{fig:schematPolaczen}). Zwarcie przycisku powoduje ustalenie sygnału na poziomie 0V. Pojawienie się na magistrali zbocza opadającego powoduje zgłoszenie przerwania od odpowiedniego pinu portu wejściowego. 
 
@@ -278,7 +278,7 @@ Z przyciskami związany jest problem drgań styków w trakcie zwierania/rozwiera
     \caption{Porównanie przebiegów sygnałów interpretowanych przez analizator stanów logicznych dla przycisku z filtrem RC - kanał 0, oraz bez filtra- kanał 1.}
     \label{fig:drganiaPrzyciskow}
 \end{figure}
-Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykonane zostały proste filtry dolnoprzepustowe RC. Zasada działania filtru RC została opisana w pkt. \ref{filtrRc}. W dokumentacji mikrokontrolera można znaleźć informację na temat minimalnego poziomu napięcia, interpretowanego jako stan wysoki - $0.6V_{in}$ \cite{tiva}. Podobny poziom napięcia osiągany jest na wyjściu filtru RC, po skokowej zmianie napięcia wejściowego, po czasie równym stałej czasowej filtra. Autor założył, że zmiany biegów, oraz zmiana tryb jazdy, nie mogą być dokonywane częściej, niż 10 razy na sekundę. Z tego wynika, że stała czasowa filtru powinna wynosić około $100ms$. Wszystkie 3 filtry zostały wykonane w oparciu o opornik o rezystancji $200k\Omega$ i kondensator o pojemności 470$nF$. Tak dobór elementów pasywnych pozwala zbudować filtr, którego stała czasowa wynosi około $94ms$.
+Istnieje kilka sposobów rozwiązania tego problemu. Można je podzielić na sposoby programowe oraz sprzętowe. Sposoby programowe to np. kilkukrotne sprawdzenie stanu portu wejściowego lub chwilowe wyłączenie przerwań od portów wejściowych. Autor zdecydował, że lepszym rozwiązaniem będzie usunięcie przyczyny tego zjawiska, czyli odpowiednie kondycjonowanie sygnału. W tym celu wykonane zostały proste filtry dolnoprzepustowe RC. Zasada działania filtru RC została opisana w pkt. \ref{filtrRc}. W dokumentacji mikrokontrolera można znaleźć informację na temat minimalnego poziomu napięcia, interpretowanego jako stan wysoki - $0.6V_{in}$ \cite{tiva}. Podobny poziom napięcia osiągany jest na wyjściu filtru RC, po skokowej zmianie napięcia wejściowego, po czasie równym stałej czasowej filtra. Autor założył, że zmiany biegów, oraz zmiana tryb jazdy, nie mogą być dokonywane częściej, niż 10 razy na sekundę. Z tego wynika, że stała czasowa filtru powinna wynosić około $100ms$. Wszystkie 3 filtry zostały wykonane z użyciem opornika o rezystancji $200k\Omega$ i kondensatoa o pojemności 470$nF$. Tak dobór elementów pasywnych pozwala zbudować filtr, którego stała czasowa wynosi około $94ms$.
 %______________________________________________________________________________________________________________
 \subsection{Obsługa zbliżeniowych czujników magnetycznych}
 Zbliżeniowe czujniki magnetyczne działają w sposób analogiczny do przycisków monostablilnych. Różnica polega na tym, że styki zwierane są w wyniku działania zewnętrznego pola magnetycznego, pochodzącego od magnesu trwałego. W trakcie zwierania/rozwierania czujnika magnetycznego również pojawia się problem mechanicznych drgań styków. Problem został wyeliminowany w taki sam sposób, jak w przypadku przycisków - przez zastosowanie filtrów dolnoprzepustowych RC. Elementy pasywne filtrów RC Stałe dla czujników magnetycznych zostały dobrane zgodnie z poniższymi założeniami.
@@ -290,19 +290,19 @@ Czujnik magnetyczny wykorzystywany do wyznaczenia chwilowej wartości kadencji j
 \subsection{Obsługa jednostki pomiarowej Pololu AltIMU10}
 Dane pomiarowe pochodzące z akcelerometru oraz żyroskopu wykorzystywane są w trybie active i sport. Kąt nachylenia podłoża wyznaczany jest co 10ms przy użyciu filtru komplementarnego, którego zasadę działania opisano w pkt. \ref{kompZasadaDzialania}. 
  
-Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi 100$kb/s$. Jednostka pomiarowa posiada pięć pinów wyjściowych, jednak używane są tylko cztery:
+Komunikacja pomiędzy mikrokontrolerem a jednostką pomiarową zachodzi przy użyciu magistrali I2C. Magistrala działa w tybie \textit{standard mode}, w którym prędkość transmisji danych wynosi 100$kb/s$. Jednostka pomiarowa posiada pięć wyprowadzeń wyjściowych, jednak w projekcie używane są tylko cztery:
 \begin{itemize}
     \item
     SCL (ang. {\em Serial Clock Line}) - linia zegarowa wykorzystana do synchronizacji transferu danych,
     \item
-    SDA (ang. {\em Serial Data Line}) - linia danych wykorzystana do transferu danych,
+    SDA (ang. {\em Serial Data Line}) - linia danych wykorzystana do przesyłu danych,
     \item
     Vin - zasilanie jednostki pomiarowej, które przyjmuje napięcie z zakresu od 2.5V do 5.5V,
     \item
     GND - wspólna masa.
 \end{itemize} 
 
-Komunikacja w standardzie I2C jest komunikacją typu master/slave. Urządzeniem nadrzędnym, odpowiedzialnym za inicjowanie, prowadzenie oraz kontrolę transmisji, jest mikrokontroler. Urządzenia pomiarowe to urządzenia typu slave. Każdy z układów pomiarowych posiada swój unikalny, 7-bitowy adres. Każde z urządzeń typu slave udziela odpowiedzi na rozkazy wysyłane przez mikrokontroler. Adresy urządzeń jednostki pomiarowej:
+Komunikacja w standardzie I2C jest komunikacją typu master/slave. Urządzeniem nadrzędnym, odpowiedzialnym za inicjowanie, prowadzenie oraz kontrolę transmisji, jest mikrokontroler. Urządzenia pomiarowe to urządzenia typu slave. Każdy z układów pomiarowych posiada swój unikalny, 7-bitowy adres. Każde z urządzeń typu slave udziela odpowiedzi na rozkazy wysyłane przez mikrokontroler. Adresy urządzeń jednostki pomiarowej przedstawiono w tabeli \ref{tab:adresyImu}:
 
 \begin{table}[h]
     \caption{Adresy urządzeń pomiarowych:}
@@ -322,7 +322,7 @@ Komunikacja w standardzie I2C jest komunikacją typu master/slave. Urządzeniem 
 	\end{center}
 \end{table}
 
-Biblioteka TivaWare udostępnia metody do obsługi komunikacji I2C. Akcelerometr został skonfigurowany w taki sposób, aby obsługiwał zakres przyspieszeń $\pm2g$. Żyroskop obsługuje zakres pomiarowy $\pm245dps$.
+Biblioteka \textit{TivaWare} udostępnia metody do obsługi komunikacji I2C. Akcelerometr został skonfigurowany w taki sposób, aby obsługiwał zakres przyspieszeń $\pm2g$. Żyroskop obsługuje zakres pomiarowy $\pm245dps$.
 %______________________________________________________________________________________________________________
 \subsection{Pomiar poziomu naładowania pakietu zasilającego}
 
@@ -349,9 +349,9 @@ Przetwornik analogowo-cyfrowy przetwarza sygnał analogowy na równoważną post
 Zgodnie z pkt. \ref{niskiPoziom}, zgłaszane są dwa stany alarmowe związane z zasilaniem:
 \begin{itemize}
 \item
-    stan niskiego poziomu naładowania pakietu zasilającego wynoszący 6.8V,
+    stan niskiego poziomu naładowania pakietu zasilającego, gdy napięcie na akumulatorze jest mniejsze bądź równe 6.8V,
 \item
-    stan rozładowania pakietu zasilającego wynoszący 6V.
+    stan rozładowania pakietu zasilającego, gdy napięcie na akumulatorze jest mniejsze bądź równe 6V.
 \end{itemize}
 
 Biorąc pod uwagę powyższe zależności i założenia, można wyznaczyć wartości zwracane przez przetwornik dla stanów alarmowych, które przedsatwiono w tabeli \ref{tab:napieciaDwojnik}
